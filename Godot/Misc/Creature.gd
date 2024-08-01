@@ -8,13 +8,13 @@ var cells : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#i is because there is no enumerate
 	var i = 0
 	for RNA in DNA:
 		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'] + ".tscn")
 		var cell_instance = cell_base.instantiate()
 		add_child(cell_instance)
 		cell_instance.unpack(RNA, str(i))
-		
 		i += 1
 	cells = get_children()
 	cells.pop_front()
