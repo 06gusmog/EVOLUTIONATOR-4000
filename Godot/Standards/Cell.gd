@@ -32,6 +32,10 @@ func get_from_sauce(special_sauce : String, values : Array):
 			"angle":
 				toReturn.append( (float(special_sauce.substr(0,2)) / 100) * 2 * PI - PI )
 				special_sauce = special_sauce.substr(2, special_sauce.length()-2)
+			_:
+				print_rich("[rainbow]You made a typo!!!")
+				print_rich("[rainbow]Silly you, " + value + " isn't a valid sauce value![/rainbow]")
+				print_rich("[img]res://Misc/ohnocat.jpg[img]")
 	return toReturn
 
 #-- Interface With Creature --

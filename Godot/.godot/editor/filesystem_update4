@@ -6,3 +6,6 @@ res://Cell Types/Scenes/eye_cell.tscn
 res://Misc/Creature.gd
 res://Cell Types/Scripts/EatingCell.gd
 res://Cell Types/Scripts/NeuronCell.gd
+res://Misc/testworld.gd
+res://Cell Types/Scenes/eating_cell.tscn
+res://Standards/Cell.gd

@@ -15,9 +15,8 @@ var creatures = [
 	[
 		{'Type':'eye_cell', 'Position':Vector2(1,0), 'Connections':[], 'Special Sauce':'009'},
 		{'Type':'move_cell', 'Position':Vector2(1,1), 'Connections':['0'], 'Special Sauce':'1234'},
-		{'Type':'move_cell', 'Position':Vector2(1,2), 'Connections':[], 'Special Sauce':'1234'},
-		{'Type':'move_cell', 'Position':Vector2(1,3), 'Connections':[], 'Special Sauce':'1234'},
-		{'Type':'move_cell', 'Position':Vector2(1,4), 'Connections':[], 'Special Sauce':'1234'}
+		{'Type':'move_cell', 'Position':Vector2(1,1), 'Connections':['3'], 'Special Sauce':'005'},
+		{'Type':'neuron_cell', 'Position':Vector2(1,1), 'Connections':[], 'Special Sauce':'0051'}
 	]
 ]
 
