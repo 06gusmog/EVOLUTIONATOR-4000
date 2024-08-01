@@ -3,6 +3,8 @@ var DNA : Array
 var killing_queue : Array
 var cells : Array
 
+@export var cell_weight : float
+
 @onready var visual_effects_root_node = $"Visual Effects"
 
 
@@ -16,6 +18,7 @@ func _ready():
 		add_child(cell_instance)
 		cell_instance.unpack(RNA, str(i))
 		i += 1
+	mass = i * cell_weight
 	cells = get_children()
 	cells.pop_front()
 
@@ -51,6 +54,7 @@ func clear_killing_queue():
 		for cell in cells:
 			if cell.cellID in killing_queue:
 				cell.queue_free()
+				mass -= 1
 				continue
 			cell.remove_connections(killing_queue)
 			placeholder_cells.append(cell)

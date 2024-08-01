@@ -2,7 +2,7 @@
 
 [ext_resource type="Shape2D" uid="uid://v66p2r8ukumf" path="res://Standards/cell_shape.tres" id="1_qni4f"]
 [ext_resource type="Script" path="res://Cell Types/Scripts/EyeCell.gd" id="2_x5267"]
-[ext_resource type="Texture2D" uid="uid://b4jpaasw3jigd" path="res://icon.svg" id="3_yfibe"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="3_q8c7u"]
 
 [node name="EyeCell" type="CollisionShape2D"]
 shape = ExtResource("1_qni4f")
@@ -14,5 +14,5 @@ script = ExtResource("2_x5267")
 width = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.01, 0.01)
-texture = ExtResource("3_yfibe")
+modulate = Color(0.737255, 0, 1, 1)
+texture = ExtResource("3_q8c7u")

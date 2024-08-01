@@ -2,12 +2,12 @@
 
 [ext_resource type="Shape2D" uid="uid://v66p2r8ukumf" path="res://Standards/cell_shape.tres" id="1_mso51"]
 [ext_resource type="Script" path="res://Cell Types/Scripts/EatingCell.gd" id="2_bprx4"]
-[ext_resource type="Texture2D" uid="uid://b4jpaasw3jigd" path="res://icon.svg" id="3_j7yaj"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="3_eb0i2"]
 
 [node name="EatingCell" type="CollisionShape2D"]
 shape = ExtResource("1_mso51")
 script = ExtResource("2_bprx4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.01, 0.01)
-texture = ExtResource("3_j7yaj")
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("3_eb0i2")

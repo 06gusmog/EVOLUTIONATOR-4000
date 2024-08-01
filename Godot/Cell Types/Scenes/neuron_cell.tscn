@@ -2,12 +2,12 @@
 
 [ext_resource type="Shape2D" uid="uid://v66p2r8ukumf" path="res://Standards/cell_shape.tres" id="1_mm8el"]
 [ext_resource type="Script" path="res://Cell Types/Scripts/NeuronCell.gd" id="2_vbl14"]
-[ext_resource type="Texture2D" uid="uid://b4jpaasw3jigd" path="res://icon.svg" id="3_4q5gl"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="3_11kg0"]
 
 [node name="NeuronCell" type="CollisionShape2D"]
 shape = ExtResource("1_mm8el")
 script = ExtResource("2_vbl14")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.01, 0.01)
-texture = ExtResource("3_4q5gl")
+modulate = Color(1, 1, 0, 1)
+texture = ExtResource("3_11kg0")

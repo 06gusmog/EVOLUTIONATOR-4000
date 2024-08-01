@@ -1,0 +1,5 @@
+Red - Eating Cell
+Blue - Move Cell
+Yellow - Neuron Cell
+Purple - Eye Cell
+Green - Rotation Cell
