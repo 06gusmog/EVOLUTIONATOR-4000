@@ -36,7 +36,7 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 		return 0
 	var local_cell = get_child(local_shape_index)
 	var body_cell = get_parent().get_child(body).get_child(body_shape_index)
-	if 'Eats' in body_cell.tags and not 'Uneatable' in local_cell.tags:
+	if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
 		print('-We have been consumed-')
 		kill_cell(local_shape_index)
 	print('---Collision handling end---')
