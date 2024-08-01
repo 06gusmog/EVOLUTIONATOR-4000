@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://e56rk6ix6kmn"]
+
+[ext_resource type="Script" path="res://Misc/testworld.gd" id="1_b44a6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_87dk2"]
+
+[node name="Testworld" type="Node2D"]
+script = ExtResource("1_b44a6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_87dk2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-352, -133, -382, 128, 301, 124, 282, -142, -352, -133, -632, -380, 620, -356, 618, 360, -646, 360, -632, -380, -632, -380)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-552, -293, -554, 288, 512, 284, 528, -291, -552, -291, -633, -378, 609, -353, 615, 351, -650, 356, -633, -376)

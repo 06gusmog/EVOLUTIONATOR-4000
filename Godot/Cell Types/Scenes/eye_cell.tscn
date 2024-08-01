@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://drqpv8j4pkhop"]
+
+[ext_resource type="Shape2D" uid="uid://v66p2r8ukumf" path="res://Standards/cell_shape.tres" id="1_qni4f"]
+[ext_resource type="Script" path="res://Cell Types/Scripts/EyeCell.gd" id="2_x5267"]
+[ext_resource type="Texture2D" uid="uid://b4jpaasw3jigd" path="res://icon.svg" id="3_yfibe"]
+
+[node name="EyeCell" type="CollisionShape2D"]
+shape = ExtResource("1_qni4f")
+script = ExtResource("2_x5267")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("3_yfibe")
