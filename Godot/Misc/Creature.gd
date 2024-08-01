@@ -1,6 +1,7 @@
 extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
+var cells : Array
 
 @onready var visual_effects_root_node = $"Visual Effects"
 
@@ -15,13 +16,13 @@ func _ready():
 		cell_instance.unpack(RNA, str(i))
 		
 		i += 1
+	cells = get_children()
+	cells.pop_front()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	clear_killing_queue()
 	
-	var cells = get_children()
-	cells.pop_front()
 	for cell in cells:
 		cell.update_output()
 	for cell in cells:
@@ -45,13 +46,16 @@ func kill_cell(cellID : String):
 	killing_queue.append(cellID)
 
 func clear_killing_queue():
-	for cell in get_children():
-		if cell == visual_effects_root_node:
-			continue
-		if cell.cellID in killing_queue:
-			cell.queue_free()
-			continue
-		cell.remove_connections(killing_queue)
+	if killing_queue != []:
+		var placeholder_cells = []
+		for cell in cells:
+			if cell.cellID in killing_queue:
+				cell.queue_free()
+				continue
+			cell.remove_connections(killing_queue)
+			placeholder_cells.append(cell)
+		cells = placeholder_cells
+		killing_queue = []
 
 
 
