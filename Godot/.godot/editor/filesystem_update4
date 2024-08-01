@@ -1,13 +1,17 @@
-res://Cell Types/Scenes/move_cell.tscn
-res://Cell Types/Scripts/SimulationHandler.gd
-res://Misc/testworld.tscn
 res://Misc/creature.tscn
-res://Cell Types/Scenes/test_cell.tscn
+res://Cell Types/Scripts/SimulationHandler.gd
+res://Standards/Cell.gd
+res://Misc/Creature.gd
+res://Misc/Food.gd
+res://Misc/testworld.tscn
+res://Cell Types/Scenes/move_cell.tscn
 res://Cell Types/Scenes/eye_cell.tscn
 res://Cell Types/Scenes/eating_cell.tscn
-res://Misc/testworld.gd
-res://Misc/Creature.gd
-res://Cell Types/Scripts/MoveCell.gd
 res://Cell Types/Scenes/neuron_cell.tscn
-res://Misc/visuals/Colour Explanation.txt
 res://Cell Types/Scenes/rotation_cell.tscn
+res://Misc/food.tscn
+res://Misc/testworld.gd
+res://Misc/visuals/Colour Explanation.txt
+res://Misc/FoodObject.gd
+res://Misc/food_object.tscn
+res://Misc/food_bit.tscn

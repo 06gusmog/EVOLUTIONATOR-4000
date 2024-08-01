@@ -5,6 +5,7 @@ class_name Cell
 var cellID : String
 var type : String
 var tags : Array # Eats, Uneatable
+var energy_consumption = 1.0
 var connections : Array
 var input : float
 var output : float

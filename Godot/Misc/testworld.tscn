@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://e56rk6ix6kmn"]
+[gd_scene load_steps=4 format=3 uid="uid://e56rk6ix6kmn"]
 
 [ext_resource type="Script" path="res://Misc/testworld.gd" id="1_b44a6"]
+[ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_bhpx2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_87dk2"]
 
@@ -18,3 +19,5 @@ polygon = PackedVector2Array(-552, -291, -554, 288, 512, 284, 528, -291, -552, -
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-552, -293, -554, 288, 512, 284, 528, -291, -552, -291, -633, -378, 609, -353, 615, 351, -650, 356, -633, -376)
+
+[node name="FoodObject" parent="." instance=ExtResource("2_bhpx2")]

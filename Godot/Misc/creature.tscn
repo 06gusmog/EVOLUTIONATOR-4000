@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://Misc/Creature.gd" id="1_2isnp"]
 
 [node name="Creature" type="RigidBody2D"]
+max_contacts_reported = 10
+contact_monitor = true
 linear_damp = 2.0
 angular_damp = 5.0
 script = ExtResource("1_2isnp")

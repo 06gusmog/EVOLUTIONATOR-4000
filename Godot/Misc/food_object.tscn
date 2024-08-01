@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgpjpvrhc2ioi"]
+
+[ext_resource type="Script" path="res://Misc/FoodObject.gd" id="1_ybqjv"]
+
+[node name="FoodObject" type="Area2D"]
+script = ExtResource("1_ybqjv")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

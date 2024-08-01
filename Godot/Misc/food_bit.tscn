@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6cvmdem4ljqp"]
+
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="1_gkowr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x482q"]
+radius = 1.0
+
+[node name="FoodBit" type="CollisionShape2D"]
+shape = SubResource("CircleShape2D_x482q")
+metadata/eaten = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_gkowr")

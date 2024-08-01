@@ -3,17 +3,18 @@ extends Node2D
 @export var camera_move_speed = 5.0
 
 var template = load("res://Misc/creature.tscn")
+@onready var food_object = $FoodObject
 
 var creatures = [
 	[
 		{'Type':'eye_cell', 'Position':Vector2(1,0), 'Connections':[], 'Special Sauce':'009'},
 		{'Type':'move_cell', 'Position':Vector2(1,1), 'Connections':['0'], 'Special Sauce':'1234'},
-		{'Type':'move_cell', 'Position':Vector2(1,2), 'Connections':['3'], 'Special Sauce':'005'},
+		{'Type':'move_cell', 'Position':Vector2(1,2), 'Connections':['3'], 'Special Sauce':'505'},
 		{'Type':'neuron_cell', 'Position':Vector2(1,3), 'Connections':[], 'Special Sauce':'0051'}
 	],
 	[
 		{'Type':'move_cell', 'Position':Vector2(0,0), 'Connections':['1'], 'Special Sauce':'004'},
-		{'Type':'neuron_cell', 'Position':Vector2(1,0), 'Connections':[], 'Special Sauce':''}
+		{'Type':'neuron_cell', 'Position':Vector2(1,0), 'Connections':[], 'Special Sauce':'0000'}
 	]
 ]
 
@@ -32,3 +33,5 @@ func _ready():
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
+	if Input.is_action_just_pressed("click"):
+		food_object.add_food(20, get_global_mouse_position())
