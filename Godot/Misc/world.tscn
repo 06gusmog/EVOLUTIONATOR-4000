@@ -1,14 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
-[ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
+[ext_resource type="PackedScene" path="res://Misc/food_object.tscn" id="2_8ygnx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06e6h"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
 creature_amount = 20
-creature_size = 10
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

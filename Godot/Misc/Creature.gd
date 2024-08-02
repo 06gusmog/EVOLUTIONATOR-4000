@@ -2,7 +2,7 @@ extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
 var cells : Array
-var energy = 1000.0
+var energy = 100.0
 var food_object
 
 @export var cell_weight : float
@@ -16,7 +16,7 @@ func _ready():
 	food_object = get_parent().get_node('FoodObject')
 	var i = 0
 	for RNA in DNA:
-		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
+		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'] + ".tscn")
 		var cell_instance = cell_base.instantiate()
 		add_child(cell_instance)
 		cell_instance.unpack(RNA, str(i))
@@ -40,18 +40,18 @@ func _process(delta):
 
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	#print('---Collision handling start---')
+	print('---Collision handling start---')
 	if not body is RigidBody2D:
-		#print('---Not a creature break---')
+		print('---Not a creature break---')
 		return 0
 	var local_cell = cells[local_shape_index]
 	var body_cell = body.cells[body_shape_index]
 	print(body_cell)
 	print(local_cell)
 	if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
-		#print('-We have been consumed-')
-		kill_cell(str(local_shape_index))
-	#print('---Collision handling end---')
+		print('-We have been consumed-')
+		kill_cell(local_shape_index)
+	print('---Collision handling end---')
 	
 	
 func kill_cell(cellID : String):
