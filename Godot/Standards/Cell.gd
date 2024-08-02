@@ -58,14 +58,14 @@ func remove_connections(cellIDs : Array):
 func update_output():
 	_update_output(input)
 
-func read_and_act():
+func read_and_act(delta):
 	input = 0.0
 	for connection in connections:
 		var other_cell = get_parent().get_node(connection)
 		input += other_cell.output
 	input = weighted_clamp(input)
 	
-	_act(input)
+	_act(input, delta)
 
 #-- Cell Type Unique Functions --
 func _interpret_special_sauce(special_sauce): # And add tags
@@ -75,5 +75,5 @@ func _update_output(input):
 	pass
 	
 
-func _act(input):
+func _act(input, delta):
 	pass

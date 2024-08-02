@@ -7,5 +7,5 @@ func _interpret_special_sauce(special_sauce):
 func _update_output(input): 
 	output = 0
 	
-func _act(input):
-	get_parent().apply_torque(input * weight)	
+func _act(input, delta):
+	get_parent().apply_torque_impulse(input * weight * delta)

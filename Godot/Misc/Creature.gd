@@ -32,7 +32,7 @@ func _process(delta):
 	for cell in cells:
 		cell.update_output()
 	for cell in cells:
-		cell.read_and_act()
+		cell.read_and_act(delta)
 		frame_energy_consumption += cell.energy_consumption
 	energy -= frame_energy_consumption * delta
 	if energy <= 0:
