@@ -1,18 +1,30 @@
-extends Node
+extends Node2D
 
 var rng = RandomNumberGenerator.new()
 var number_string = "0123456789"
 var cell_types = DirAccess.get_files_at("res://Cell Types/Scenes/")
-
+const CREATURE = preload("res://Misc/creature.tscn")
 @export var creature_amount: int
+@export var creature_size: int
 @export var special_sauce_length: int = 5
+@onready var camera_2d = $Camera2D
+@export var camera_move_speed = 5.0
+@onready var food_object = $FoodObject
 
 # Math functions
 
 func _ready():
-	var DNA = generate_random_DNA(10)
-	for RNA in DNA:
-		print(RNA)
+	for i in range(creature_amount):
+		var dudebro = CREATURE.instantiate()
+		dudebro.DNA = generate_random_DNA(creature_size)
+		dudebro.position += Vector2((i % 10)*20, int(i / 10) * -20)
+		add_child(dudebro)
+
+func _process(delta):
+	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
+	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
+	if Input.is_action_just_pressed("click"):
+		food_object.add_food(20, get_global_mouse_position())
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""

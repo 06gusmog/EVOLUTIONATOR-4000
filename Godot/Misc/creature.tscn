@@ -5,8 +5,8 @@
 [node name="Creature" type="RigidBody2D"]
 max_contacts_reported = 10
 contact_monitor = true
-linear_damp = 2.0
-angular_damp = 5.0
+linear_damp = 10.0
+angular_damp = 10.01
 script = ExtResource("1_2isnp")
 cell_weight = 1.0
 

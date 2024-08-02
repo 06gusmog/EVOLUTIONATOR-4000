@@ -9,6 +9,7 @@ var energy_consumption = 1.0
 var connections : Array
 var input : float
 var output : float
+@export var movement_tweak = 50.0
 
 #-- Math Functions --
 func weighted_clamp(number):
@@ -54,6 +55,7 @@ func remove_connections(cellIDs : Array):
 	for connection in connections:
 		if not connection in cellIDs:
 			temporary_array.append(connection)
+	connections = temporary_array
 
 func update_output():
 	_update_output(input)

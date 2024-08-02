@@ -6,3 +6,13 @@ res://Cell Types/Scripts/MoveCell.gd
 res://Cell Types/Scenes/rotation_cell.tscn
 res://Cell Types/Scripts/RotationCell.gd
 res://Cell Types/Scenes/eating_cell.tscn
+res://Cell Types/Scenes/eye_cell.tscn
+res://Cell Types/Scenes/neuron_cell.tscn
+res://Misc/world.tscn
+res://Misc/testworld.tscn
+res://Misc/creature.tscn
+res://Misc/testworld.gd
+res://Misc/SimulationHandler.gd
+res://Misc/food_bit.tscn
+res://Misc/food_object.tscn
+res://Misc/FoodObject.gd
