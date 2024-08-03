@@ -37,19 +37,26 @@ func generate_random_DNA(size : int):
 	var DNA = []
 	var cell_positions = []
 	for cell in range(size):
-		var RNA = {}
-		RNA['Type'] = cell_types[rng.randi() % len(cell_types)]
-		cell_positions.append(select_cell_position(cell_positions))
-		RNA['Position'] = cell_positions[-1]
-		RNA['Connections'] = []
-		for x in range(int(ceil(8.8/((rng.randi() % 10) + 2.2)))): # Selects a weighted number between 1 and 4
-			var connection = rng.randi() % (size-1)
-			if connection >= len(cell_positions):
-				connection += 1
-			RNA['Connections'].append(str(connection))
-		RNA['Special Sauce'] = generate_special_sauce(special_sauce_length)
+		var random_RNA_return = generate_random_RNA(cell_positions, size)
+		var RNA = random_RNA_return[0]
+		#This way of updating cell_positions feels a bit goofy, but i think it's fine?
+		cell_positions = random_RNA_return[1]
 		DNA.append(RNA)
 	return DNA
+	
+func generate_random_RNA(cell_positions: Array, creature_size):
+	var RNA = {}
+	RNA['Type'] = cell_types[rng.randi() % len(cell_types)] #Would it be slower to use randi_range() instead?
+	cell_positions.append(select_cell_position(cell_positions))
+	RNA['Position'] = cell_positions[-1]
+	RNA['Connections'] = []
+	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
+		var connection = rng.randi() % (creature_size-1)
+		if connection >= len(cell_positions):
+			connection += 1
+		RNA['Connections'].append(str(connection))
+	RNA['Special Sauce'] = generate_special_sauce(special_sauce_length)
+	return [RNA, cell_positions]
 
 func select_cell_position(established_positions : Array):
 	var cell_position = Vector2(0,0)

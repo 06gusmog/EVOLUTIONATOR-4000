@@ -1,8 +1,2 @@
-res://Misc/testworld.tscn
-res://Misc/SimulationHandler.gd
-res://Cell Types/Scenes/rotation_cell.tscn
-res://Cell Types/Scenes/move_cell.tscn
 res://Misc/world.tscn
-res://Misc/creature.tscn
-res://Misc/food_bit.tscn
-res://Misc/food_object.tscn
+res://Misc/SimulationHandler.gd
