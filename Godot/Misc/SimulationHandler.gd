@@ -46,20 +46,6 @@ func generate_random_DNA(size : int):
 		DNA.append(RNA)
 	return [DNA, cell_positions]
 
-func generate_random_RNA(cell_positions: Array, creature_size):
-	var RNA = {}
-	RNA['Type'] = cell_types[rng.randi() % len(cell_types)] #Would it be slower to use randi_range() instead?
-	cell_positions.append(select_cell_position(cell_positions))
-	RNA['Position'] = cell_positions[-1]
-	RNA['Connections'] = []
-	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
-		var connection = rng.randi() % (creature_size-1)
-		if connection >= len(cell_positions):
-			connection += 1
-		RNA['Connections'].append(str(connection))
-	RNA['Special Sauce'] = generate_special_sauce(special_sauce_length)
-	return [RNA, cell_positions]
-
 func select_cell_position(established_positions : Array):
 	var cell_position = Vector2(0,0)
 	var x = 1 - ((rng.randi() % 2) * 2)
