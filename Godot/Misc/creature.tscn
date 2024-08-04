@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Misc/Creature.gd" id="1_2isnp"]
 
 [node name="Creature" type="RigidBody2D"]
+input_pickable = true
 max_contacts_reported = 10
 contact_monitor = true
 linear_damp = 10.0
@@ -12,4 +13,8 @@ cell_weight = 1.0
 
 [node name="Visual Effects" type="Node2D" parent="."]
 
+[node name="Line2D" type="Line2D" parent="Visual Effects"]
+width = 0.5
+
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[connection signal="input_event" from="." to="." method="_on_input_event"]

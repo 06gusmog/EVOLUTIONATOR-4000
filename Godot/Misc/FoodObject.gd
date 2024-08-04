@@ -20,11 +20,11 @@ func eat_food(index : int):
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if body is RigidBody2D:
-		print('Food has been consumed')
-		print(local_shape_index)
-		print(get_child_count())
+		#print('Food has been consumed')
+		#print(local_shape_index)
+		#print(get_child_count())
 		var energy_to_eat = eat_food(local_shape_index)
 		body.energy += energy_to_eat
 	else:
-		print('Food in the wall')
+		#print('Food in the wall')
 		eat_food(local_shape_index)

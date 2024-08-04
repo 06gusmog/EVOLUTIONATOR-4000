@@ -23,8 +23,8 @@ func _ready():
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
-	if Input.is_action_just_pressed("click"):
-		food_object.add_food(20, get_global_mouse_position())
+	#if Input.is_action_just_pressed("click"):
+	#	food_object.add_food(20, get_global_mouse_position())
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""
