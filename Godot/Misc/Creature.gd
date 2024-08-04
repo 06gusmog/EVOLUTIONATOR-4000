@@ -65,7 +65,7 @@ func _process(delta):
 	if energy <= 0:
 		die()
 	if energy >= required_energy:
-		mitosis.emit(DNA)
+		mitosis.emit(self)
 
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):

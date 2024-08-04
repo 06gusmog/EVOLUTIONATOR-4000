@@ -15,7 +15,7 @@ const CREATURE = preload("res://Misc/creature.tscn")
 
 func _ready():
 	for i in range(creature_amount):
-		create_creature(generate_random_DNA(creature_size), i)
+		create_creature(generate_random_DNA(creature_size), Vector2((i % 10)*20, int(i / 10) * -20)) # Getting weird error while doing it like this, but I have to go for like 40 min
 
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
@@ -23,11 +23,13 @@ func _process(delta):
 	#if Input.is_action_just_pressed("click"):
 	#	food_object.add_food(20, get_global_mouse_position())
 
-func create_creature(DNA, creature_index): 
+func create_creature(DNA, creature_position): 
 	var dudebro = CREATURE.instantiate()
 	dudebro.DNA = DNA
-	dudebro.position += Vector2((creature_index % 10)*20, int(creature_index / 10) * -20) #Does this still work if we spawn more later?
+	dudebro.position = creature_position #Does this still work if we spawn more later? [Why would we do it like this???]
+	dudebro.mitosis.connect(_on_mitosis)
 	add_child(dudebro)
+	
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""
@@ -72,8 +74,9 @@ func select_cell_position(established_positions : Array):
 		else:
 			return cell_position
 
-func _on_mitosis(old_DNA): #NOTE: Does not yet connect to the mitosis signal
-	var new_DNA = [old_DNA, old_DNA]
+func _on_mitosis(creature): #NOTE: Does not yet connect to the mitosis signal
+	var new_DNA = [creature.DNA, creature.DNA]
+	print('MITOSIS')
 	for DNA in new_DNA:
 		"""---Insert the code for mutation here---"""
 		
