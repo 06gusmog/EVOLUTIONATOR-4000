@@ -24,5 +24,54 @@ polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -122, -633, -378, 609, -353, 615, 351, -650, 356, -633, -376)
 
-[node name="UserInterface" type="Node2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="UserInterface" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
 script = ExtResource("3_6vnwv")
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -178.0
+offset_right = 553.0
+grow_vertical = 0
+current_tab = 2
+
+[node name="Graph View" type="BoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Energy
+"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+expand_mode = 4
