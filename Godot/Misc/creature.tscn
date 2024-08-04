@@ -10,7 +10,7 @@ linear_damp = 10.0
 angular_damp = 10.01
 script = ExtResource("1_2isnp")
 cell_weight = 1.0
-required_energy = 10.0
+required_energy = 1100.0
 
 [node name="Visual Effects" type="Node2D" parent="."]
 

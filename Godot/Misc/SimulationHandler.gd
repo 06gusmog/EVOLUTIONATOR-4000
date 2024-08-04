@@ -15,19 +15,19 @@ const CREATURE = preload("res://Misc/creature.tscn")
 
 func _ready():
 	for i in range(creature_amount):
-		create_creature(generate_random_DNA(creature_size), Vector2((i % 10)*20, int(i / 10) * -20)) # Getting weird error while doing it like this, but I have to go for like 40 min
+		create_creature(generate_random_DNA(creature_size), Vector2((i % 10)*20, int(i / 10) * -20))
 
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
-	#if Input.is_action_just_pressed("click"):
-	#	food_object.add_food(20, get_global_mouse_position())
+	if Input.is_action_just_pressed("click"):
+		food_object.add_food(20, get_global_mouse_position())
 
 func create_creature(DNA, creature_position): 
 	var dudebro = CREATURE.instantiate()
 	dudebro.DNA = DNA
 	dudebro.position = creature_position #Does this still work if we spawn more later? [Why would we do it like this???]
-	dudebro.mitosis.connect(_on_mitosis)
+	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
 	add_child(dudebro)
 	
 
@@ -74,12 +74,15 @@ func select_cell_position(established_positions : Array):
 		else:
 			return cell_position
 
-func _on_mitosis(creature): #NOTE: Does not yet connect to the mitosis signal
+func _on_mitosis(creature): #NOTE: Does not yet connect to the mitosis signal [It now connects to the mitosis signal]
 	var new_DNA = [creature.DNA, creature.DNA]
 	print('MITOSIS')
-	for DNA in new_DNA:
-		"""---Insert the code for mutation here---"""
+	create_creature(creature.DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
+	creature.energy -= 500
+	# NOTE: I have No idea what you were planning to do with this list, but here's my suggestion for how we do the position -Gus
+	#for DNA in new_DNA:
+	"""---Insert the code for mutation here---"""
 		
-		var creature_index = null #CRITICAL: This does not work and is just to prevent error in the editor, either we have to keep track of the creature index, or we fix the position some other way (probably the latter) 
-		create_creature(DNA, creature_index)
-	
+		#var creature_index = null #CRITICAL: This does not work and is just to prevent error in the editor, either we have to keep track of the creature index, or we fix the position some other way (probably the latter) 
+		
+		#creature.energy -= 100

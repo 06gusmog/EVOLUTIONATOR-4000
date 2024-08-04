@@ -5,6 +5,7 @@ var cells : Array
 var energy = 1000.0
 var food_object
 var user_interface
+var bounding_sphere_size : float
 
 @export var cell_weight : float
 @export var cell_energy : float
@@ -33,20 +34,18 @@ func _ready():
 	cells.pop_front()
 	
 	# Box around the creature
-	var max_distance_from_center = 0
 	for cell in cells:
-		if abs(cell.position.x - center_of_mass.x) > max_distance_from_center:
-			max_distance_from_center = abs(cell.position.x - center_of_mass.x)
-		if abs(cell.position.y - center_of_mass.y) > max_distance_from_center:
-			max_distance_from_center = abs(cell.position.y - center_of_mass.y)
-	max_distance_from_center = max_distance_from_center * 2
+		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size:
+			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
+	bounding_sphere_size = sqrt(bounding_sphere_size)
+	var box_side_length = bounding_sphere_size * 2
 	line_2d.points = [
-		Vector2(1,1) * max_distance_from_center + center_of_mass, 
-		Vector2(1,-1) * max_distance_from_center + center_of_mass, 
-		Vector2(-1,-1) * max_distance_from_center + center_of_mass, 
-		Vector2(-1,1) * max_distance_from_center + center_of_mass, 
-		Vector2(1,1) * max_distance_from_center + center_of_mass,
-		Vector2(1,-1) * max_distance_from_center + center_of_mass
+		Vector2(1,1) * box_side_length + center_of_mass, 
+		Vector2(1,-1) * box_side_length + center_of_mass, 
+		Vector2(-1,-1) * box_side_length + center_of_mass, 
+		Vector2(-1,1) * box_side_length + center_of_mass, 
+		Vector2(1,1) * box_side_length + center_of_mass,
+		Vector2(1,-1) * box_side_length + center_of_mass
 		]
 	line_2d.visible = false
 

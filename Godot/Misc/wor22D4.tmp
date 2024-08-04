@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqhflav3j0b86"]
+
+[ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
+[ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
+[ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06e6h"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_yl8cj")
+creature_amount = 20
+creature_size = 10
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="FoodObject" parent="." instance=ExtResource("2_8ygnx")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_06e6h")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -122, -633, -378, 609, -353, 615, 351, -650, 356, -633, -378, -633, -378)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -122, -633, -378, 609, -353, 615, 351, -650, 356, -633, -376)
+
+[node name="UserInterface" type="Node2D" parent="."]
+script = ExtResource("3_6vnwv")
