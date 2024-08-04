@@ -20,7 +20,7 @@ signal mitosis
 func _ready():
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
-	user_interface = get_parent().get_node('UserInterface')
+	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
 	var i = 0
 	for RNA in DNA:
 		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
