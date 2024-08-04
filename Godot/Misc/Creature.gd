@@ -8,9 +8,12 @@ var user_interface
 
 @export var cell_weight : float
 @export var cell_energy : float
+@export var required_energy: float
 
 @onready var visual_effects_root_node = $"Visual Effects"
 @onready var line_2d = $"Visual Effects/Line2D"
+
+signal mitosis
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,6 +64,8 @@ func _process(delta):
 	energy -= frame_energy_consumption * delta
 	if energy <= 0:
 		die()
+	if energy >= required_energy:
+		mitosis.emit(DNA)
 
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):

@@ -1,37 +1,38 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1722761086
-icon.svg::CompressedTexture2D::4441387332717914551::1722526094::1722526094::1::::<><>::
-::res://Cell Types/::1722526094
-::res://Cell Types/Scenes/::1722713687
-eating_cell.tscn::PackedScene::8641913928747468093::1722615139::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/EatingCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-eye_cell.tscn::PackedScene::8386452442066178343::1722703517::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/EyeCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-move_cell.tscn::PackedScene::7321338624538245781::1722713687::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/MoveCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-neuron_cell.tscn::PackedScene::4456736601535792160::1722615140::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/NeuronCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-rotation_cell.tscn::PackedScene::431739927113711935::1722713687::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/RotationCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-::res://Cell Types/Scripts/::1722714543
-EatingCell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
-EyeCell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
-MoveCell.gd::GDScript::-1::1722714543::0::1::::<>Cell<>::
-NeuronCell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
-RotationCell.gd::GDScript::-1::1722616610::0::1::::<>Cell<>::
-::res://Misc/::1722714728
-Creature.gd::GDScript::-1::1722714543::0::1::::<>RigidBody2D<>::
-creature.tscn::PackedScene::1258858348319535998::1722713687::0::1::::<><>::res://Misc/Creature.gd
-FoodObject.gd::GDScript::-1::1722625042::0::1::::<>Area2D<>::
-food_bit.tscn::PackedScene::4567700242688869243::1722713687::0::1::::<><>::uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
-food_object.tscn::PackedScene::2839093781249483292::1722713687::0::1::::<><>::res://Misc/FoodObject.gd
-ohnocat.jpg::CompressedTexture2D::4275537161440605393::1722526094::1722526094::1::::<><>::
-SimulationHandler.gd::GDScript::-1::1722714728::0::1::::<>Node2D<>::
-testworld.gd::GDScript::-1::1722714543::0::1::::<>Node2D<>::
-testworld.tscn::PackedScene::344599865963954293::1722713687::0::1::::<><>::res://Misc/testworld.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn
-test_world_2.tscn::PackedScene::4748377158070736314::1722614915::0::1::::<><>::res://Misc/SimulationHandler.gd
-world.tscn::PackedScene::8297057455989122461::1722714728::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn
-::res://Misc/visuals/::1722542379
-1_white_pixel.png::CompressedTexture2D::2732337751587001121::1722526492::1722534777::1::::<><>::
-Colour Explanation.txt::TextFile::-1::1722542379::0::1::::<><>::
-fire_trail.png::CompressedTexture2D::6488266468003389591::1722526094::1722526094::1::::<><>::
-::res://Standards/::1722714543
-Cell.gd::GDScript::-1::1722714543::0::1::::Cell<>CollisionShape2D<>::
-cell_shape.tres::RectangleShape2D::1539871886377508189::1722526094::0::1::::<><>::
-template_cell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
-template_cell.tscn::PackedScene::5826966655064679632::1722526094::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Standards/template_cell.gd<>uid://b4jpaasw3jigd::::res://icon.svg
+::res://::1722767103
+icon.svg::CompressedTexture2D::4441387332717914551::1722715117::1722715117::1::::<><>::
+::res://Cell Types/::1722715117
+::res://Cell Types/Scenes/::1722715117
+eating_cell.tscn::PackedScene::8641913928747468093::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/EatingCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+eye_cell.tscn::PackedScene::8386452442066178343::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/EyeCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+move_cell.tscn::PackedScene::7321338624538245781::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/MoveCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+neuron_cell.tscn::PackedScene::4456736601535792160::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/NeuronCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+rotation_cell.tscn::PackedScene::431739927113711935::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Cell Types/Scripts/RotationCell.gd<>uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+::res://Cell Types/Scripts/::1722715117
+EatingCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+EyeCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+MoveCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+NeuronCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+RotationCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+::res://Misc/::1722767054
+Creature.gd::GDScript::-1::1722767054::0::1::::<>RigidBody2D<>::
+creature.tscn::PackedScene::1258858348319535998::1722767054::0::1::::<><>::res://Misc/Creature.gd
+FoodObject.gd::GDScript::-1::1722767054::0::1::::<>Area2D<>::
+food_bit.tscn::PackedScene::4567700242688869243::1722715117::0::1::::<><>::uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
+food_object.tscn::PackedScene::2839093781249483292::1722715117::0::1::::<><>::res://Misc/FoodObject.gd
+ohnocat.jpg::CompressedTexture2D::4275537161440605393::1722715117::1722715117::1::::<><>::
+SimulationHandler.gd::GDScript::-1::1722767054::0::1::::<>Node2D<>::
+testworld.gd::GDScript::-1::1722715117::0::1::::<>Node2D<>::
+testworld.tscn::PackedScene::344599865963954293::1722715117::0::1::::<><>::res://Misc/testworld.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn
+test_world_2.tscn::PackedScene::4748377158070736314::1722715117::0::1::::<><>::res://Misc/SimulationHandler.gd
+UserInterface.gd::GDScript::-1::1722767054::0::1::::<>Node2D<>::
+world.tscn::PackedScene::8297057455989122461::1722767054::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn<>res://Misc/UserInterface.gd
+::res://Misc/visuals/::1722715117
+1_white_pixel.png::CompressedTexture2D::2732337751587001121::1722715117::1722715117::1::::<><>::
+Colour Explanation.txt::TextFile::-1::1722715117::0::1::::<><>::
+fire_trail.png::CompressedTexture2D::6488266468003389591::1722715117::1722715117::1::::<><>::
+::res://Standards/::1722715117
+Cell.gd::GDScript::-1::1722715117::0::1::::Cell<>CollisionShape2D<>::
+cell_shape.tres::RectangleShape2D::1539871886377508189::1722715117::0::1::::<><>::
+template_cell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
+template_cell.tscn::PackedScene::5826966655064679632::1722715117::0::1::::<><>::uid://v66p2r8ukumf::::res://Standards/cell_shape.tres<>res://Standards/template_cell.gd<>uid://b4jpaasw3jigd::::res://icon.svg

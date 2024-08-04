@@ -15,16 +15,19 @@ const CREATURE = preload("res://Misc/creature.tscn")
 
 func _ready():
 	for i in range(creature_amount):
-		var dudebro = CREATURE.instantiate()
-		dudebro.DNA = generate_random_DNA(creature_size)
-		dudebro.position += Vector2((i % 10)*20, int(i / 10) * -20)
-		add_child(dudebro)
+		create_creature(generate_random_DNA(creature_size), i)
 
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
 	#if Input.is_action_just_pressed("click"):
 	#	food_object.add_food(20, get_global_mouse_position())
+
+func create_creature(DNA, creature_index): 
+	var dudebro = CREATURE.instantiate()
+	dudebro.DNA = DNA
+	dudebro.position += Vector2((creature_index % 10)*20, int(creature_index / 10) * -20) #Does this still work if we spawn more later?
+	add_child(dudebro)
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""
@@ -33,7 +36,6 @@ func generate_special_sauce(length : int):
 	return special_sauce
 	
 func generate_random_DNA(size : int):
-	"""No chance to have 0 connections. That math function could use a revision"""
 	var DNA = []
 	var cell_positions = []
 	for cell in range(size):
@@ -70,3 +72,11 @@ func select_cell_position(established_positions : Array):
 		else:
 			return cell_position
 
+func _on_mitosis(old_DNA): #NOTE: Does not yet connect to the mitosis signal
+	var new_DNA = [old_DNA, old_DNA]
+	for DNA in new_DNA:
+		"""---Insert the code for mutation here---"""
+		
+		var creature_index = null #CRITICAL: This does not work and is just to prevent error in the editor, either we have to keep track of the creature index, or we fix the position some other way (probably the latter) 
+		create_creature(DNA, creature_index)
+	
