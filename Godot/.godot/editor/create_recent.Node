@@ -1,9 +1,10 @@
+Label
+Button
 VBoxContainer
 MarginContainer
 BoxContainer
 AspectRatioContainer
 TextureRect
-Label
 TabContainer
 ProgressBar
 MenuBar
@@ -11,4 +12,3 @@ CanvasLayer
 Control
 Sprite2D
 Line2D
-Polygon2D
