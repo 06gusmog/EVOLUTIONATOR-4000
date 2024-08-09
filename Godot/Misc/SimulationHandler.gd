@@ -26,7 +26,7 @@ func _process(delta):
 func create_creature(DNA, creature_position): 
 	var dudebro = CREATURE.instantiate()
 	dudebro.DNA = DNA
-	dudebro.position = creature_position #Does this still work if we spawn more later? [Why would we do it like this???]
+	dudebro.position = creature_position 
 	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
 	add_child(dudebro)
 	
@@ -55,7 +55,7 @@ func generate_random_RNA(cell_positions: Array, creature_size):
 	RNA['Position'] = cell_positions[-1]
 	RNA['Connections'] = []
 	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
-		var connection = rng.randi() % (creature_size-1)
+		var connection = rng.randi() % (creature_size-1) #NOTE: Doesn't this make it so that it can't reference itself?
 		if connection >= len(cell_positions):
 			connection += 1
 		RNA['Connections'].append(str(connection))
@@ -74,15 +74,20 @@ func select_cell_position(established_positions : Array):
 		else:
 			return cell_position
 
-func _on_mitosis(creature): #NOTE: Does not yet connect to the mitosis signal [It now connects to the mitosis signal]
-	var new_DNA = [creature.DNA, creature.DNA]
+func _on_mitosis(creature:): 
+	var new_DNA = creature.DNA
 	print('MITOSIS')
-	create_creature(creature.DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
+	
+	#Chance to spawn a new cell
+	if not rng.randi % 100: #This code makes it a 1/100 chance right?
+		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
+		for RNA in new_DNA:
+			cell_positions.append(RNA['Position'])
+		new_DNA.append(generate_random_RNA(cell_positions, len(new_DNA) + 1)[0])
+	
+	#Chance to gain a new connection on a random cell
+	if not rng.randi() % 50:
+		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(rng.randi() % len(new_DNA))
+	
+	create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
 	creature.energy -= 500
-	# NOTE: I have No idea what you were planning to do with this list, but here's my suggestion for how we do the position -Gus
-	#for DNA in new_DNA:
-	"""---Insert the code for mutation here---"""
-		
-		#var creature_index = null #CRITICAL: This does not work and is just to prevent error in the editor, either we have to keep track of the creature index, or we fix the position some other way (probably the latter) 
-		
-		#creature.energy -= 100

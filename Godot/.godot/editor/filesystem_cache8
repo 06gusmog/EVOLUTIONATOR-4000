@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1722787867
+::res://::1723214239
 icon.svg::CompressedTexture2D::4441387332717914551::1722715117::1722715117::1::::<><>::
 ::res://Cell Types/::1722715117
 ::res://Cell Types/Scenes/::1722715117
@@ -14,20 +14,20 @@ EyeCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
 MoveCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
 NeuronCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
 RotationCell.gd::GDScript::-1::1722715117::0::1::::<>Cell<>::
-::res://Misc/::1722787309
+::res://Misc/::1723214186
 arrow.tscn::PackedScene::4458750659632243490::1722787309::0::1::::<><>::
-Creature.gd::GDScript::-1::1722787309::0::1::::<>RigidBody2D<>::
+Creature.gd::GDScript::-1::1722788221::0::1::::<>RigidBody2D<>::
 creature.tscn::PackedScene::1258858348319535998::1722787309::0::1::::<><>::res://Misc/Creature.gd
 FoodObject.gd::GDScript::-1::1722767054::0::1::::<>Area2D<>::
 food_bit.tscn::PackedScene::4567700242688869243::1722715117::0::1::::<><>::uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
 food_object.tscn::PackedScene::2839093781249483292::1722715117::0::1::::<><>::res://Misc/FoodObject.gd
 ohnocat.jpg::CompressedTexture2D::4275537161440605393::1722715117::1722715117::1::::<><>::
-SimulationHandler.gd::GDScript::-1::1722787309::0::1::::<>Node2D<>::
+SimulationHandler.gd::GDScript::-1::1722787883::0::1::::<>Node2D<>::
 testworld.gd::GDScript::-1::1722715117::0::1::::<>Node2D<>::
 testworld.tscn::PackedScene::344599865963954293::1722715117::0::1::::<><>::res://Misc/testworld.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn
 test_world_2.tscn::PackedScene::4748377158070736314::1722715117::0::1::::<><>::res://Misc/SimulationHandler.gd
-UserInterface.gd::GDScript::-1::1722787309::0::1::::<>Control<>::
-world.tscn::PackedScene::8297057455989122461::1722787309::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn<>res://Misc/UserInterface.gd
+UserInterface.gd::GDScript::-1::1723214186::0::1::::<>Control<>::
+world.tscn::PackedScene::8297057455989122461::1723214186::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn<>res://Misc/UserInterface.gd
 ::res://Misc/visuals/::1722715117
 1_white_pixel.png::CompressedTexture2D::2732337751587001121::1722715117::1722715117::1::::<><>::
 Colour Explanation.txt::TextFile::-1::1722715117::0::1::::<><>::

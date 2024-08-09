@@ -1,4 +1,3 @@
 res://Misc/world.tscn
-res://Misc/SimulationHandler.gd
 res://Misc/Creature.gd
-res://Misc/UserInterface.gd
+res://Misc/SimulationHandler.gd
