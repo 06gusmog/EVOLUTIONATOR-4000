@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1723465823
+::res://::1723484804
 icon.svg::CompressedTexture2D::4441387332717914551::1722526094::1722526094::1::::<><>::
 ::res://Cell Types/::1722526094
 ::res://Cell Types/Scenes/::1722713687
@@ -14,10 +14,10 @@ EyeCell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
 MoveCell.gd::GDScript::-1::1722714543::0::1::::<>Cell<>::
 NeuronCell.gd::GDScript::-1::1722526094::0::1::::<>Cell<>::
 RotationCell.gd::GDScript::-1::1722616610::0::1::::<>Cell<>::
-::res://Misc/::1723468705
+::res://Misc/::1723473100
 arrow.tscn::PackedScene::4458750659632243490::1722785527::0::1::::<><>::
-Creature.gd::GDScript::-1::1723145390::0::1::::<>RigidBody2D<>::
-creature.tscn::PackedScene::1258858348319535998::1722782402::0::1::::<><>::res://Misc/Creature.gd
+Creature.gd::GDScript::-1::1723471259::0::1::::<>RigidBody2D<>::
+creature.tscn::PackedScene::1258858348319535998::1723472995::0::1::::<><>::res://Misc/Creature.gd
 FoodObject.gd::GDScript::-1::1722762389::0::1::::<>Area2D<>::
 food_bit.tscn::PackedScene::4567700242688869243::1722713687::0::1::::<><>::uid://be6tg6lcyhdvt::::res://Misc/visuals/1_white_pixel.png
 food_object.tscn::PackedScene::2839093781249483292::1722713687::0::1::::<><>::res://Misc/FoodObject.gd
@@ -26,14 +26,14 @@ SimulationHandler.gd::GDScript::-1::1723466472::0::1::::<>Node2D<>::
 testworld.gd::GDScript::-1::1722714543::0::1::::<>Node2D<>::
 testworld.tscn::PackedScene::344599865963954293::1722713687::0::1::::<><>::res://Misc/testworld.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn
 test_world_2.tscn::PackedScene::4748377158070736314::1722614915::0::1::::<><>::res://Misc/SimulationHandler.gd
-UserInterface.gd::GDScript::-1::1723446294::0::1::::<>Control<>::
-world.tscn::PackedScene::8297057455989122461::1723468705::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn<>res://Misc/UserInterface.gd
-::res://Misc/UI assets/::1723468705
-connection_to_self.png::CompressedTexture2D::3851965317197527569::1723468228::1723468754::1::::<><>::
-connection.tscn::PackedScene::6534482536089385360::1723468705::0::1::::<><>::res://Misc/UI assets/connection.gd
+UserInterface.gd::GDScript::-1::1723471783::0::1::::<>Control<>::
+world.tscn::PackedScene::8297057455989122461::1723473100::0::1::::<><>::res://Misc/SimulationHandler.gd<>uid://bgpjpvrhc2ioi::::res://Misc/food_object.tscn<>res://Misc/UserInterface.gd
+::res://Misc/UI assets/::1723473088
 connection.gd::GDScript::-1::1723468678::0::1::::<>Node2D<>::
-visual_creature.gd::GDScript::-1::1723468308::0::1::::<>Node2D<>::
-visual_creature.tscn::PackedScene::2516665398901005841::1723468705::0::1::::<><>::res://Misc/UI assets/visual_creature.gd
+connection.tscn::PackedScene::6534482536089385360::1723472995::0::1::::<><>::res://Misc/UI assets/connection.gd
+connection_to_self.png::CompressedTexture2D::3851965317197527569::1723468228::1723468754::1::::<><>::
+visual_creature.gd::GDScript::-1::1723473088::0::1::::<>Node2D<>::
+visual_creature.tscn::PackedScene::2516665398901005841::1723473088::0::1::::<><>::res://Misc/UI assets/visual_creature.gd
 ::res://Misc/visuals/::1723447156
 1_white_pixel.png::CompressedTexture2D::2732337751587001121::1722526492::1722534777::1::::<><>::
 Colour Explanation.txt::TextFile::-1::1723447156::0::1::::<><>::

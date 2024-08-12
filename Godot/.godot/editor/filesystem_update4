@@ -1,9 +1,7 @@
 res://Misc/world.tscn
 res://Misc/SimulationHandler.gd
+res://Misc/UserInterface.gd
 res://Misc/UI assets/visual_creature.gd
 res://Misc/UI assets/visual_creature.tscn
-res://Misc/UI assets/connection.gd
 res://Misc/UI assets/connection.tscn
-res://Misc/UserInterface.gd
-res://Misc/creature.tscn
-res://Misc/Creature.gd
+res://Misc/UI assets/connection.gd

@@ -28,6 +28,7 @@ polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -
 polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -122, -633, -378, 609, -353, 615, 351, -650, 356, -633, -376)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_priority = 1
 
 [node name="UserInterface" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -49,24 +50,27 @@ offset_top = -178.0
 offset_right = 553.0
 grow_vertical = 0
 
-[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
+[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Energy
 "
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
 layout_mode = 2
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
-custom_minimum_size = Vector2(0, 100)
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/Creature View/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/AspectRatioContainer"]
 layout_mode = 2
 texture = SubResource("ViewportTexture_xdqrd")
 expand_mode = 4

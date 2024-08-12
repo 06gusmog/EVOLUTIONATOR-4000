@@ -3,7 +3,9 @@ var creature_selected
 var rendered_creature = Image
 var connections = []
 @onready var creature_sim = $"Creature View/Creature Sim"
+
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
+const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
 func _ready():
 	visible = false
@@ -12,9 +14,16 @@ func _ready():
 func _process(_delta):
 	if not creature_selected: # When there is no selected creature: break
 		return 0
-	for connection in connections:
-		var strength = creature_selected.get_child(connection['From'])
-		
+	var i = 0
+	var real_cells = creature_selected.cells
+	for sim_cell in creature_sim.get_child(0).get_children():
+		if sim_cell is Camera2D:
+			continue
+		var output = real_cells[i].output
+		for connection in sim_cell.get_children():
+			if connection is CONNECTION2D:
+				connection.update_output(output)
+		i += 1
 
 
 func creature_clicked(creature):
