@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=6 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
 [ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06e6h"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xdqrd"]
+viewport_path = NodePath("CanvasLayer/UserInterface/Creature View")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
@@ -46,25 +49,26 @@ offset_top = -178.0
 offset_right = 553.0
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Energy
 "
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
 layout_mode = 2
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/VBoxContainer/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/Creature View/AspectRatioContainer"]
 layout_mode = 2
+texture = SubResource("ViewportTexture_xdqrd")
 expand_mode = 4
 
 [node name="Exit Button" type="Button" parent="CanvasLayer/UserInterface"]
@@ -77,5 +81,9 @@ offset_bottom = 8.0
 grow_horizontal = 0
 action_mode = 0
 text = "Exit"
+
+[node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
+
+[node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
 
 [connection signal="pressed" from="CanvasLayer/UserInterface/Exit Button" to="CanvasLayer/UserInterface" method="_on_exit_button_pressed"]

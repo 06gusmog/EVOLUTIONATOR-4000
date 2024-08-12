@@ -15,6 +15,7 @@ var bounding_sphere_size : float
 @onready var line_2d = $"Visual Effects/Line2D"
 
 signal mitosis
+signal cell_death(cellID:String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -96,6 +97,8 @@ func clear_killing_queue():
 				continue
 			cell.remove_connections(killing_queue)
 			placeholder_cells.append(cell)
+		for item in killing_queue:
+			cell_death.emit(item)
 		cells = placeholder_cells
 		killing_queue = []
 	if cells == []:

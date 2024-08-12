@@ -4,3 +4,4 @@ Yellow - Neuron Cell
 Purple - Eye Cell
 Green - Rotation Cell
 pink - Food
+black / grey / white - Connections

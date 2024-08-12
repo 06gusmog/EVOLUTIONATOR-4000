@@ -1,3 +1,8 @@
+Camera2D
+Sprite2D
+Line2D
+Node2D
+SubViewport
 Label
 Button
 VBoxContainer
@@ -7,8 +12,3 @@ AspectRatioContainer
 TextureRect
 TabContainer
 ProgressBar
-MenuBar
-CanvasLayer
-Control
-Sprite2D
-Line2D
