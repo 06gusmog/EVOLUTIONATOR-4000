@@ -3,12 +3,14 @@ var creature_selected
 var rendered_creature = Image
 var connections = []
 @onready var creature_sim = $"Creature View/Creature Sim"
+@onready var progress_bar = $"TabContainer/HBoxContainer/Creature View/ProgressBar"
 
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
 const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
 func _ready():
 	visible = false
+	progress_bar.max_value = GlobalSettings.energy_required_to_reproduce
 
 
 func _process(_delta):
@@ -33,8 +35,9 @@ func _process(_delta):
 					#print('hello')
 					var output_origin = connection.to
 					connection.update_output(real_cells[connection.origin_cellID].output)
-			
+		
 		i += 1
+	progress_bar.value = creature_selected.energy
 
 
 func creature_clicked(creature):

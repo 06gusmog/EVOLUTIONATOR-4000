@@ -1,14 +1,4 @@
 res://Misc/world.tscn
 res://Misc/SimulationHandler.gd
-res://Misc/UI assets/connection.tscn
-res://Misc/UI assets/connection.gd
-res://Cell Types/Scenes/neuron_cell.tscn
-res://Standards/Cell.gd
-res://Cell Types/Scripts/EyeCell.gd
-res://Cell Types/Scripts/NeuronCell.gd
-res://Misc/UI assets/visual_creature.tscn
-res://Misc/UI assets/visual_creature.gd
-res://Misc/UserInterface.gd
-res://Cell Types/Scenes/rotation_cell.tscn
-res://Cell Types/Scripts/MoveCell.gd
-res://Cell Types/Scripts/RotationCell.gd
+res://Misc/creature.tscn
+res://Standards/global_settings.gd

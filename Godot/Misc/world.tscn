@@ -64,7 +64,10 @@ text = "Energy
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
+custom_minimum_size = Vector2(0, 270)
 layout_mode = 2
+size_flags_vertical = 1
+fill_mode = 3
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
 custom_minimum_size = Vector2(300, 300)

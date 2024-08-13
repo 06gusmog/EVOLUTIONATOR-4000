@@ -15,6 +15,10 @@ run/main_scene="res://Misc/world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalSettings="*res://Standards/global_settings.gd"
+
 [input]
 
 left={

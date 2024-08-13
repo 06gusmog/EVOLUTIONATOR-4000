@@ -55,9 +55,7 @@ func generate_random_RNA(cell_positions: Array, creature_size):
 	RNA['Position'] = cell_positions[-1]
 	RNA['Connections'] = []
 	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
-		var connection = rng.randi() % (creature_size-1) #NOTE: Doesn't this make it so that it can't reference itself?
-		if connection >= len(cell_positions):
-			connection += 1
+		var connection = rng.randi() % (creature_size)
 		RNA['Connections'].append(str(connection))
 	RNA['Special Sauce'] = generate_special_sauce(special_sauce_length)
 	return [RNA, cell_positions]
@@ -79,7 +77,7 @@ func _on_mitosis(creature:):
 	print('MITOSIS')
 	
 	#Chance to spawn a new cell
-	if not rng.randi % 100: #This code makes it a 1/100 chance right?
+	if not rng.randi() % 100: #This code makes it a 1/100 chancsae right?
 		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
 		for RNA in new_DNA:
 			cell_positions.append(RNA['Position'])

@@ -7,9 +7,9 @@ var food_object
 var user_interface
 var bounding_sphere_size : float
 
-@export var cell_weight : float
-@export var cell_energy : float
-@export var required_energy: float
+var cell_weight = GlobalSettings.cell_weight
+var cell_energy = GlobalSettings.energy_dropped_on_cell_death
+var required_energy = GlobalSettings.energy_required_to_reproduce
 
 @onready var visual_effects_root_node = $"Visual Effects"
 @onready var line_2d = $"Visual Effects/Line2D"
