@@ -19,10 +19,21 @@ func _process(_delta):
 	for sim_cell in creature_sim.get_child(0).get_children():
 		if sim_cell is Camera2D:
 			continue
-		var output = real_cells[i].output
-		for connection in sim_cell.get_children():
-			if connection is CONNECTION2D:
-				connection.update_output(output)
+		#print(sim_cell.tags)
+		if 'Output' in sim_cell.tags:
+			var output = real_cells[i].output
+			var dot_sprite = sim_cell.get_node('Dot')
+			var hue = (output + 1) / 2
+			dot_sprite.modulate = Color(hue,hue,hue)
+		if 'Input' in sim_cell.tags:
+			#print(sim_cell.tags)
+			for connection in sim_cell.get_children():
+				#print(connection)
+				if connection is CONNECTION2D: # theres some other sprites and stuff in there that I have to filther out.
+					#print('hello')
+					var output_origin = connection.to
+					connection.update_output(real_cells[connection.origin_cellID].output)
+			
 		i += 1
 
 

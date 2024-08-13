@@ -9,6 +9,8 @@ func _interpret_special_sauce(special_sauce):
 	weight = acquired_sauce[1] * sign
 	sign = int(acquired_sauce[2]) * 2 - 1
 	constant = acquired_sauce[3] * sign
+	tags.append('Output')
+	tags.append('Input')
 
 func _update_output(input):
 	output = input * weight + constant

@@ -11,6 +11,7 @@ func _interpret_special_sauce(special_sauce):
 	distance = sauce_values[1] * distance_factor
 	ray_cast_2d.target_position = Vector2(cos(angle), sin(angle)) * distance
 	line_2d.points = [Vector2(0,0), ray_cast_2d.target_position]
+	tags.append('Output')
 	
 func _update_output(input):
 	if ray_cast_2d.is_colliding():

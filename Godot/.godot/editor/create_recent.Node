@@ -1,6 +1,6 @@
+Sprite2D
 HBoxContainer
 Camera2D
-Sprite2D
 Line2D
 Node2D
 SubViewport
@@ -12,4 +12,3 @@ BoxContainer
 AspectRatioContainer
 TextureRect
 TabContainer
-ProgressBar

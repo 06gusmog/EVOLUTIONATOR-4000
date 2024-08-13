@@ -11,6 +11,7 @@ func _interpret_special_sauce(special_sauce):
 	strength = sauce_values[1] * movement_tweak
 	force = Vector2(cos(angle), sin(angle)) * strength
 	sprite_2d_2.rotation = angle - PI/2
+	tags.append('Input')
 
 func _act(input, delta):
 	get_parent().apply_impulse(input * force * delta, position)
