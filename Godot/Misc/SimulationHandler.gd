@@ -2,6 +2,8 @@ extends Node2D
 
 var rng = RandomNumberGenerator.new()
 var number_string = "0123456789"
+var mutation_chances = GlobalSettings.mutation_chances
+var mutation_chance_multiplier = GlobalSettings.mutation_chance_multiplier
 var cell_types = DirAccess.get_files_at("res://Cell Types/Scenes/")
 const CREATURE = preload("res://Misc/creature.tscn")
 @export var creature_amount: int
@@ -50,9 +52,9 @@ func generate_random_DNA(size : int):
 	
 func generate_random_RNA(cell_positions: Array, creature_size):
 	var RNA = {}
-	RNA['Type'] = cell_types[rng.randi() % len(cell_types)] #Would it be slower to use randi_range() instead?
+	RNA['Type'] = cell_types[rng.randi() % len(cell_types)]
 	cell_positions.append(select_cell_position(cell_positions))
-	RNA['Position'] = cell_positions[-1]
+	RNA['Position'] = cell_positions[-1] #Uhhhhh, I don't know how to mutate this?????
 	RNA['Connections'] = []
 	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
 		var connection = rng.randi() % (creature_size)
@@ -77,15 +79,24 @@ func _on_mitosis(creature:):
 	print('MITOSIS')
 	
 	#Chance to spawn a new cell
-	if not rng.randi() % 100: #This code makes it a 1/100 chancsae right?
+	if not rng.randi() % (mutation_chances['new_cell'] * mutation_chance_multiplier):
 		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
 		for RNA in new_DNA:
 			cell_positions.append(RNA['Position'])
 		new_DNA.append(generate_random_RNA(cell_positions, len(new_DNA) + 1)[0])
 	
 	#Chance to gain a new connection on a random cell
-	if not rng.randi() % 50:
+	if not rng.randi() % (mutation_chances['new_connection'] * mutation_chance_multiplier):
 		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(rng.randi() % len(new_DNA))
+	
+	#Chance to change one cell type
+	if not rng.randi() % (mutation_chances['type_switch'] * mutation_chance_multiplier):
+		new_DNA[rng.randi() % len(new_DNA)]['Type'] = cell_types[rng.randi() % len(cell_types)]
+	
+	#Chance to change one digit in the special sauce
+	if not rng.randi() % (mutation_chances['special_sauce_digit_change'] * mutation_chance_multiplier):
+		var special_sauce = new_DNA[rng.randi() % len(new_DNA)]['Special Sauce']
+		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
 	create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
 	creature.energy -= 500

@@ -60,7 +60,7 @@ func load_creature(creature):
 func _on_cell_death(cellID):
 	load_creature(creature_selected)
 
-func _on_exit_button_pressed():
+func _on_exit_button_pressed(): #TODO: Save simulation state to a txt file, so we don't lose all progress?
 	visible = false
 	creature_selected.get_child(0).get_child(0).visible = false
 	creature_selected.cell_death.disconnect(_on_cell_death)
