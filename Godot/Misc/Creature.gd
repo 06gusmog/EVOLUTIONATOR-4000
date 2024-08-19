@@ -113,10 +113,11 @@ func clear_killing_queue():
 			cell_death.emit(cell.cellID)
 		killing_queue = []
 		
-	if cells == []:
+	if len(cells) <= len(DNA) * 0.5:
 		die()
 
 func die():
+	print('Aaauuugh my leg!')
 	for cell in cells:
 		food_object.add_food(cell_energy, cell.global_position)
 		mass -= cell_weight

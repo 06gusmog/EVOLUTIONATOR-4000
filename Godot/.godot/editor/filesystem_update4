@@ -1,8 +1,5 @@
-res://Misc/creature.tscn
-res://Misc/SimulationHandler.gd
-res://Misc/Creature.gd
 res://Misc/world.tscn
-res://Misc/FoodObject.gd
-res://test.gd
-res://node_2d.tscn
-res://Standards/Cell.gd
+res://Misc/SimulationHandler.gd
+res://Misc/creature.tscn
+res://Misc/Creature.gd
+res://Misc/UI assets/visual_creature.gd
