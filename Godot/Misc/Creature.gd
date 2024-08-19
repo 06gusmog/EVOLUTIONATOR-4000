@@ -1,7 +1,7 @@
 extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
-var cells : Array
+var cells : Dictionary
 var energy = 1000.0
 var food_object
 var user_interface
@@ -31,11 +31,13 @@ func _ready():
 		i += 1
 	
 	mass = i * cell_weight
-	cells = get_children()
-	cells.pop_front()
+	for cell in get_children():
+		cells[cell.name] = cell
+	cells.erase('Visual Effects')
 	
 	# Box around the creature
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size:
 			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
 	bounding_sphere_size = sqrt(bounding_sphere_size)
@@ -52,13 +54,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	clear_killing_queue()
 	line_2d.global_rotation = 0.0 # box
 	
-	clear_killing_queue()
 	var frame_energy_consumption = 0.0
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		cell.update_output()
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		cell.read_and_act(delta)
 		frame_energy_consumption += cell.energy_consumption
 	energy -= frame_energy_consumption * delta
@@ -66,46 +70,61 @@ func _process(delta):
 		die()
 	if energy >= required_energy:
 		mitosis.emit(self)
-
+	
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	#print('---Collision handling start---')
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')
 		return 0
-	var local_cell = cells[local_shape_index]
-	var body_cell = body.cells[body_shape_index]
+	var local_cell = get_child(local_shape_index+1)
+	var body_cell = body.get_child(body_shape_index+1)
 	#print(body_cell)
 	#print(local_cell)
 	if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
 		#print('-We have been consumed-')
-		kill_cell(str(local_shape_index))
+		kill_cell(get_child(local_shape_index+1).cellID)
 	#print('---Collision handling end---')
 	
 	
 func kill_cell(cellID : String):
-	killing_queue.append(cellID)
+	var cell = get_node(cellID)
+	var cell_copy = cell.duplicate() 
+	# NOTE I am very mad. This took a while to find
+	# This is an issue with godot, here's the git report I found: https://github.com/godotengine/godot/issues/3393#issuecomment-1218262767
+	# Confirmed bug from 2016
+	# Fuck me I guess
+	cell_copy.cellID = cell.cellID
+	killing_queue.append(cell_copy)
+	cell.queue_free()
 
 func clear_killing_queue():
 	if killing_queue != []:
-		var placeholder_cells = []
-		for cell in cells:
-			if cell.cellID in killing_queue:
-				food_object.add_food(cell_energy, cell.global_position)
-				cell.queue_free()
-				mass -= cell_weight
-				continue
-			cell.remove_connections(killing_queue)
-			placeholder_cells.append(cell)
-		for item in killing_queue:
-			cell_death.emit(item)
+		var killing_queue_cellID = []
+		for cell in killing_queue:
+			killing_queue_cellID.append(cell.cellID)
+		
+		var placeholder_cells = {}
+		for cellID in cells:
+			var cell = cells[cellID]
+			if is_instance_valid(cell): # Checks if the cell has been removed in kill_cell
+				cell.remove_connections(killing_queue_cellID)
+				placeholder_cells[cellID] = cell
 		cells = placeholder_cells
+		
+		for cell in killing_queue:
+			food_object.add_food(cell_energy, cell.global_position)
+			mass -= cell_weight
+			cell_death.emit(cell.cellID)
 		killing_queue = []
-	if cells == []:
+		
+	if len(cells) <= len(DNA) * 0.5:
 		die()
 
 func die():
-	for cell in cells:
+	print('Aaauuugh my leg!')
+	for cellID in cells:
+		var cell = cells[cellID]
 		food_object.add_food(cell_energy, cell.global_position)
 		mass -= cell_weight
 	queue_free()

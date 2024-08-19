@@ -13,7 +13,7 @@ func eat_food(index : int):
 	var food_to_eat = get_child(index)
 	if food_to_eat.get_meta('eaten') == false: # This fuckery is necessary because the creature overlapps several times before the food is deleted.
 		food_to_eat.set_meta('eaten', true)
-		food_to_eat.queue_free()
+		food_to_eat.free() # Screw the queue, it only causes problems
 		return food.pop_at(index)
 	return 0
 
@@ -24,6 +24,7 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 		#print(local_shape_index)
 		#print(get_child_count())
 		var energy_to_eat = eat_food(local_shape_index)
+		print(energy_to_eat)
 		body.energy += energy_to_eat
 	else:
 		#print('Food in the wall')

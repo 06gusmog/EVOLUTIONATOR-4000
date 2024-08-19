@@ -1,5 +1,8 @@
+
 TextureRect
 Sprite2D
+CollisionShape2D
+RigidBody2D
 HBoxContainer
 Camera2D
 Line2D

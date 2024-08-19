@@ -22,11 +22,12 @@ func _process(_delta):
 		if sim_cell is Camera2D:
 			continue
 		#print(sim_cell.tags)
-		if 'Output' in sim_cell.tags:
-			var output = real_cells[i].output
-			var dot_sprite = sim_cell.get_node('Dot')
-			var hue = (output + 1) / 2
-			dot_sprite.modulate = Color(hue,hue,hue)
+		if is_instance_valid(real_cells[sim_cell.cellID]):
+			if 'Output' in sim_cell.tags:
+				var output = real_cells[sim_cell.cellID].output
+				var dot_sprite = sim_cell.get_node('Dot')
+				var hue = (output + 1) / 2
+				dot_sprite.modulate = Color(hue,hue,hue)
 		if 'Input' in sim_cell.tags:
 			#print(sim_cell.tags)
 			for connection in sim_cell.get_children():
