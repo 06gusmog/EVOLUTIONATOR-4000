@@ -1,3 +1,5 @@
-res://Misc/SimulationHandler.gd
 res://Misc/world.tscn
-res://Standards/global_settings.gd
+res://Misc/SimulationHandler.gd
+res://Misc/creature.tscn
+res://Misc/FoodObject.gd
+res://Misc/Creature.gd

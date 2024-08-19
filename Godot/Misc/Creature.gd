@@ -121,14 +121,15 @@ func clear_killing_queue():
 						break
 				i += 1
 			if len(groups_it_fit) == 0: # If it didnt match any group
-				groups_of_cells.append([cell.position])
+				groups_of_cells.append([cell])
 			elif len(groups_it_fit) == 1: # If it only matched one group
-				groups_of_cells[groups_it_fit[0]].append(cell.position)
+				groups_of_cells[groups_it_fit[0]].append(cell)
 			else: # If it matched multiple groups
 				var new_group = []
 				groups_it_fit.reverse()
 				for group_index in groups_it_fit:
 					new_group.append_array(groups_of_cells.pop_at(group_index))
+				groups_of_cells.append(new_group)
 #INFO Then add potential cut-off parts to killing queue
 		if len(groups_of_cells) > 1:
 			groups_of_cells.sort_custom(sort_by_length)
