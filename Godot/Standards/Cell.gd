@@ -52,10 +52,13 @@ func unpack(RNA, ID):
 	
 func remove_connections(cellIDs : Array):
 	var temporary_array = []
+	#print(str(connections) + ' Before')
+	#print(str(cellIDs) + 'To remove')
 	for connection in connections:
 		if not connection in cellIDs:
 			temporary_array.append(connection)
 	connections = temporary_array
+	#print(str(connections) + ' After')
 
 func update_output():
 	_update_output(input)

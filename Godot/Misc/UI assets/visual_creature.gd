@@ -18,7 +18,7 @@ func _ready(): #NOTE Creates every cell as a sprite2D named after the index, and
 					var connection_visual = connection_node.instantiate()
 					cell_instance.add_child(connection_visual)
 					connection_visual.make_connection(cell_instance.position, creature.cells[int(connection)].position, int(connection)) #NOTE index out of range error
-					
+		
 		if 'Output' in cell.tags:
 			var dot_sprite = Sprite2D.new()
 			dot_sprite.texture = white_dot
@@ -26,7 +26,7 @@ func _ready(): #NOTE Creates every cell as a sprite2D named after the index, and
 			dot_sprite.name = 'Dot'
 			cell_instance.add_child(dot_sprite)
 		i += 1
-	
+
 func tick_forward(inputs):
 	pass
 	

@@ -1,4 +1,6 @@
 Sprite2D
+CollisionShape2D
+RigidBody2D
 HBoxContainer
 Camera2D
 Line2D
@@ -10,5 +12,3 @@ VBoxContainer
 MarginContainer
 BoxContainer
 AspectRatioContainer
-TextureRect
-TabContainer

@@ -1,3 +1,5 @@
 res://Misc/world.tscn
 res://Misc/SimulationHandler.gd
-res://Standards/global_settings.gd
+res://Misc/creature.tscn
+res://Misc/Creature.gd
+res://Misc/UI assets/visual_creature.gd
