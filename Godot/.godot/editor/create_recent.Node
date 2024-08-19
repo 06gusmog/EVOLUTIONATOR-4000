@@ -1,4 +1,5 @@
-PanelContainer
+
+TextureRect
 Sprite2D
 CollisionShape2D
 RigidBody2D
@@ -13,3 +14,4 @@ VBoxContainer
 MarginContainer
 BoxContainer
 AspectRatioContainer
+TabContainer
