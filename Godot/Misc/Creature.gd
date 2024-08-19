@@ -1,7 +1,7 @@
 extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
-var cells : Array
+var cells : Dictionary
 var energy = 1000.0
 var food_object
 var user_interface
@@ -31,11 +31,13 @@ func _ready():
 		i += 1
 	
 	mass = i * cell_weight
-	cells = get_children()
-	cells.pop_front()
+	for cell in get_children():
+		cells[cell.name] = cell
+	cells.erase('Visual Effects')
 	
 	# Box around the creature
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size:
 			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
 	bounding_sphere_size = sqrt(bounding_sphere_size)
@@ -56,9 +58,11 @@ func _process(delta):
 	line_2d.global_rotation = 0.0 # box
 	
 	var frame_energy_consumption = 0.0
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		cell.update_output()
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		cell.read_and_act(delta)
 		frame_energy_consumption += cell.energy_consumption
 	energy -= frame_energy_consumption * delta
@@ -73,8 +77,8 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')
 		return 0
-	var local_cell = cells[local_shape_index]
-	var body_cell = body.cells[body_shape_index]
+	var local_cell = get_child(local_shape_index+1)
+	var body_cell = body.get_child(body_shape_index+1)
 	#print(body_cell)
 	#print(local_cell)
 	if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
@@ -100,11 +104,12 @@ func clear_killing_queue():
 		for cell in killing_queue:
 			killing_queue_cellID.append(cell.cellID)
 		
-		var placeholder_cells = []
-		for cell in cells:
+		var placeholder_cells = {}
+		for cellID in cells:
+			var cell = cells[cellID]
 			if is_instance_valid(cell): # Checks if the cell has been removed in kill_cell
 				cell.remove_connections(killing_queue_cellID)
-				placeholder_cells.append(cell)
+				placeholder_cells[cellID] = cell
 		cells = placeholder_cells
 		
 		for cell in killing_queue:
@@ -118,7 +123,8 @@ func clear_killing_queue():
 
 func die():
 	print('Aaauuugh my leg!')
-	for cell in cells:
+	for cellID in cells:
+		var cell = cells[cellID]
 		food_object.add_food(cell_energy, cell.global_position)
 		mass -= cell_weight
 	queue_free()
