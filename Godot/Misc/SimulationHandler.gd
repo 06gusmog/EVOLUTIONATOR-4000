@@ -78,6 +78,10 @@ func _on_mitosis(creature:):
 	var new_DNA = creature.DNA
 	print('MITOSIS')
 	
+	#Chance to remove a cell
+	if not rng.randi() % (mutation_chances['remove_cell'] * mutation_chance_multiplier):
+		new_DNA.pop(rng.randi() % len(new_DNA))
+	
 	#Chance to spawn a new cell
 	if not rng.randi() % (mutation_chances['new_cell'] * mutation_chance_multiplier):
 		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time

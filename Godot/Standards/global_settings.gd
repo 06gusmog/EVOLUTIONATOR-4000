@@ -8,6 +8,7 @@ var cell_weight = 1.0
 # Mutation
 var mutation_chance_multiplier = 10
 var mutation_chances = {
+	'remove_cell': 10,
 	'new_cell': 10, #Likelihood is 1/x
 	'new_connection': 5,
 	'type_switch': 5,
