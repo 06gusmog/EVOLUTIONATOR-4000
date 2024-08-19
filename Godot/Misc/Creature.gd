@@ -100,24 +100,60 @@ func kill_cell(cellID : String):
 
 func clear_killing_queue():
 	if killing_queue != []:
-		var killing_queue_cellID = []
-		for cell in killing_queue:
-			killing_queue_cellID.append(cell.cellID)
-		
-		var placeholder_cells = {}
+#INFO First remove the invalid (free'd) cells from cells
+		var placeholder_cells = {} 
 		for cellID in cells:
 			var cell = cells[cellID]
 			if is_instance_valid(cell): # Checks if the cell has been removed in kill_cell
-				cell.remove_connections(killing_queue_cellID)
 				placeholder_cells[cellID] = cell
 		cells = placeholder_cells
-		
+#INFO Then group the cells by if they're touching
+		var adjacent_offsets = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]
+		var groups_of_cells = []
+		for cellID in cells:
+			var cell = cells[cellID]
+			var groups_it_fit = []
+			var i = 0
+			for group in groups_of_cells:
+				for offset in adjacent_offsets:
+					if (cell.position + offset) in group:
+						groups_it_fit.append(i)
+						break
+				i += 1
+			if len(groups_it_fit) == 0: # If it didnt match any group
+				groups_of_cells.append([cell.position])
+			elif len(groups_it_fit) == 1: # If it only matched one group
+				groups_of_cells[groups_it_fit[0]].append(cell.position)
+			else: # If it matched multiple groups
+				var new_group = []
+				groups_it_fit.reverse()
+				for group_index in groups_it_fit:
+					new_group.append_array(groups_of_cells.pop_at(group_index))
+#INFO Then add potential cut-off parts to killing queue
+		if len(groups_of_cells) > 1:
+			groups_of_cells.sort_custom(sort_by_length)
+			if len(groups_of_cells[0]) <= len(DNA) * 0.5:
+				die()
+			else:
+				groups_of_cells.remove_at(0)
+				for group in groups_of_cells:
+					killing_queue.append_array(group)
+					for cell in group:
+						cell.free() # Might be risky
+#INFO Remove all connections to dead cells
+		var killing_queue_cellID = []
+		for cell in killing_queue:
+			killing_queue_cellID.append(cell.cellID)
+		for cellID in cells:
+			var cell = cells[cellID]
+			cell.remove_connections(killing_queue_cellID)
+#INFO Spawn food and send relevant signals
 		for cell in killing_queue:
 			food_object.add_food(cell_energy, cell.global_position)
 			mass -= cell_weight
 			cell_death.emit(cell.cellID)
 		killing_queue = []
-		
+#INFO Check if the creature died
 	if len(cells) <= len(DNA) * 0.5:
 		die()
 
@@ -126,9 +162,14 @@ func die():
 	for cellID in cells:
 		var cell = cells[cellID]
 		food_object.add_food(cell_energy, cell.global_position)
-		mass -= cell_weight
 	queue_free()
 
 func _on_input_event(_viewport, event, _shape_idx): # Box
 	if event.is_action_pressed('click'):
 		user_interface.creature_clicked(self)
+
+
+func sort_by_length(a, b):
+	if len(a) > len(b):
+		return 1
+	return 0

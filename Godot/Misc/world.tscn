@@ -31,6 +31,7 @@ polygon = PackedVector2Array(-202, -122, -190, 123, 271, 128, 271, -119, -202, -
 process_priority = 1
 
 [node name="UserInterface" type="Control" parent="CanvasLayer"]
+process_priority = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
