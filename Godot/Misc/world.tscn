@@ -18,6 +18,10 @@ creature_size = 10
 
 [node name="FoodObject" parent="." instance=ExtResource("2_8ygnx")]
 
+[node name="FoodSpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_06e6h")
 
@@ -94,4 +98,5 @@ text = "Exit"
 
 [node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
 
+[connection signal="timeout" from="FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/UserInterface/Exit Button" to="CanvasLayer/UserInterface" method="_on_exit_button_pressed"]

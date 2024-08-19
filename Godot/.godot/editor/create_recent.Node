@@ -1,4 +1,4 @@
-
+Timer
 TextureRect
 Sprite2D
 CollisionShape2D
@@ -13,5 +13,3 @@ Button
 VBoxContainer
 MarginContainer
 BoxContainer
-AspectRatioContainer
-TabContainer

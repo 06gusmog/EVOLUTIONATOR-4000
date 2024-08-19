@@ -48,7 +48,6 @@ func spawn_food():
 		var reference_position = get_random_position()
 		if noise.get_noise_2d(proposed_position[0], proposed_position[1]) >= noise.get_noise_2d(reference_position[0], reference_position[1]):
 			break
-	print([energy, proposed_position])
 	food_object.add_food(energy, Vector2(proposed_position[0], proposed_position[1]))
 
 func create_creature(DNA, creature_position): 
@@ -129,3 +128,7 @@ func _on_mitosis(creature:):
 	
 	create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
 	creature.energy -= 500
+	
+func _on_food_spawn_timer_timeout():
+	for x in range(GlobalSettings.food_spawn_burst_size):
+		spawn_food()

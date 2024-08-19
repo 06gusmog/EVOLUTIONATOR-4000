@@ -8,6 +8,8 @@ var energy_required_to_reproduce = 1100.0
 var energy_dropped_on_cell_death = 100.0 #This should probably be a percentage of the stored energy
 var cell_weight = 1.0
 
+var food_spawn_burst_size = 50
+
 # Mutation
 var mutation_chance_multiplier = 10
 var mutation_chances = {
