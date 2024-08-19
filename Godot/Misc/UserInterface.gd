@@ -42,7 +42,7 @@ func _process(_delta):
 
 
 func creature_clicked(creature):
-	if creature_selected:
+	if visible:
 		creature_selected.get_child(0).get_child(0).visible = false
 		creature_selected.cell_death.disconnect(_on_cell_death)
 	visible = true
