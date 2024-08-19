@@ -13,9 +13,16 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @export var camera_move_speed = 5.0
 @onready var food_object = $FoodObject
 
+var noise = FastNoiseLite.new()
+
 # Math functions
 
 func _ready():
+	noise.seed = randi()
+	noise.fractal_octaves = 1
+	noise.fractal_gain = 0.5
+	noise.fractal_lacunarity = 2
+	
 	for i in range(creature_amount):
 		create_creature(generate_random_DNA(creature_size), Vector2((i % 10)*20, int(i / 10) * -20))
 
@@ -24,6 +31,25 @@ func _process(delta):
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
 	#if Input.is_action_just_pressed("click"):
 	#	food_object.add_food(20, get_global_mouse_position())
+	if Input.is_action_just_pressed("test input"):
+		spawn_food()
+
+func get_random_position():
+	var width = int(GlobalSettings.map_size[0])
+	var height = int(GlobalSettings.map_size[1])
+	return [rng.randi() % width - width/2, rng.randi() % height - height/2]
+
+func spawn_food():
+	var energy = rng.randi() % 50 + 100
+	#This is the method used: https://stackoverflow.com/questions/71551080/random-distribution-of-points-based-on-perlin-noise
+	var proposed_position = [0,0]
+	for x in range(15):
+		proposed_position = get_random_position()
+		var reference_position = get_random_position()
+		if noise.get_noise_2d(proposed_position[0], proposed_position[1]) >= noise.get_noise_2d(reference_position[0], reference_position[1]):
+			break
+	print([energy, proposed_position])
+	food_object.add_food(energy, Vector2(proposed_position[0], proposed_position[1]))
 
 func create_creature(DNA, creature_position): 
 	var dudebro = CREATURE.instantiate()
@@ -31,7 +57,6 @@ func create_creature(DNA, creature_position):
 	dudebro.position = creature_position 
 	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
 	add_child(dudebro)
-	
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""

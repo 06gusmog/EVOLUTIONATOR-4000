@@ -1,3 +1,4 @@
+TextureRect
 Sprite2D
 HBoxContainer
 Camera2D
@@ -10,5 +11,4 @@ VBoxContainer
 MarginContainer
 BoxContainer
 AspectRatioContainer
-TextureRect
 TabContainer
