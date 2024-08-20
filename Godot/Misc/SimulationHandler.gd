@@ -104,10 +104,20 @@ func _on_mitosis(creature:):
 	
 	#Chance to remove a cell
 	if not rng.randi() % (mutation_chances['remove_cell'] * mutation_chance_multiplier):
-		new_DNA.pop(rng.randi() % len(new_DNA))
+		print('Cell Mutation: Removal')
+		var pop_index = rng.randi() % len(new_DNA)
+		new_DNA.pop_at(pop_index)
+		for RNA in new_DNA:
+			var new_connections = []
+			for connection in RNA['Connections']:
+				if int(connection) < len(new_DNA):
+					new_connections.append(connection)
+			RNA['Connections'] = new_connections
+		
 	
 	#Chance to spawn a new cell
 	if not rng.randi() % (mutation_chances['new_cell'] * mutation_chance_multiplier):
+		print('Cell Mutation: Addition')
 		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
 		for RNA in new_DNA:
 			cell_positions.append(RNA['Position'])
@@ -115,14 +125,17 @@ func _on_mitosis(creature:):
 	
 	#Chance to gain a new connection on a random cell
 	if not rng.randi() % (mutation_chances['new_connection'] * mutation_chance_multiplier):
-		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(rng.randi() % len(new_DNA))
+		print('Cell Mutation: Connection')
+		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(str(rng.randi() % len(new_DNA)))
 	
 	#Chance to change one cell type
 	if not rng.randi() % (mutation_chances['type_switch'] * mutation_chance_multiplier):
+		print('Cell Mutation: Type Change')
 		new_DNA[rng.randi() % len(new_DNA)]['Type'] = cell_types[rng.randi() % len(cell_types)]
 	
 	#Chance to change one digit in the special sauce
 	if not rng.randi() % (mutation_chances['special_sauce_digit_change'] * mutation_chance_multiplier):
+		print('Cell Mutation: Special Sauce')
 		var special_sauce = new_DNA[rng.randi() % len(new_DNA)]['Special Sauce']
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
