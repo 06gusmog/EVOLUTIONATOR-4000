@@ -8,6 +8,8 @@ func add_food(energy, food_position):
 	var instantiated_food_bit = FOOD_BIT.instantiate()
 	instantiated_food_bit.position = food_position
 	add_child(instantiated_food_bit)
+	if get_child_count() > GlobalSettings.food_cap:
+		eat_food(0)
 	
 func eat_food(index : int):
 	var food_to_eat = get_child(index)
@@ -24,7 +26,7 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 		#print(local_shape_index)
 		#print(get_child_count())
 		var energy_to_eat = eat_food(local_shape_index)
-		print(energy_to_eat)
+		#print(energy_to_eat)
 		body.energy += energy_to_eat
 	else:
 		#print('Food in the wall')

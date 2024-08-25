@@ -2,7 +2,7 @@ extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
 var cells : Dictionary
-var energy = 1000.0
+var energy = GlobalSettings.energy_required_to_reproduce * GlobalSettings.spawn_energy_multiplier
 var food_object
 var user_interface
 var bounding_sphere_size : float
@@ -51,11 +51,12 @@ func _ready():
 		Vector2(1,-1) * box_side_length + center_of_mass
 		]
 	line_2d.visible = false
-
+	
+	get_parent().get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	clear_killing_queue()
-	line_2d.global_rotation = 0.0 # box
+	line_2d.global_rotation = 0.0 # boxD
 	
 	var frame_energy_consumption = 0.0
 	for cellID in cells:
@@ -68,15 +69,22 @@ func _process(delta):
 	energy -= frame_energy_consumption * delta
 	if energy <= 0:
 		die()
-	if energy >= required_energy:
-		mitosis.emit(self)
+#	if energy >= required_energy:
+#		mitosis.emit(self)
 	
+func reproduce_time():
+	if energy >= GlobalSettings.energy_required_to_reproduce:
+		mitosis.emit(self)
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	#print('---Collision handling start---')
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')
-		return 0
+		return
+	#print(body)
+	if body.get_child_count() < body_shape_index+2:
+		print('Ahh fuck')
+		body.die()
 	var local_cell = get_child(local_shape_index+1)
 	var body_cell = body.get_child(body_shape_index+1)
 	#print(body_cell)
@@ -112,7 +120,7 @@ func clear_killing_queue():
 		var groups_of_cells = []
 		for cellID in cells:
 			var cell = cells[cellID]
-			print(cell.position)
+			#print(cell.position)
 			var groups_it_fit = []
 			var i = 0
 			for group in groups_of_cells:
@@ -125,13 +133,13 @@ func clear_killing_queue():
 						break
 				i += 1
 			if len(groups_it_fit) == 0: # If it didnt match any group
-				print('First')
+				#print('First')
 				groups_of_cells.append([cell])
 			elif len(groups_it_fit) == 1: # If it only matched one group
-				print('Second')
+				#print('Second')
 				groups_of_cells[groups_it_fit[0]].append(cell)
 			else: # If it matched multiple groups
-				print('Third')
+				#print('Third')
 				var new_group = []
 				groups_it_fit.reverse()
 				for group_index in groups_it_fit:

@@ -12,6 +12,7 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @onready var camera_2d = $Camera2D
 @export var camera_move_speed = 5.0
 @onready var food_object = $FoodObject
+@onready var spawnpoints = $Spawnpoints
 
 var noise = FastNoiseLite.new()
 
@@ -22,9 +23,6 @@ func _ready():
 	noise.fractal_octaves = 1
 	noise.fractal_gain = 0.5
 	noise.fractal_lacunarity = 2
-	
-	for i in range(creature_amount):
-		create_creature(generate_random_DNA(creature_size), Vector2((i % 10)*20, int(i / 10) * -20))
 
 func _process(delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
@@ -100,6 +98,7 @@ func select_cell_position(established_positions : Array):
 
 func _on_mitosis(creature:): 
 	var new_DNA = creature.DNA
+	creature.energy = creature.energy / 2
 	print('MITOSIS')
 	
 	#Chance to remove a cell
@@ -145,3 +144,14 @@ func _on_mitosis(creature:):
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
 		spawn_food()
+
+
+func _on_spawn_timer_timeout():
+	for spawn in spawnpoints.get_children():
+		if spawn is Timer:
+			continue
+		var overlapping_bodies = spawn.get_child(0).get_overlapping_bodies()
+		if overlapping_bodies == []:
+			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
+		elif len(overlapping_bodies) == 1 and food_object in overlapping_bodies:
+			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)

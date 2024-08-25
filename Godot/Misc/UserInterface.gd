@@ -42,9 +42,10 @@ func _process(_delta):
 
 
 func creature_clicked(creature):
-	if visible:
-		creature_selected.get_child(0).get_child(0).visible = false
-		creature_selected.cell_death.disconnect(_on_cell_death)
+	if is_instance_valid(creature_selected):
+		if creature_selected.get_child(0).get_child(0).visible:
+			creature_selected.get_child(0).get_child(0).visible = false
+			creature_selected.cell_death.disconnect(_on_cell_death)
 	visible = true
 	creature.get_child(0).get_child(0).visible = true
 	creature_selected = creature
@@ -61,7 +62,7 @@ func load_creature(creature):
 func _on_cell_death(cellID):
 	load_creature(creature_selected)
 
-func _on_exit_button_pressed(): #TODO: Save simulation state to a txt file, so we don't lose all progress?
-	visible = false
+func _on_exit_button_pressed():
+	#visible = false
 	creature_selected.get_child(0).get_child(0).visible = false
 	creature_selected.cell_death.disconnect(_on_cell_death)
