@@ -13,7 +13,7 @@ func _interpret_special_sauce(special_sauce):
 	line_2d.points = [Vector2(0,0), ray_cast_2d.target_position]
 	tags.append('Output')
 	
-func _update_output(input):
+func _update_output(_input):
 	if ray_cast_2d.is_colliding():
 		var collision_point = ray_cast_2d.get_collision_point()
 		var collision_distance = collision_point.distance_to(Vector2(0,0))

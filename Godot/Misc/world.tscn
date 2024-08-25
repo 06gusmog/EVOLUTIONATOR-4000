@@ -15,7 +15,6 @@ viewport_path = NodePath("CanvasLayer/UserInterface/Creature View")
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
 creature_amount = 20
-creature_size = 10
 
 [node name="Spawnpoints" type="Node2D" parent="."]
 

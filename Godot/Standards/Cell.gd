@@ -7,7 +7,7 @@ var type : String
 var tags : Array # Eats, Uneatable, Output
 var energy_consumption = 1.0
 var connections : Array
-var input : float
+var calculated_input : float
 var output : float
 @export var movement_tweak = 50.0
 
@@ -22,7 +22,7 @@ func get_from_sauce(special_sauce : String, values : Array):
 		weight : 1 -> 0 - 9
 		angle : 2 -> -pi - pi
 	"""
-	var toReturn : Array
+	var toReturn = []
 	for value in values:
 		match value:
 			"bool":
@@ -61,24 +61,24 @@ func remove_connections(cellIDs : Array):
 	#print(str(connections) + ' After')
 
 func update_output():
-	_update_output(input)
+	_update_output(calculated_input)
 
 func read_and_act(delta):
-	input = 0.0
+	calculated_input = 0.0
 	for connection in connections:
 		var other_cell = get_parent().get_node(connection)
-		input += other_cell.output
-	input = weighted_clamp(input)
+		calculated_input += other_cell.output
+	calculated_input = weighted_clamp(calculated_input)
 	
-	_act(input, delta)
+	_act(calculated_input, delta)
 
 #-- Cell Type Unique Functions --
-func _interpret_special_sauce(special_sauce): # And add tags
+func _interpret_special_sauce(_special_sauce): # And add tags
 	pass
 
-func _update_output(input):
+func _update_output(_input):
 	pass
 	
 
-func _act(input, delta):
+func _act(_input, _delta):
 	pass

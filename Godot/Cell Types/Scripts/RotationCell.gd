@@ -5,7 +5,7 @@ func _interpret_special_sauce(special_sauce):
 	weight = get_from_sauce(special_sauce, ["weight"])[0] * movement_tweak
 	tags.append('Input')
 
-func _update_output(input): 
+func _update_output(_input): 
 	output = 0
 	
 func _act(input, delta):

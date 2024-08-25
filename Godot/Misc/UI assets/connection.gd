@@ -1,7 +1,5 @@
 extends Node2D
 
-var from: Vector2
-var to: Vector2
 var origin_cellID: String
 var sprite
 

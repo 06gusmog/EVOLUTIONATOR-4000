@@ -20,7 +20,7 @@ func eat_food(index : int):
 	return 0
 
 
-func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_index):
 	if body is RigidBody2D:
 		#print('Food has been consumed')
 		#print(local_shape_index)

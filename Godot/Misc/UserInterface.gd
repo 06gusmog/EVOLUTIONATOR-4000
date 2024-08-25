@@ -16,7 +16,6 @@ func _ready():
 func _process(_delta):
 	if not creature_selected: # When there is no selected creature: break
 		return 0
-	var i = 0
 	var real_cells = creature_selected.cells
 	for sim_cell in creature_sim.get_child(0).get_children():
 		if sim_cell is Camera2D:
@@ -34,10 +33,8 @@ func _process(_delta):
 				#print(connection)
 				if connection is CONNECTION2D: # theres some other sprites and stuff in there that I have to filther out.
 					#print('hello')
-					var output_origin = connection.to
 					connection.update_output(real_cells[connection.origin_cellID].output)
 		
-		i += 1
 	progress_bar.value = creature_selected.energy
 
 
@@ -59,7 +56,7 @@ func load_creature(creature):
 		creature_sim.remove_child(creature_sim.get_child(0))
 	creature_sim.add_child(visual_creature_instance)
 	
-func _on_cell_death(cellID):
+func _on_cell_death(_cellID):
 	load_creature(creature_selected)
 
 func _on_exit_button_pressed():

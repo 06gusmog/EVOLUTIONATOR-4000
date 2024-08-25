@@ -7,7 +7,6 @@ var mutation_chance_multiplier = GlobalSettings.mutation_chance_multiplier
 var cell_types = DirAccess.get_files_at("res://Cell Types/Scenes/")
 const CREATURE = preload("res://Misc/creature.tscn")
 @export var creature_amount: int
-@export var creature_size: int
 @export var special_sauce_length: int = 5
 @onready var camera_2d = $Camera2D
 @export var camera_move_speed = 5.0
@@ -24,7 +23,7 @@ func _ready():
 	noise.fractal_gain = 0.5
 	noise.fractal_lacunarity = 2
 
-func _process(delta):
+func _process(_delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
 	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
 	#if Input.is_action_just_pressed("click"):

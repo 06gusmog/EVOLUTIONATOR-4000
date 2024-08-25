@@ -76,7 +76,7 @@ func reproduce_time():
 	if energy >= GlobalSettings.energy_required_to_reproduce:
 		mitosis.emit(self)
 
-func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index):
 	#print('---Collision handling start---')
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')

@@ -6,7 +6,6 @@ const white_dot = preload("res://Misc/UI assets/white_dot.png")
 # Called when the node enters the scene tree for the first time.
 func _ready(): #NOTE Creates every cell as a sprite2D named after the index, and the cells connections as line2D's as its children, with them being named after their target cell.
 	#DNA = generate_random_DNA(3)
-	var i = 0
 	for cellID in creature.cells:
 		var cell = creature.cells[cellID]
 		var cell_instance = cell.duplicate() # Dot on output, connections on input
@@ -27,8 +26,4 @@ func _ready(): #NOTE Creates every cell as a sprite2D named after the index, and
 			dot_sprite.scale = Vector2(0.01,0.01)
 			dot_sprite.name = 'Dot'
 			cell_instance.add_child(dot_sprite)
-		i += 1
 
-func tick_forward(inputs):
-	pass
-	
