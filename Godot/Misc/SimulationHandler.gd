@@ -97,7 +97,6 @@ func select_cell_position(established_positions : Array):
 
 func _on_mitosis(creature:): 
 	var new_DNA = creature.DNA
-	creature.energy = creature.energy / 2
 	print('MITOSIS')
 	
 	#Chance to remove a cell
@@ -138,7 +137,7 @@ func _on_mitosis(creature:):
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
 	create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 2))
-	creature.energy -= 500
+	creature.energy -= GlobalSettings.energy_lost_on_reproduction
 	
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):

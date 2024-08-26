@@ -54,6 +54,22 @@ position = Vector2(0, -67)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 4/Area2D"]
 shape = SubResource("CircleShape2D_rjn3i")
 
+[node name="Spawn 5" type="Node2D" parent="Spawnpoints"]
+position = Vector2(-120, 0)
+
+[node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 5/Area2D"]
+shape = SubResource("CircleShape2D_rjn3i")
+
+[node name="Spawn 6" type="Node2D" parent="Spawnpoints"]
+position = Vector2(40, 0)
+
+[node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 6/Area2D"]
+shape = SubResource("CircleShape2D_rjn3i")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="FoodObject" parent="." instance=ExtResource("2_8ygnx")]

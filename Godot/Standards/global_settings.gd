@@ -5,6 +5,7 @@ var map_size = Vector2(640, 384)
 
 # Energy
 var energy_required_to_reproduce = 1100.0
+var energy_lost_on_reproduction = 400.0
 var energy_dropped_on_cell_death = 100.0 #This should probably be a percentage of the stored energy
 var cell_weight = 1.0
 var spawn_energy_multiplier = 0.5

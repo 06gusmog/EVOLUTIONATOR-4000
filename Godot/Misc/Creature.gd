@@ -82,16 +82,17 @@ func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index
 		#print('---Not a creature break---')
 		return
 	#print(body)
-	if body.get_child_count() < body_shape_index+2:
-		print('Ahh fuck')
-		body.die()
+	#if body.get_child_count() < body_shape_index+2:
+	#	print('Ahh fuck')
+	#	body.die()
 	var local_cell = get_child(local_shape_index+1)
 	var body_cell = body.get_child(body_shape_index+1)
 	#print(body_cell)
 	#print(local_cell)
-	if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
-		#print('-We have been consumed-')
-		kill_cell(get_child(local_shape_index+1).cellID)
+	if is_instance_valid(body_cell) and is_instance_valid(local_cell): # Checks if the cell has already been eaten
+		if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
+			#print('-We have been consumed-')
+			kill_cell(get_child(local_shape_index+1).cellID)
 	#print('---Collision handling end---')
 	
 	
