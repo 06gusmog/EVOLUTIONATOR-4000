@@ -9,6 +9,7 @@ shape = ExtResource("1_qni4f")
 script = ExtResource("2_x5267")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+collide_with_areas = true
 
 [node name="Line2D" type="Line2D" parent="."]
 width = 0.1
