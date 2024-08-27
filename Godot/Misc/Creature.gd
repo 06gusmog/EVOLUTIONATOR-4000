@@ -52,7 +52,7 @@ func _ready():
 		]
 	line_2d.visible = false
 	
-	get_parent().get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
+	get_parent().get_node('FoodSpawnPoints').get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	clear_killing_queue()

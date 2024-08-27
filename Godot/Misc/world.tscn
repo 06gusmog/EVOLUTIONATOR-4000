@@ -42,10 +42,6 @@ position = Vector2(-121, -75)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 3/Area2D"]
 shape = SubResource("CircleShape2D_rjn3i")
 
-[node name="SpawnTimer" type="Timer" parent="Spawnpoints"]
-wait_time = 5.0
-autostart = true
-
 [node name="Spawn 4" type="Node2D" parent="Spawnpoints"]
 position = Vector2(0, -67)
 
@@ -70,13 +66,34 @@ position = Vector2(40, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 6/Area2D"]
 shape = SubResource("CircleShape2D_rjn3i")
 
+[node name="SpawnTimer" type="Timer" parent="Spawnpoints"]
+wait_time = 5.0
+autostart = true
+
+[node name="FoodSpawnPoints" type="Node2D" parent="."]
+
+[node name="FoodSpawn1" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(-179, -56)
+
+[node name="FoodSpawn2" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(-32, 77)
+
+[node name="FoodSpawn3" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(79, -45)
+
+[node name="FoodSpawn4" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(-60, -105)
+
+[node name="FoodSpawn5" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(199, -145)
+
+[node name="FoodSpawnTimer" type="Timer" parent="FoodSpawnPoints"]
+wait_time = 10.0
+autostart = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="FoodObject" parent="." instance=ExtResource("2_8ygnx")]
-
-[node name="FoodSpawnTimer" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_06e6h")
@@ -155,5 +172,5 @@ text = "Exit"
 [node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
-[connection signal="timeout" from="FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
+[connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/UserInterface/Exit Button" to="CanvasLayer/UserInterface" method="_on_exit_button_pressed"]
