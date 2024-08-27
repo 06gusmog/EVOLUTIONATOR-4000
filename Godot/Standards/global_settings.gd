@@ -14,7 +14,7 @@ var food_spawn_burst_size = 50
 var creature_spawn_size = 10
 
 # Mutation
-var mutation_chance_multiplier = 10
+var mutation_chance_multiplier = 1
 var mutation_chances = {
 	'remove_cell': 20,
 	'new_cell': 10, #Likelihood is 1/x

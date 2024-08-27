@@ -27,13 +27,13 @@ func _process(_delta):
 				var dot_sprite = sim_cell.get_node('Dot')
 				var hue = (output + 1) / 2
 				dot_sprite.modulate = Color(hue,hue,hue)
-		if 'Input' in sim_cell.tags:
-			#print(sim_cell.tags)
-			for connection in sim_cell.get_children():
-				#print(connection)
-				if connection is CONNECTION2D: # theres some other sprites and stuff in there that I have to filther out.
-					#print('hello')
-					connection.update_output(real_cells[connection.origin_cellID].output)
+			if 'Input' in sim_cell.tags:
+				#print(sim_cell.tags)
+				for connection in sim_cell.get_children():
+					#print(connection)
+					if connection is CONNECTION2D: # theres some other sprites and stuff in there that I have to filther out.
+						#print('hello')
+						connection.update_output(real_cells[connection.origin_cellID].output)
 		
 	progress_bar.value = creature_selected.energy
 
@@ -58,8 +58,3 @@ func load_creature(creature):
 	
 func _on_cell_death(_cellID):
 	load_creature(creature_selected)
-
-func _on_exit_button_pressed():
-	#visible = false
-	creature_selected.get_child(0).get_child(0).visible = false
-	creature_selected.cell_death.disconnect(_on_cell_death)

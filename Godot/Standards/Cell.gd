@@ -67,7 +67,10 @@ func read_and_act(delta):
 	calculated_input = 0.0
 	for connection in connections:
 		var other_cell = get_parent().get_node(connection)
-		calculated_input += other_cell.output
+		if is_instance_valid(other_cell):
+			calculated_input += other_cell.output
+		else:
+			print('Connection to nowhere')
 	calculated_input = weighted_clamp(calculated_input)
 	
 	_act(calculated_input, delta)

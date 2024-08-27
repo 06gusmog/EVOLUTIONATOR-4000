@@ -139,21 +139,9 @@ layout_mode = 2
 texture = SubResource("ViewportTexture_xdqrd")
 expand_mode = 4
 
-[node name="Exit Button" type="Button" parent="CanvasLayer/UserInterface"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -8.0
-offset_bottom = 8.0
-grow_horizontal = 0
-action_mode = 0
-text = "Exit"
-
 [node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
 
 [node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/UserInterface/Exit Button" to="CanvasLayer/UserInterface" method="_on_exit_button_pressed"]

@@ -148,9 +148,6 @@ func clear_killing_queue():
 				groups_of_cells.append(new_group)
 #INFO Then add potential cut-off parts to killing queue
 		if groups_of_cells.size() > 1:
-			print('several_groups')
-			print(groups_of_cells.size())
-			print(groups_of_cells)
 			groups_of_cells.sort_custom(sort_by_length)
 			if len(groups_of_cells[0]) <= len(DNA) * 0.5:
 				die()
@@ -184,11 +181,9 @@ func clear_killing_queue():
 		killing_queue = []
 #INFO Check if the creature died
 	if len(cells) <= len(DNA) * 0.5:
-		print('Not enough mass')
 		die()
 
 func die():
-	print('Aaauuugh my leg!')
 	for cellID in cells:
 		var cell = cells[cellID]
 		food_object.add_food(cell_energy, cell.global_position)
