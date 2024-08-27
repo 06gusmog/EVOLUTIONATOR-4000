@@ -121,6 +121,11 @@ func _on_mitosis(creature:):
 		print('Cell Mutation: Connection')
 		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(str(rng.randi() % len(new_DNA)))
 	
+	if not rng.randi() % (mutation_chances['delete_connection'] * mutation_chance_multiplier):
+		var connections = new_DNA[rng.randi() % len(new_DNA)]['Connections']
+		if not len(connections) == 0:
+			connections.pop_at(rng.randi() % len(connections))
+	
 	#Chance to change one cell type
 	if not rng.randi() % (mutation_chances['type_switch'] * mutation_chance_multiplier):
 		print('Cell Mutation: Type Change')
