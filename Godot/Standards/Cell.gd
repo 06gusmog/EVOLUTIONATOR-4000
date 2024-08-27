@@ -5,7 +5,7 @@ class_name Cell
 var cellID : String
 var type : String
 var tags : Array # Eats, Uneatable, Output
-var energy_consumption = 0.5
+var energy_consumption = GlobalSettings.energy_consumption_PC
 var connections : Array
 var calculated_input : float
 var output : float

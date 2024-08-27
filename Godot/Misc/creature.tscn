@@ -4,15 +4,15 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cf5g3"]
 friction = 0.1
-bounce = 0.1
+bounce = 0.4
 
 [node name="Creature" type="RigidBody2D"]
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_cf5g3")
 max_contacts_reported = 10
 contact_monitor = true
-linear_damp = 10.0
-angular_damp = 10.01
+linear_damp = 3.621
+angular_damp = 49.347
 script = ExtResource("1_2isnp")
 
 [node name="Visual Effects" type="Node2D" parent="."]

@@ -141,7 +141,7 @@ func _on_mitosis(creature:):
 		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3))
 	else:
 		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3)
-	creature.energy -= GlobalSettings.energy_lost_on_reproduction
+	creature.energy -= GlobalSettings.energy_required_to_reproduce_PC * len(creature.cells)
 	
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):

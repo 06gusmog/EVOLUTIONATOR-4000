@@ -4,11 +4,16 @@ extends Node
 var map_size = Vector2(640, 384)
 
 # Energy
-var energy_required_to_reproduce = 1100.0
-var energy_lost_on_reproduction = 400.0
-var energy_dropped_on_cell_death = 100.0 #This should probably be a percentage of the stored energy
+# PC stands for Per Cell
+var energy_required_to_reproduce_PC = 100.0
+var energy_cap_PC = 200.0
+var energy_starting_PC = 50.0
+var energy_dropped_min = 25.0
+var energy_dropped_max = 75.0
+var energy_consumption_PC = 0.2
+
+# Energy
 var cell_weight = 1.0
-var spawn_energy_multiplier = 0.5
 
 var food_spawn_burst_size = 50
 var creature_spawn_size = 10

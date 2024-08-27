@@ -14,5 +14,5 @@ func _interpret_special_sauce(special_sauce):
 
 func _act(input, delta):
 	var direction = Vector2(cos(angle + get_parent().rotation), sin(angle + get_parent().rotation))
-	get_parent().apply_impulse(direction * strength * input * delta, position.rotated(get_parent().rotation))
+	get_parent().apply_impulse(direction * 4 * strength * input * delta, position.rotated(get_parent().rotation))
 	sprite_2d_2.scale.y = strength * input / (movement_tweak * 9)

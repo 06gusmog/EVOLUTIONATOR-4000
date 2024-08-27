@@ -2,14 +2,12 @@ extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
 var cells : Dictionary
-var energy = GlobalSettings.energy_required_to_reproduce * GlobalSettings.spawn_energy_multiplier
+var energy : float
 var food_object
 var user_interface
 var bounding_sphere_size : float
 
 var cell_weight = GlobalSettings.cell_weight
-var cell_energy = GlobalSettings.energy_dropped_on_cell_death
-var required_energy = GlobalSettings.energy_required_to_reproduce
 
 @onready var visual_effects_root_node = $"Visual Effects"
 @onready var line_2d = $"Visual Effects/Line2D"
@@ -52,6 +50,8 @@ func _ready():
 		]
 	line_2d.visible = false
 	
+	energy = GlobalSettings.energy_starting_PC * len(cells)
+	
 	get_parent().get_node('FoodSpawnPoints').get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -73,7 +73,7 @@ func _process(delta):
 #		mitosis.emit(self)
 	
 func reproduce_time():
-	if energy >= GlobalSettings.energy_required_to_reproduce:
+	if energy >= GlobalSettings.energy_required_to_reproduce_PC * len(cells):
 		mitosis.emit(self)
 
 func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index):
@@ -175,7 +175,7 @@ func clear_killing_queue():
 			cell.remove_connections(killing_queue_cellID)
 #INFO Spawn food and send relevant signals
 		for cell in killing_queue:
-			food_object.add_food(cell_energy, cell.global_position)
+			food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
 			mass -= cell_weight
 			cell_death.emit(cell.cellID)
 		killing_queue = []
@@ -186,7 +186,7 @@ func clear_killing_queue():
 func die():
 	for cellID in cells:
 		var cell = cells[cellID]
-		food_object.add_food(cell_energy, cell.global_position)
+		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
 	queue_free()
 
 func _on_input_event(_viewport, event, _shape_idx): # Box

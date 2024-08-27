@@ -19,7 +19,7 @@ creature_amount = 20
 [node name="Spawnpoints" type="Node2D" parent="."]
 
 [node name="Spawn 1" type="Node2D" parent="Spawnpoints"]
-position = Vector2(29, 61)
+position = Vector2(120, 120)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 1"]
 
@@ -27,7 +27,7 @@ position = Vector2(29, 61)
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 2" type="Node2D" parent="Spawnpoints"]
-position = Vector2(156, -67)
+position = Vector2(100, -170)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 2"]
 
@@ -66,6 +66,22 @@ position = Vector2(40, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 6/Area2D"]
 shape = SubResource("CircleShape2D_rjn3i")
 
+[node name="Spawn 7" type="Node2D" parent="Spawnpoints"]
+position = Vector2(0, 120)
+
+[node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 7"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 7/Area2D"]
+shape = SubResource("CircleShape2D_rjn3i")
+
+[node name="Spawn 8" type="Node2D" parent="Spawnpoints"]
+position = Vector2(250, 30)
+
+[node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 8"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawnpoints/Spawn 8/Area2D"]
+shape = SubResource("CircleShape2D_rjn3i")
+
 [node name="SpawnTimer" type="Timer" parent="Spawnpoints"]
 wait_time = 5.0
 autostart = true
@@ -73,19 +89,25 @@ autostart = true
 [node name="FoodSpawnPoints" type="Node2D" parent="."]
 
 [node name="FoodSpawn1" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-179, -56)
+position = Vector2(-198, -36)
 
 [node name="FoodSpawn2" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-32, 77)
+position = Vector2(-70, 94)
 
 [node name="FoodSpawn3" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(79, -45)
+position = Vector2(290, 139)
 
 [node name="FoodSpawn4" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-60, -105)
+position = Vector2(-39, -159)
 
 [node name="FoodSpawn5" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(199, -145)
+position = Vector2(196, -91)
+
+[node name="FoodSpawn6" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(-51, -12)
+
+[node name="FoodSpawn7" type="Node2D" parent="FoodSpawnPoints"]
+position = Vector2(-70, -75)
 
 [node name="FoodSpawnTimer" type="Timer" parent="FoodSpawnPoints"]
 wait_time = 10.0
@@ -98,11 +120,29 @@ autostart = true
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_06e6h")
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(208, -151, 119, -153, 112, -95, 50, -72, 18, -121, -89, -167, -172, -144, -170, -108, -210, -72, -169, 21, -82, 61, -73, 2, -76, -39, -28, -24, -39, 34, -86, 98, 78, 139, 84, 99, 124, 47, 103, -12, 164, -11, 213, -21, 218, -64, 269, -56, 83, 210, -281, 69, -219, -199, 126, -212, 253, -187, 269, -56, 218, -64)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(11, -98, 38, -65, 56, -67, 82, -81, 112, -67, 130, -96, 127, -136, 83, -140, 41, -124)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(208, -151, 119, -153, 112, -95, 50, -72, 18, -121, -89, -167, -172, -144, -170, -108, -210, -72, -169, 21, -82, 61, -73, 2, -76, -39, -28, -24, -39, 34, -86, 98, 78, 139, 84, 99, 124, 47, 103, -12, 164, -11, 213, -21, 218, -64, 269, -56, 83, 210, -281, 69, -219, -199, 126, -212, 253, -187, 269, -56, 218, -64)
+polygon = PackedVector2Array(-39, -79, -79, -89, -99, -64, -118, -38, -94, -24, -74, -5, -46, -3, -18, -23, -29, -63)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95, 105, 88, 198, 71, 222, -4)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 208, 123, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 208, 123, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
+
+[node name="Polygon2D2" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(11, -98, 38, -65, 56, -67, 82, -81, 112, -67, 130, -96, 127, -136, 83, -140, 41, -124)
+
+[node name="Polygon2D3" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-39, -79, -79, -89, -99, -64, -118, -38, -94, -24, -74, -5, -46, -3, -18, -23, -29, -63)
+
+[node name="Polygon2D4" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95, 105, 88, 198, 71, 222, -4)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_priority = 1

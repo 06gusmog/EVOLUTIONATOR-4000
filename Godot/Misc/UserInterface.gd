@@ -10,7 +10,6 @@ const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
 func _ready():
 	visible = false
-	progress_bar.max_value = GlobalSettings.energy_required_to_reproduce
 
 
 func _process(_delta):
@@ -55,6 +54,7 @@ func load_creature(creature):
 	if creature_sim.get_child_count() > 0:
 		creature_sim.remove_child(creature_sim.get_child(0))
 	creature_sim.add_child(visual_creature_instance)
+	progress_bar.max_value = len(creature.cells) * GlobalSettings.energy_cap_PC
 	
 func _on_cell_death(_cellID):
 	load_creature(creature_selected)
