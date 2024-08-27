@@ -12,16 +12,12 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @export var camera_move_speed = 5.0
 @onready var food_object = $FoodObject
 @onready var spawnpoints = $Spawnpoints
-
-var noise = FastNoiseLite.new()
+@onready var food_spawn_nodes = get_node("FoodSpawnPoints").get_children()
 
 # Math functions
 
 func _ready():
-	noise.seed = randi()
-	noise.fractal_octaves = 1
-	noise.fractal_gain = 0.5
-	noise.fractal_lacunarity = 2
+	food_spawn_nodes.pop_at(-1)
 
 func _process(_delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
@@ -29,21 +25,21 @@ func _process(_delta):
 	#if Input.is_action_just_pressed("click"):
 	#	food_object.add_food(20, get_global_mouse_position())
 	if Input.is_action_just_pressed("test input"):
-		spawn_food()
+		for x in range(200):
+			spawn_food(food_spawn_nodes[rng.randi() % len(food_spawn_nodes)])
 
-func get_random_position():
-	var width = int(GlobalSettings.map_size[0])
-	var height = int(GlobalSettings.map_size[1])
-	return [rng.randi() % width - width/2, rng.randi() % height - height/2]
+func get_random_position(food_spawn_node):
+	var diameter = 150
+	var offset = food_spawn_node.position 
+	return Vector2(rng.randi() % diameter - diameter/2 + offset[0], rng.randi() % diameter - diameter/2 + offset[1])
 
-func spawn_food():
+func spawn_food(food_spawn_node):
 	var energy = rng.randi() % 50 + 100
-	#This is the method used: https://stackoverflow.com/questions/71551080/random-distribution-of-points-based-on-perlin-noise
 	var proposed_position = [0,0]
 	for x in range(15):
-		proposed_position = get_random_position()
-		var reference_position = get_random_position()
-		if noise.get_noise_2d(proposed_position[0], proposed_position[1]) >= noise.get_noise_2d(reference_position[0], reference_position[1]):
+		proposed_position = get_random_position(food_spawn_node)
+		var reference_position = get_random_position(food_spawn_node)
+		if food_spawn_node.position.distance_to(proposed_position)*2 <= food_spawn_node.position.distance_to(reference_position):
 			break
 	food_object.add_food(energy, Vector2(proposed_position[0], proposed_position[1]))
 
@@ -144,7 +140,7 @@ func _on_mitosis(creature:):
 	
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
-		spawn_food()
+		spawn_food(food_spawn_nodes[rng.randi() % len(food_spawn_nodes)])
 
 
 func _on_spawn_timer_timeout():
