@@ -2,8 +2,13 @@ extends Control
 var creature_selected
 var rendered_creature = Image
 var connections = []
+
+@onready var camera_2d = $"../../Camera2D"
+@export var camera_move_speed = 5.0
+
 @onready var creature_sim = $"Creature View/Creature Sim"
 @onready var progress_bar = $"TabContainer/HBoxContainer/Creature View/ProgressBar"
+@onready var world = $"../.."
 
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
 const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
@@ -13,6 +18,29 @@ func _ready():
 
 
 func _process(_delta):
+	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
+	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
+	
+	if Input.is_action_just_pressed('Pause'):
+		if get_tree().paused:
+			print('Unpause')
+			get_tree().paused = false
+		else:
+			print('Pause')
+			get_tree().paused = true
+	
+	if Input.is_action_just_pressed('click'):
+		var mouse_pos = world.get_local_mouse_position()
+		print(mouse_pos)
+		for creature in world.get_children():
+			if not creature is RigidBody2D:
+				continue
+			#print(mouse_pos.distance_squared_to(creature.global_position))
+			if mouse_pos.distance_squared_to(creature.global_position) <= creature.bounding_sphere_size*creature.bounding_sphere_size:
+				print('Click')
+				creature_clicked(creature)
+				break
+	
 	if not creature_selected: # When there is no selected creature: break
 		return 0
 	var real_cells = creature_selected.cells
@@ -35,6 +63,9 @@ func _process(_delta):
 						connection.update_output(real_cells[connection.origin_cellID].output)
 		
 	progress_bar.value = creature_selected.energy
+	
+	
+		
 
 
 func creature_clicked(creature):

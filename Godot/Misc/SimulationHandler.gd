@@ -8,8 +8,6 @@ var cell_types = DirAccess.get_files_at("res://Cell Types/Scenes/")
 const CREATURE = preload("res://Misc/creature.tscn")
 @export var creature_amount: int
 @export var special_sauce_length: int = 5
-@onready var camera_2d = $Camera2D
-@export var camera_move_speed = 5.0
 @onready var food_object = $FoodObject
 @onready var spawnpoints = $Spawnpoints
 @onready var food_spawn_nodes = get_node("FoodSpawnPoints").get_children()
@@ -20,8 +18,6 @@ func _ready():
 	food_spawn_nodes.pop_at(-1)
 
 func _process(_delta):
-	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
-	camera_2d.zoom -= Vector2(0.01, 0.01) * Input.get_axis("zoom_in", "zoom_out") * camera_2d.zoom
 	#if Input.is_action_just_pressed("click"):
 	#	food_object.add_food(20, get_global_mouse_position())
 	if Input.is_action_just_pressed("test input"):

@@ -189,10 +189,6 @@ func die():
 		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
 	queue_free()
 
-func _on_input_event(_viewport, event, _shape_idx): # Box
-	if event.is_action_pressed('click'):
-		user_interface.creature_clicked(self)
-
 
 func sort_by_length(a, b):
 	if len(a) > len(b):

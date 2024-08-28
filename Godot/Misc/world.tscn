@@ -145,6 +145,7 @@ polygon = PackedVector2Array(-39, -79, -79, -89, -99, -64, -118, -38, -94, -24, 
 polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95, 105, 88, 198, 71, 222, -4)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 process_priority = 1
 
 [node name="UserInterface" type="Control" parent="CanvasLayer"]
