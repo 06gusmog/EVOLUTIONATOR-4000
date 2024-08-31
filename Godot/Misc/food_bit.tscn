@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="1_gkowr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_blp4a"]
-size = Vector2(0.5, 0.5)
+size = Vector2(0.02, 0.02)
 
 [node name="FoodBit" type="CollisionShape2D"]
 shape = SubResource("RectangleShape2D_blp4a")
@@ -11,5 +11,5 @@ metadata/eaten = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 1, 1)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.02, 0.02)
 texture = ExtResource("1_gkowr")

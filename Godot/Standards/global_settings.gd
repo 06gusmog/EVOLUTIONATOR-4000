@@ -30,9 +30,9 @@ var mutation_chances = {
 	}
 
 # Physics
-var simulation_speed = 5
+var simulation_speed = 2
 var food_cap = 1000
-var ticks_per_second = 60
+var ticks_per_second = 30
 
 func _ready():
 	Engine.time_scale = simulation_speed

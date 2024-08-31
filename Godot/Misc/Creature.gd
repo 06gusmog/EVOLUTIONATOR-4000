@@ -14,6 +14,7 @@ var cell_weight = GlobalSettings.cell_weight
 
 signal mitosis
 signal cell_death(cellID:String)
+signal death
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -187,6 +188,7 @@ func die():
 	for cellID in cells:
 		var cell = cells[cellID]
 		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
+	death.emit()
 	queue_free()
 
 

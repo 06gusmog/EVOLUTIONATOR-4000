@@ -7,6 +7,7 @@ func add_food(energy, food_position):
 	food.append(energy)
 	var instantiated_food_bit = FOOD_BIT.instantiate()
 	instantiated_food_bit.position = food_position
+	instantiated_food_bit.scale = Vector2(1,1) * energy
 	add_child(instantiated_food_bit)
 	if get_child_count() > GlobalSettings.food_cap:
 		eat_food(0)

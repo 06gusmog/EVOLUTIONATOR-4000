@@ -1,5 +1,6 @@
 extends Control
 var creature_selected
+var is_a_creature_selected = false
 var rendered_creature = Image
 var connections = []
 
@@ -13,8 +14,6 @@ var connections = []
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
 const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
-func _ready():
-	visible = false
 
 
 func _process(_delta):
@@ -32,18 +31,27 @@ func _process(_delta):
 	if Input.is_action_just_pressed('click'):
 		var mouse_pos = world.get_local_mouse_position()
 		print(mouse_pos)
+		is_a_creature_selected = false
+		creature_sim.get_child(0).visible = false
+		progress_bar.value = 0
+		if is_instance_valid(creature_selected):
+			creature_selected.get_child(0).get_child(0).visible = false
 		for creature in world.get_children():
 			if not creature is RigidBody2D:
 				continue
 			#print(mouse_pos.distance_squared_to(creature.global_position))
 			if mouse_pos.distance_squared_to(creature.global_position) <= creature.bounding_sphere_size*creature.bounding_sphere_size:
-				print('Click')
 				creature_clicked(creature)
+				is_a_creature_selected = true
+				creature_sim.get_child(0).visible = true
 				break
-	
-	if not creature_selected: # When there is no selected creature: break
+			
+		
+	if not is_a_creature_selected: # When there is no selected creature: break
 		return 0
-	var real_cells = creature_selected.cells
+	if not is_instance_valid(creature_selected):
+		return 0
+	var real_cells = creature_selected.cells # Signal when creature dies
 	for sim_cell in creature_sim.get_child(0).get_children():
 		if sim_cell is Camera2D:
 			continue
@@ -78,6 +86,7 @@ func creature_clicked(creature):
 	creature_selected = creature
 	load_creature(creature_selected)
 	creature.cell_death.connect(_on_cell_death)
+	creature.death.connect(_on_creature_death)
 
 func load_creature(creature):
 	var visual_creature_instance = visual_creature_file.instantiate()
@@ -89,3 +98,8 @@ func load_creature(creature):
 	
 func _on_cell_death(_cellID):
 	load_creature(creature_selected)
+
+func _on_creature_death():
+	is_a_creature_selected = false
+	creature_sim.get_child(0).visible = false
+	progress_bar.value = 0

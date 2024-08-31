@@ -201,5 +201,9 @@ expand_mode = 4
 
 [node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
 
+[node name="Placeholder" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim"]
+
+[node name="Placeholder squared" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim/Placeholder"]
+
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
