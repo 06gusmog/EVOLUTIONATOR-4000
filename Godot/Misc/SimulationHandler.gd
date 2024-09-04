@@ -1,5 +1,6 @@
 extends Node2D
 
+var last_creature_ID = -1
 var rng = RandomNumberGenerator.new()
 var number_string = "0123456789"
 var mutation_chances = GlobalSettings.mutation_chances
@@ -12,7 +13,11 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @onready var spawnpoints = $Spawnpoints
 @onready var food_spawn_nodes = get_node("FoodSpawnPoints").get_children()
 
-# Math functions
+
+func _process(delta):
+	if Input.is_action_just_pressed('test input'):
+		for event in GlobalSettings.event_register:
+			print(event)
 
 func _ready():
 	food_spawn_nodes.pop_at(-1)
@@ -32,10 +37,12 @@ func spawn_food(food_spawn_node):
 			break
 	food_object.add_food(energy, Vector2(proposed_position[0], proposed_position[1]))
 
-func create_creature(DNA, creature_position): 
+func create_creature(DNA, creature_position):
 	var dudebro = CREATURE.instantiate()
 	dudebro.DNA = DNA
 	dudebro.position = creature_position 
+	last_creature_ID += 1
+	dudebro.creatureID = last_creature_ID
 	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
 	add_child(dudebro)
 
@@ -126,11 +133,15 @@ func _on_mitosis(creature:):
 		var special_sauce = new_DNA[rng.randi() % len(new_DNA)]['Special Sauce']
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
+	
+	
 	if creature.linear_velocity == Vector2(0,0):
 		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3))
 	else:
 		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3)
 	creature.energy -= GlobalSettings.energy_required_to_reproduce_PC * len(creature.cells)
+	
+	GlobalSettings.add_event('Mitosis', last_creature_ID, [creature.creatureID, new_DNA]) # Timeline Thing
 	
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
@@ -142,7 +153,10 @@ func _on_spawn_timer_timeout():
 		if spawn is Timer:
 			continue
 		var overlapping_bodies = spawn.get_child(0).get_overlapping_bodies()
+		var new_DNA = generate_random_DNA(GlobalSettings.creature_spawn_size)
 		if overlapping_bodies == []:
-			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
+			create_creature(new_DNA, spawn.position)
+			GlobalSettings.add_event('Creation', last_creature_ID, [new_DNA]) # Timeline Thing
 		elif len(overlapping_bodies) == 1 and food_object in overlapping_bodies:
-			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
+			create_creature(new_DNA, spawn.position)
+			GlobalSettings.add_event('Creation', last_creature_ID, [new_DNA]) # Timeline Thing

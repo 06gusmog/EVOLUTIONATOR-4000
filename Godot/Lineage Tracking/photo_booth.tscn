@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvxvhwmlwa1bj"]
+
+[ext_resource type="Script" path="res://Lineage Tracking/Photo Booth.gd" id="1_x2mek"]
+
+[node name="Photo Booth" type="Node2D"]
+script = ExtResource("1_x2mek")
+
+[node name="Camera Room" type="SubViewport" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Camera Room"]

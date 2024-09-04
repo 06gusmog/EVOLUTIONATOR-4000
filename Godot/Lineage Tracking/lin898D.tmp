@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://et3fgg6klysf"]
+
+[ext_resource type="Script" path="res://Lineage Tracking/LineageDrawer.gd" id="1_vwb8d"]
+
+[node name="LineageDrawer" type="Node2D"]
+script = ExtResource("1_vwb8d")
+
+[node name="IGNORE" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="IGNORE"]

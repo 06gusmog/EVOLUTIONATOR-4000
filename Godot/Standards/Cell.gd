@@ -71,6 +71,9 @@ func read_and_act(delta):
 			calculated_input += other_cell.output
 		else:
 			print('Connection to nowhere')
+			print('Removing faulty connection')
+			connections.pop_at(connections.find(connection))
+			
 	calculated_input = weighted_clamp(calculated_input)
 	
 	_act(calculated_input, delta)

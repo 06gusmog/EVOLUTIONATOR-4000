@@ -4,8 +4,8 @@ var killing_queue : Array
 var cells : Dictionary
 var energy : float
 var food_object
-var user_interface
 var bounding_sphere_size : float
+var creatureID : int
 
 var cell_weight = GlobalSettings.cell_weight
 
@@ -20,7 +20,6 @@ signal death
 func _ready():
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
-	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
 	var i = 0
 	for RNA in DNA:
 		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
@@ -189,6 +188,7 @@ func die():
 		var cell = cells[cellID]
 		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
 	death.emit()
+	GlobalSettings.add_event('Death', creatureID) # Timeline Thing
 	queue_free()
 
 

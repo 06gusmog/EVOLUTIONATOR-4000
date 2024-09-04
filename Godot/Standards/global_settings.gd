@@ -1,5 +1,7 @@
 extends Node
 
+signal event
+
 #Map
 var map_size = Vector2(640, 384)
 
@@ -12,8 +14,7 @@ var energy_dropped_min = 25.0
 var energy_dropped_max = 75.0
 var energy_consumption_PC = 0.2
 
-# Energy
-var cell_weight = 1.0
+
 
 var food_spawn_burst_size = 50
 var creature_spawn_size = 10
@@ -30,9 +31,33 @@ var mutation_chances = {
 	}
 
 # Physics
-var simulation_speed = 2
+var cell_weight = 1.0
+var simulation_speed = 10
 var food_cap = 1000
 var ticks_per_second = 30
+
+# Lineage Tracking
+var event_register = []
+var creature_register = []
+
+var photo_booth = load("res://Lineage Tracking/photo_booth.tscn").instantiate()
+
+func add_event(type:String, creatureID:int, other_tags:Array = []):
+	event.emit()
+	print(type)
+	print(creatureID)
+	match type:
+		'Creation':
+			event_register.append({'Type':'Creation', 'CreatureID': creatureID})
+			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[0], 'Parent':-1, 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[0]), 'Dead':false, 'Death Event':0})
+		'Mitosis':
+			event_register.append({'Type':'Mitosis', 'Offspring CreatureID': creatureID, 'Parent CreatureID': other_tags[0]})
+			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[1], 'Parent':other_tags[0], 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[1]), 'Dead':false, 'Death Event':0})
+			creature_register[other_tags[0]]['Offspring'].append(creatureID)
+		'Death':
+			event_register.append({'Type':'Death', 'CreatureID':creatureID})
+			creature_register[creatureID]['Dead'] = true
+			creature_register[creatureID]['Death Event'] = len(event_register)-1
 
 func _ready():
 	Engine.time_scale = simulation_speed
