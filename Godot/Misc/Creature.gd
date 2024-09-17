@@ -18,6 +18,7 @@ signal death
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_parent().add_to_group("Persist")
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
 	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
@@ -72,7 +73,15 @@ func _process(delta):
 		die()
 #	if energy >= required_energy:
 #		mitosis.emit(self)
-	
+
+func save():
+	var save_dict = {
+		"DNA": DNA,
+		"cells": cells, 
+		"energy": energy, 
+	}
+	return save_dict
+
 func reproduce_time():
 	if energy >= GlobalSettings.energy_required_to_reproduce_PC * len(cells):
 		mitosis.emit(self)

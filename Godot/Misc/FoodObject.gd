@@ -3,8 +3,14 @@ extends Area2D
 const FOOD_BIT = preload("res://Misc/food_bit.tscn")
 var food : Array
 
+func save():
+	var save_dict = {
+		"food": food
+	}
+	return save_dict
+
 func add_food(energy, food_position):
-	food.append(energy)
+	food.append([energy, food_position])
 	var instantiated_food_bit = FOOD_BIT.instantiate()
 	instantiated_food_bit.position = food_position
 	instantiated_food_bit.scale = Vector2(1,1) * energy
@@ -17,9 +23,9 @@ func eat_food(index : int):
 	if food_to_eat.get_meta('eaten') == false: # This fuckery is necessary because the creature overlapps several times before the food is deleted.
 		food_to_eat.set_meta('eaten', true)
 		food_to_eat.free() # Screw the queue, it only causes problems
-		return food.pop_at(index)
+		#I think this fixed potential issues with position being added to the food array
+		return food.pop_at(index)[0]
 	return 0
-
 
 func _on_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_index):
 	if body is RigidBody2D:
