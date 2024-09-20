@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=11 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
 [ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
 [ext_resource type="PackedScene" uid="uid://et3fgg6klysf" path="res://Lineage Tracking/lineage_drawer.tscn" id="4_lw6q8"]
+[ext_resource type="PackedScene" uid="uid://dvxvhwmlwa1bj" path="res://Lineage Tracking/photo_booth.tscn" id="5_m7cfs"]
+[ext_resource type="PackedScene" uid="uid://bsbbgrak06yss" path="res://Lineage Tracking/photo_booth_2.tscn" id="6_77bdk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
@@ -161,56 +163,69 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
-mouse_filter = 1
 script = ExtResource("3_6vnwv")
 
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UserInterface"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -178.0
-offset_right = 553.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Creature View" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UserInterface/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Creature View" type="HBoxContainer" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer"]
 layout_mode = 2
 
-[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
+[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Creature View"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/Creature View/Creature View"]
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Creature View/Creature View"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Energy
 "
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/Creature View/Creature View"]
-custom_minimum_size = Vector2(0, 270)
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Creature View/Creature View"]
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 3
 fill_mode = 3
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/Creature View"]
-custom_minimum_size = Vector2(300, 300)
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Creature View"]
 layout_mode = 2
+size_flags_horizontal = 2
+stretch_mode = 1
+alignment_horizontal = 0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/Creature View/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Creature View/AspectRatioContainer"]
 layout_mode = 2
 texture = SubResource("ViewportTexture_xdqrd")
 expand_mode = 4
 
-[node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/Lineage View"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Lineage View"]
 layout_mode = 2
+size_flags_horizontal = 2
+stretch_mode = 1
+alignment_horizontal = 0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/Lineage View/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/VBoxContainer/TabContainer/Lineage View/AspectRatioContainer"]
 layout_mode = 2
 texture = SubResource("ViewportTexture_noyqq")
+expand_mode = 4
 
 [node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
 
@@ -223,6 +238,10 @@ texture = SubResource("ViewportTexture_noyqq")
 [node name="Lineage View" type="SubViewport" parent="CanvasLayer/UserInterface"]
 
 [node name="LineageDrawer" parent="CanvasLayer/UserInterface/Lineage View" instance=ExtResource("4_lw6q8")]
+
+[node name="Photo Booth" parent="CanvasLayer/UserInterface" instance=ExtResource("5_m7cfs")]
+
+[node name="Photo Booth 2" parent="CanvasLayer/UserInterface" instance=ExtResource("6_77bdk")]
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]

@@ -14,10 +14,6 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @onready var food_spawn_nodes = get_node("FoodSpawnPoints").get_children()
 
 
-func _process(delta):
-	if Input.is_action_just_pressed('test input'):
-		for event in GlobalSettings.event_register:
-			print(event)
 
 func _ready():
 	food_spawn_nodes.pop_at(-1)

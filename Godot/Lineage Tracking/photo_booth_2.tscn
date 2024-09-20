@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsbbgrak06yss"]
+
+[ext_resource type="Script" path="res://Lineage Tracking/Photo Booth 2.gd" id="1_ofubd"]
+
+[node name="Photo Booth 2" type="Node2D"]
+script = ExtResource("1_ofubd")

@@ -7,17 +7,16 @@ var connections = []
 @onready var camera_2d = $"../../Camera2D"
 @export var camera_move_speed = 5.0
 @onready var lineage_drawer = $"Lineage View/LineageDrawer"
+@onready var canvas_layer = $".."
 
 
 @onready var creature_sim = $"Creature View/Creature Sim"
-@onready var progress_bar = $"TabContainer/Creature View/Creature View/ProgressBar"
+@onready var progress_bar = $"VBoxContainer/TabContainer/Creature View/Creature View/ProgressBar"
 @onready var world = $"../.."
 
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
 const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
-func _ready():
-	GlobalSettings.event.connect(_on_event)
 
 func _process(_delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
@@ -31,23 +30,28 @@ func _process(_delta):
 			print('Pause')
 			get_tree().paused = true
 	
+	if Input.is_action_just_pressed("test input"):
+		if is_a_creature_selected:
+			lineage_drawer.draw_specific_lineage(creature_selected.creatureID, GlobalSettings.event_register, GlobalSettings.creature_register)
+	
 	if Input.is_action_just_pressed('click'):
 		var mouse_pos = world.get_local_mouse_position()
-		print(mouse_pos)
-		is_a_creature_selected = false
-		creature_sim.get_child(0).visible = false
-		progress_bar.value = 0
-		if is_instance_valid(creature_selected):
-			creature_selected.get_child(0).get_child(0).visible = false
-		for creature in world.get_children():
-			if not creature is RigidBody2D:
-				continue
-			#print(mouse_pos.distance_squared_to(creature.global_position))
-			if mouse_pos.distance_squared_to(creature.global_position) <= creature.bounding_sphere_size*creature.bounding_sphere_size:
-				creature_clicked(creature)
-				is_a_creature_selected = true
-				creature_sim.get_child(0).visible = true
-				break
+		var local_mouse_pos = get_viewport().get_mouse_position()
+		if local_mouse_pos.y < get_viewport_rect().size.y/2:
+			is_a_creature_selected = false
+			creature_sim.get_child(0).visible = false
+			progress_bar.value = 0
+			if is_instance_valid(creature_selected):
+				creature_selected.get_child(0).get_child(0).visible = false
+			for creature in world.get_children():
+				if not creature is RigidBody2D:
+					continue
+				#print(mouse_pos.distance_squared_to(creature.global_position))
+				if mouse_pos.distance_squared_to(creature.global_position) <= creature.bounding_sphere_size*creature.bounding_sphere_size:
+					creature_clicked(creature)
+					is_a_creature_selected = true
+					creature_sim.get_child(0).visible = true
+					break
 			
 		
 	if not is_a_creature_selected: # When there is no selected creature: break
@@ -74,9 +78,6 @@ func _process(_delta):
 						connection.update_output(real_cells[connection.origin_cellID].output)
 		
 	progress_bar.value = creature_selected.energy
-
-func _on_event():
-	lineage_drawer.draw_lineage(GlobalSettings.event_register, GlobalSettings.creature_register)
 
 func creature_clicked(creature):
 	if is_instance_valid(creature_selected):

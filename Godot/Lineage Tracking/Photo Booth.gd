@@ -7,10 +7,11 @@ const white_dot = preload("res://Misc/UI assets/white_dot.png")
 
 @export var edge_padding = 0.01
 
+
 func generate_icon(DNA):
 	var cells = {}
 	var radius_squared = 0
-	for child in $"Camera Room".get_children():
+	for child in camera_room.get_children():
 		if child is Camera2D:
 			continue
 		child.queue_free()
@@ -44,7 +45,9 @@ func generate_icon(DNA):
 			dot_sprite.scale = Vector2(0.01,0.01)
 			dot_sprite.name = 'Dot'
 			cell_instance.add_child(dot_sprite)
-	
+
 	camera_2d.zoom = Vector2(1,1) * float(camera_2d.get_viewport().size.x) / (sqrt(radius_squared) + edge_padding)
 	var img = camera_room.get_texture().get_image()
+	img.convert(Image.FORMAT_RGBA8)
 	return ImageTexture.create_from_image(img)
+

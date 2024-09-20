@@ -2,6 +2,15 @@ extends Node
 
 signal event
 
+# Visual
+var color_sheet = {
+	'eating_cell.tscn':Color.RED,
+	'eye_cell.tscn':Color.PURPLE,
+	'move_cell.tscn':Color.BLUE,
+	'neuron_cell.tscn':Color.YELLOW,
+	'rotation_cell.tscn':Color.GREEN
+	}
+
 #Map
 var map_size = Vector2(640, 384)
 
@@ -40,27 +49,25 @@ var ticks_per_second = 30
 var event_register = []
 var creature_register = []
 
-var photo_booth = load("res://Lineage Tracking/photo_booth.tscn").instantiate()
+var photo_booth
 
 func add_event(type:String, creatureID:int, other_tags:Array = []):
-	event.emit()
-	print(type)
-	print(creatureID)
 	match type:
 		'Creation':
 			event_register.append({'Type':'Creation', 'CreatureID': creatureID})
-			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[0], 'Parent':-1, 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[0]), 'Dead':false, 'Death Event':0})
+			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[0], 'Parent':-1, 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[0], color_sheet), 'Dead':false, 'Death Event':0})
 		'Mitosis':
 			event_register.append({'Type':'Mitosis', 'Offspring CreatureID': creatureID, 'Parent CreatureID': other_tags[0]})
-			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[1], 'Parent':other_tags[0], 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[1]), 'Dead':false, 'Death Event':0})
+			creature_register.append({'Creation Event':len(event_register)-1, 'DNA':other_tags[1], 'Parent':other_tags[0], 'Offspring':[], 'image':photo_booth.generate_icon(other_tags[1], color_sheet), 'Dead':false, 'Death Event':0})
 			creature_register[other_tags[0]]['Offspring'].append(creatureID)
 		'Death':
 			event_register.append({'Type':'Death', 'CreatureID':creatureID})
 			creature_register[creatureID]['Dead'] = true
 			creature_register[creatureID]['Death Event'] = len(event_register)-1
+	event.emit()
+		
+
 
 func _ready():
 	Engine.time_scale = simulation_speed
 	Engine.physics_ticks_per_second = ticks_per_second * simulation_speed
-
-

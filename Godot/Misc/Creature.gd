@@ -12,6 +12,7 @@ var cell_weight = GlobalSettings.cell_weight
 @onready var visual_effects_root_node = $"Visual Effects"
 @onready var line_2d = $"Visual Effects/Line2D"
 
+signal done_loading
 signal mitosis
 signal cell_death(cellID:String)
 signal death
@@ -53,6 +54,8 @@ func _ready():
 	energy = GlobalSettings.energy_starting_PC * len(cells)
 	
 	get_parent().get_node('FoodSpawnPoints').get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
+	
+	done_loading.emit()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	clear_killing_queue()
