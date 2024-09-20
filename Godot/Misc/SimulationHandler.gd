@@ -17,6 +17,12 @@ const CREATURE = preload("res://Misc/creature.tscn")
 func _ready():
 	food_spawn_nodes.pop_at(-1)
 
+#func _process(_delta):
+	#if Input.is_action_just_pressed("click"):
+	#	food_object.add_food(20, get_global_mouse_position())
+	#if Input.is_action_just_pressed("test input"):
+	#	save_game()
+
 func get_random_position(food_spawn_node):
 	var diameter = 150
 	var offset = food_spawn_node.position 

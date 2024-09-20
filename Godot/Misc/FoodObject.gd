@@ -3,6 +3,9 @@ extends Area2D
 const FOOD_BIT = preload("res://Misc/food_bit.tscn")
 var food : Array
 
+func _ready():
+	self.add_to_group("Persist")
+
 func save():
 	var save_dict = {
 		"food": food

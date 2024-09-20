@@ -97,7 +97,7 @@ func load_creature(creature):
 	progress_bar.max_value = len(creature.cells) * GlobalSettings.energy_cap_PC
 	
 func _on_cell_death(_cellID):
-	load_creature(creature_selected)
+	self.call_deferred("load_creature", creature_selected)
 
 func _on_creature_death():
 	is_a_creature_selected = false

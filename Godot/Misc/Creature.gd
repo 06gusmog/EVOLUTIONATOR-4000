@@ -18,7 +18,7 @@ signal death
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_parent().add_to_group("Persist")
+	self.add_to_group("Persist")
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
 	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
