@@ -38,11 +38,13 @@ func spawn_food(food_spawn_node):
 			break
 	food_object.add_food(energy, Vector2(proposed_position[0], proposed_position[1]))
 
-func create_creature(DNA, creature_position): 
+func create_creature(DNA, creature_position, parentID = '-1'): 
+	var creatureID = LineageLogger.log_creature_creation(parentID, DNA)
 	var dudebro = CREATURE.instantiate()
 	dudebro.DNA = DNA
 	dudebro.position = creature_position 
 	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
+	dudebro.creatureID = creatureID
 	add_child(dudebro)
 
 func generate_special_sauce(length : int):
@@ -133,9 +135,9 @@ func _on_mitosis(creature:):
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
 	if creature.linear_velocity == Vector2(0,0):
-		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3))
+		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3), creature.creatureID)
 	else:
-		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3)
+		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3, creature.creatureID)
 	creature.energy -= GlobalSettings.energy_required_to_reproduce_PC * len(creature.cells)
 	
 #This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 

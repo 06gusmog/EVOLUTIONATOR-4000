@@ -6,6 +6,7 @@ var energy : float
 var food_object
 var user_interface
 var bounding_sphere_size : float
+var creatureID : String
 
 var cell_weight = GlobalSettings.cell_weight
 
@@ -197,6 +198,7 @@ func die():
 	for cellID in cells:
 		var cell = cells[cellID]
 		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
+	LineageLogger.log_creature_death(creatureID)
 	death.emit()
 	queue_free()
 

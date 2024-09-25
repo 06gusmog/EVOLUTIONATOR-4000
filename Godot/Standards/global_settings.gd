@@ -34,8 +34,18 @@ var simulation_speed = 2
 var food_cap = 1000
 var ticks_per_second = 30
 
+# Visual
+var color_sheet = {
+	'eating_cell.tscn':Color.RED,
+	'eye_cell.tscn':Color.PURPLE,
+	'move_cell.tscn':Color.BLUE,
+	'neuron_cell.tscn':Color.YELLOW,
+	'rotation_cell.tscn':Color.GREEN
+	}
+
 func _ready():
 	Engine.time_scale = simulation_speed
 	Engine.physics_ticks_per_second = ticks_per_second * simulation_speed
+
 
 
