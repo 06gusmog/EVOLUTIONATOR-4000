@@ -10,11 +10,14 @@ var connections = []
 @onready var creature_sim = $"Creature View/Creature Sim"
 @onready var progress_bar = $"TabContainer/HBoxContainer/Creature View/ProgressBar"
 @onready var world = $"../.."
+@onready var texture_rect = $TabContainer/HBoxContainer2/AspectRatioContainer/TextureRect
 
 var visual_creature_file = preload("res://Misc/UI assets/visual_creature.tscn")
 const CONNECTION2D = preload("res://Misc/UI assets/connection.gd")
 
-
+func _ready():
+	var blank_image = Image.create(10,10, false, Image.FORMAT_RGBA8)
+	blank_image.save_png('res://Lineage Tracking/Icons/test.png')
 
 func _process(_delta):
 	camera_2d.position += Input.get_vector( 'left', 'right', 'up', 'down') * camera_move_speed * 1/camera_2d.zoom
@@ -77,6 +80,11 @@ func _process(_delta):
 
 
 func creature_clicked(creature):
+	var relative_lineage = LineageLogger.get_relative_lineage(creature.creatureID)
+	var image = LineageLogger.get_image(relative_lineage.keys()[1])
+	texture_rect.texture = ImageTexture.create_from_image(image)
+	image.save_png('res://Lineage Tracking/Icons/test.png')
+	print_rich('[img]res://Lineage Tracking/Icons/test.png[/img]')
 	if is_instance_valid(creature_selected):
 		if creature_selected.get_child(0).get_child(0).visible:
 			creature_selected.get_child(0).get_child(0).visible = false
