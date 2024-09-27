@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=8 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
@@ -11,6 +11,8 @@ radius = 19.0263
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xdqrd"]
 viewport_path = NodePath("CanvasLayer/UserInterface/Creature View")
+
+[sub_resource type="ImageTexture" id="ImageTexture_6sdd6"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
@@ -196,6 +198,24 @@ layout_mode = 2
 layout_mode = 2
 texture = SubResource("ViewportTexture_xdqrd")
 expand_mode = 4
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+stretch_mode = 1
+alignment_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2/AspectRatioContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+texture = SubResource("ImageTexture_6sdd6")
+expand_mode = 5
+stretch_mode = 4
 
 [node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
 

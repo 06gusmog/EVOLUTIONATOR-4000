@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwqoi5dr3x2gq"
-path="res://.godot/imported/14.png-3411acfc6b965c9e932725b503ccdde0.ctex"
+uid="uid://dgjdt856ga0sd"
+path="res://.godot/imported/test.png-ecc97778b45d797c9aa4dbc22ab943ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Lineage Tracking/Icons/14.png"
-dest_files=["res://.godot/imported/14.png-3411acfc6b965c9e932725b503ccdde0.ctex"]
+source_file="res://Lineage Tracking/Icons/test.png"
+dest_files=["res://.godot/imported/test.png-ecc97778b45d797c9aa4dbc22ab943ec.ctex"]
 
 [params]
 
