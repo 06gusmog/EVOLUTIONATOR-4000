@@ -24,6 +24,7 @@ func _ready():
 	food_object = get_parent().get_node('FoodObject')
 	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
 	var i = 0
+	DNA = load_DNA(DNA)
 	for RNA in DNA:
 		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
 		var cell_instance = cell_base.instantiate()
@@ -77,9 +78,14 @@ func _process(delta):
 
 func save():
 	var save_dict = {
-		"DNA": DNA,
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_path(),
+		"pos_x" : position.x, # Vector2 is not supported by JSON
+		"pos_y" : position.y,
+		"DNA": save_DNA(DNA),
 		"cells": cells, 
 		"energy": energy, 
+		"creatureID": creatureID
 	}
 	return save_dict
 
@@ -207,3 +213,14 @@ func sort_by_length(a, b):
 	if len(a) > len(b):
 		return 1
 	return 0
+
+func save_DNA(DNA):
+	for RNA in DNA:
+		RNA['Position'] = [RNA['Position'][0], RNA['Position'][1]]
+	return DNA
+
+func load_DNA(DNA):
+	if typeof(DNA[0]['Position']) == TYPE_ARRAY:
+		for RNA in DNA:
+			RNA['Position'] = Vector2(RNA['Position'][0], RNA['Position'][1])
+	return DNA
