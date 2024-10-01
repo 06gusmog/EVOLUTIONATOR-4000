@@ -40,7 +40,7 @@ func _ready():
 	# Box around the creature
 	for cellID in cells:
 		var cell = cells[cellID]
-		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size:
+		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size: #CRITICAL: It crashes on startup here sometimes, error message: Invalid get index 'position' (on base: 'String'). No idea why
 			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
 	bounding_sphere_size = sqrt(bounding_sphere_size)
 	var box_side_length = bounding_sphere_size * 2
@@ -85,7 +85,8 @@ func save():
 		"DNA": save_DNA(DNA),
 		"cells": cells, 
 		"energy": energy, 
-		"creatureID": creatureID
+		"creatureID": creatureID, 
+		"bounding_sphere_size": bounding_sphere_size
 	}
 	return save_dict
 
