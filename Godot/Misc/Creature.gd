@@ -41,6 +41,12 @@ func _ready():
 	for cellID in cells:
 		var cell = cells[cellID]
 		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size: #CRITICAL: It crashes on startup here sometimes, error message: Invalid get index 'position' (on base: 'String'). No idea why
+			# When saving the cells, references to cell objects are saved as strings instead 
+			# of the cells themselves being saved. The cells are saved as children, but the 
+			# dictionary is just strings. This works when the creatures are whole because
+			# the strings are overwritten with actual references. (lines 35-38). I don't know why 
+			# the cells are just completely replaced (lines 28-33) but this solution is fundementally
+			# flawed and needs replacing.
 			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
 	bounding_sphere_size = sqrt(bounding_sphere_size)
 	var box_side_length = bounding_sphere_size * 2
