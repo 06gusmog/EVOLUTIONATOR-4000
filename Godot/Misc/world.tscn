@@ -1,18 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=10 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
-[ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
+[ext_resource type="Script" path="res://Misc/User Interface/UserInterface.gd" id="3_6vnwv"]
+[ext_resource type="Script" path="res://Misc/User Interface/Schematic View/Connection Monitor.gd" id="4_8bh71"]
+[ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06e6h"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_xdqrd"]
-viewport_path = NodePath("CanvasLayer/UserInterface/Creature View")
-
-[sub_resource type="ImageTexture" id="ImageTexture_6sdd6"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jeq8q"]
+viewport_path = NodePath("CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
@@ -150,82 +151,6 @@ polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95,
 process_mode = 3
 process_priority = 1
 
-[node name="UserInterface" type="Control" parent="CanvasLayer"]
-process_priority = 1
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-mouse_filter = 1
-script = ExtResource("3_6vnwv")
-
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -178.0
-offset_right = 553.0
-grow_vertical = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
-layout_mode = 2
-
-[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Energy
-"
-horizontal_alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
-custom_minimum_size = Vector2(0, 270)
-layout_mode = 2
-size_flags_vertical = 1
-fill_mode = 3
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
-custom_minimum_size = Vector2(300, 300)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/AspectRatioContainer"]
-layout_mode = 2
-texture = SubResource("ViewportTexture_xdqrd")
-expand_mode = 4
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-stretch_mode = 1
-alignment_horizontal = 0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2/AspectRatioContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(300, 200)
-layout_mode = 2
-texture = SubResource("ImageTexture_6sdd6")
-expand_mode = 5
-stretch_mode = 4
-
-[node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
-
-[node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
-
-[node name="Placeholder" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim"]
-
-[node name="Placeholder squared" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim/Placeholder"]
-
 [node name="UserInterface2" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
@@ -233,6 +158,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_6vnwv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UserInterface2"]
 layout_mode = 1
@@ -250,6 +176,53 @@ color = Color(1, 1, 1, 0)
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+current_tab = 1
+
+[node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Creature Schematic View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
+layout_mode = 2
+texture = SubResource("ViewportTexture_jeq8q")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Connection Monitor" type="SubViewport" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
+canvas_item_default_texture_filter = 3
+script = ExtResource("4_8bh71")
+
+[node name="Monitor Root" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor"]
+
+[node name="Camera" type="Camera2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+zoom = Vector2(2, 2)
+
+[node name="Cells" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+
+[node name="Connections" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+top_level = true
+
+[node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource("5_s53s6")
+expand_mode = 2
+stretch_mode = 4
+script = ExtResource("5_46rmg")
+
+[node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]

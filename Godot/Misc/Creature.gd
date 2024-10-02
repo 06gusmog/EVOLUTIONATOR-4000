@@ -4,7 +4,6 @@ var killing_queue : Array
 var cells : Dictionary
 var energy : float
 var food_object
-var user_interface
 var bounding_sphere_size : float
 var creatureID : String
 
@@ -22,7 +21,6 @@ func _ready():
 	self.add_to_group("Persist")
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
-	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
 	var i = 0
 	for RNA in DNA:
 		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
