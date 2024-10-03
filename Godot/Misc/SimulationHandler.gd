@@ -144,7 +144,10 @@ func _on_mitosis(creature:):
 #This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
 #if any problems occur please consult the source
 func save_game():
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+	#This should name the save "savegame[hour]:[minute].save"
+	var time = Time.get_time_dict_from_system()
+	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
+	var save_file = FileAccess.open("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE)
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
 	for node in save_nodes:
 		# Check the node is an instanced scene so it can be instanced again during load.
@@ -179,3 +182,7 @@ func _on_spawn_timer_timeout():
 			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
 		elif len(overlapping_bodies) == 1 and food_object in overlapping_bodies:
 			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
+
+
+func _on_auto_save_timer_timeout():
+	save_game()

@@ -228,5 +228,10 @@ stretch_mode = 4
 
 [node name="FileLogger" parent="." instance=ExtResource("4_4un07")]
 
+[node name="AutoSaveTimer" type="Timer" parent="."]
+wait_time = 300.0
+autostart = true
+
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
+[connection signal="timeout" from="AutoSaveTimer" to="." method="_on_auto_save_timer_timeout"]
