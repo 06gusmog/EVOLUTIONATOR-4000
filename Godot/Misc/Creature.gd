@@ -1,6 +1,7 @@
 extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
+var killing_queue_ID : Array
 var cells : Dictionary
 var energy : float
 var food_object
@@ -114,9 +115,11 @@ func kill_cell(cellID : String):
 	# Fuck me I guess
 	cell_copy.cellID = cell.cellID
 	killing_queue.append(cell_copy)
+	killing_queue_ID.append(cell.cellID)
 	cell.queue_free()
 
 func clear_killing_queue():
+	killing_queue_ID = []
 	if killing_queue != []:
 #INFO First remove the invalid (free'd) cells from cells
 		var placeholder_cells = {} 

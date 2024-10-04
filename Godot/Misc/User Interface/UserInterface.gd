@@ -27,8 +27,8 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed('click'):
 		var global_mouse_pos = get_global_mouse_position()
-		print(global_mouse_pos)
-		print(get_viewport_rect().size.y/2)
+		#print(global_mouse_pos)
+		#print(get_viewport_rect().size.y/2)
 		if global_mouse_pos.y < get_viewport_rect().size.y/2:
 			var local_mouse_pos = world.get_local_mouse_position()
 			var clicked = false

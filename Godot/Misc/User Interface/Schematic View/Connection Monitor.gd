@@ -29,18 +29,26 @@ func load_creature(creature: Node):
 	active = true
 	loaded_creature = creature
 	
-	creature.cell_death.connect(_on_creature_cell_death)
-	creature.death.connect(_on_creature_death)
+	creature.cell_death.connect(self._on_creature_cell_death)
+	creature.death.connect(self._on_creature_death)
 	
 	creature.get_child(0).get_child(0).visible = true
 	
 	for cellID in loaded_creature.cells:
+		var do_I_skip_this_cell = false
+		for cell_to_be_killed in loaded_creature.killing_queue:
+			if cell_to_be_killed.cellID == cellID:
+				do_I_skip_this_cell = true
+		if do_I_skip_this_cell:
+			continue
+		
 		var cell = loaded_creature.cells[cellID]
 		# Adding all the cells
 		var sprite = Sprite2D.new()
 		sprite.texture = WHITE_PIXEL
 		sprite.modulate = GlobalSettings.color_sheet[cell.type]
 		sprite.position = cell.position
+		sprite.name = cellID
 		cells_root.add_child(sprite)
 		
 		# Creating roots for connections (Needs to be done before adding any connections)
@@ -60,9 +68,18 @@ func load_creature(creature: Node):
 			
 	# Adding all the connections
 	for cellID in loaded_creature.cells:
+		var do_I_skip_this_cell = false
+		for cell_to_be_killed in loaded_creature.killing_queue:
+			if cell_to_be_killed.cellID == cellID:
+				do_I_skip_this_cell = true
+		if do_I_skip_this_cell:
+			continue
+		
 		var cell = loaded_creature.cells[cellID]
 		if 'Input' in cell.tags:
 			for connection in cell.connections:
+				if connection in loaded_creature.killing_queue_ID:
+					continue
 				var connecting_cell = loaded_creature.get_node(connection)
 				if 'Output' in connecting_cell.tags:
 					# Use polygon 2d with 2 points per border, then thin them when distinction is necessary. (future project)
@@ -86,12 +103,22 @@ func unload_creature():
 	active = false
 
 func _on_creature_cell_death(cellID:String):
+	print('connected')
+	print(cellID)
 	for output_cell in connections_root.get_children():
 		for connection in output_cell.get_children():
+			print(connection.name)
 			if connection.name == cellID:
-				connection.queue_free()
+				print('removed')
+				connection.free()
+			print(output_cell.name)
 		if output_cell.name == cellID:
-			output_cell.queue_free()
+			print('removed')
+			output_cell.free()
+	for output_cell in cells_root.get_children():
+		if output_cell.name == cellID:
+			output_cell.free()
+			break
 
 func _on_creature_death():
 	unload_creature()
@@ -99,7 +126,16 @@ func _on_creature_death():
 func _process(delta):
 	if active == false:
 		return 0
+	# Fuck this man wtf
+				
 	for output_node in connections_root.get_children():
+		var do_I_skip_this_cell = false
+		for cell_to_be_killed in loaded_creature.killing_queue:
+			if cell_to_be_killed.cellID == output_node.name:
+				do_I_skip_this_cell = true
+		if do_I_skip_this_cell:
+			continue
+		
 		var value = loaded_creature.cells[output_node.name].output
 		var value_color = Color.WHITE * ((value+1)/2)
 		value_color.a = abs(value)
