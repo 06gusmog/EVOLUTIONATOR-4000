@@ -8,7 +8,7 @@ var distance_factor = 10
 func _interpret_special_sauce(special_sauce):
 	var sauce_values = get_from_sauce(special_sauce, ['angle', 'weight'])
 	angle = sauce_values[0]
-	distance = sauce_values[1] * distance_factor
+	distance = (sauce_values[1] + 1) * distance_factor
 	ray_cast_2d.target_position = Vector2(cos(angle), sin(angle)) * distance
 	line_2d.points = [Vector2(0,0), ray_cast_2d.target_position]
 	tags.append('Output')
@@ -16,7 +16,9 @@ func _interpret_special_sauce(special_sauce):
 func _update_output(_input):
 	if ray_cast_2d.is_colliding():
 		var collision_point = ray_cast_2d.get_collision_point()
-		var collision_distance = collision_point.distance_to(Vector2(0,0))
-		output = collision_distance / distance
+		var collision_distance = to_local(collision_point).distance_to(Vector2(0,0))
+		#print("Max Distance: {0}, Collision Distance: {1}".format([distance, collision_distance]))
+		#NOTE: Now detects siblings, bug or feature?
+		output = (distance - collision_distance) / distance
 	else:
-		output = 0.0
+		output = -1

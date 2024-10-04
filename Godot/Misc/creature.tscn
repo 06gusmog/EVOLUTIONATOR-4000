@@ -7,10 +7,11 @@ friction = 0.1
 bounce = 0.4
 
 [node name="Creature" type="RigidBody2D"]
+collision_layer = 2
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_cf5g3")
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 linear_damp = 3.621
 angular_damp = 49.347
 script = ExtResource("1_2isnp")

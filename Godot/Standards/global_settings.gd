@@ -40,7 +40,8 @@ var color_sheet = {
 	'eye_cell.tscn':Color.PURPLE,
 	'move_cell.tscn':Color.BLUE,
 	'neuron_cell.tscn':Color.YELLOW,
-	'rotation_cell.tscn':Color.GREEN
+	'rotation_cell.tscn':Color.GREEN,
+	'hearing_cell.tscn':Color.AQUA
 	}
 
 #To create a new game, create a folder in %appdata%/Godot/app_userdata/[name of the project]/
@@ -91,5 +92,3 @@ func load_game():
 		get_node(node_data["parent"]).add_child(new_object)
 		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
 	print("Game Loaded")
-
-

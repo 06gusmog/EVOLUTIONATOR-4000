@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://0mhqxtrvoc5l"]
+
+[ext_resource type="Shape2D" uid="uid://v66p2r8ukumf" path="res://Standards/cell_shape.tres" id="1_m638y"]
+[ext_resource type="Script" path="res://Cell Types/Scripts/HearingCell.gd" id="2_vnun1"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="3_fssiw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uea70"]
+
+[node name="HearingCell" type="CollisionShape2D"]
+shape = ExtResource("1_m638y")
+script = ExtResource("2_vnun1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_fssiw")
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.1, 0.1)
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_uea70")
