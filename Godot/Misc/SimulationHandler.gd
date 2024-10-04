@@ -144,9 +144,8 @@ func _on_mitosis(creature:):
 #This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
 #if any problems occur please consult the source
 func save_game():
-	#This should name the save "savegame[hour]:[minute].save"
+	#This should name the save "savegame[hour]-[minute].save"
 	var time = Time.get_time_dict_from_system()
-	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
 	var save_file = FileAccess.open("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE)
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
 	for node in save_nodes:
@@ -185,4 +184,5 @@ func _on_spawn_timer_timeout():
 
 
 func _on_auto_save_timer_timeout():
+	print("Autosave")
 	save_game()

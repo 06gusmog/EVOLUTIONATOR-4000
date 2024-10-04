@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=10 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
 [ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
 [ext_resource type="PackedScene" uid="uid://bhsjq7sq2d0bo" path="res://file_logger.tscn" id="4_4un07"]
+[ext_resource type="Script" path="res://Misc/AutoSaveTimer.gd" id="5_f6fae"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
@@ -230,7 +231,7 @@ stretch_mode = 4
 
 [node name="AutoSaveTimer" type="Timer" parent="."]
 wait_time = 300.0
-autostart = true
+script = ExtResource("5_f6fae")
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]

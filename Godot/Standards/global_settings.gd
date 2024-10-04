@@ -46,8 +46,8 @@ var color_sheet = {
 #To create a new game, create a folder in %appdata%/Godot/app_userdata/[name of the project]/
 #and write the name of the new folder between :// and savegame.save
 var save_path = "user://Game1/"
-var save_name = "user://Game1/savegame15-32.save"
-var create_new_game = false
+var save_name = "user://Game1/savegame.save"
+var create_new_game = true
 
 func _ready():
 	if not create_new_game:
@@ -60,11 +60,6 @@ func _ready():
 func load_game():
 	if not FileAccess.file_exists(save_name):
 		return # Error! We don't have a save to load.
-
-	#NOTE: The following code needs to be uncommented if the load function is called while a simulation is running, and not on _ready()
-	#var save_nodes = get_tree().get_nodes_in_group("Persist")
-	#for i in save_nodes:
-	#	i.queue_free()
 
 	# Load the file line by line and process that dictionary to restore
 	# the object it represents.
