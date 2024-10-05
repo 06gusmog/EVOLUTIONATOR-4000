@@ -1,0 +1,4 @@
+extends Cell
+
+func _interpret_special_sauce(_special_sauce):
+	tags.append('Inedible')

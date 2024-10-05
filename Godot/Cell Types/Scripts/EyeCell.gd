@@ -17,8 +17,6 @@ func _update_output(_input):
 	if ray_cast_2d.is_colliding():
 		var collision_point = ray_cast_2d.get_collision_point()
 		var collision_distance = to_local(collision_point).distance_to(Vector2(0,0))
-		#print("Max Distance: {0}, Collision Distance: {1}".format([distance, collision_distance]))
-		#NOTE: Now detects siblings, bug or feature?
 		output = (distance - collision_distance) / distance
 	else:
 		output = -1

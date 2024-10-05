@@ -26,4 +26,4 @@ func _update_output(_input):
 		var collision_distance = sqrt(min_dist2)
 		if collision_distance > distance:
 			collision_distance = distance
-		output = (distance - collision_distance) /distance
+		output = (distance - collision_distance) / distance
