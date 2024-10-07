@@ -8,8 +8,6 @@ var user_interface
 var bounding_sphere_size : float
 var creatureID : String
 
-# Experiment
-var objects_deleted_this_frame: Array
 
 var cell_weight = GlobalSettings.cell_weight
 
@@ -108,78 +106,27 @@ func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')
 		return
-	#NOTE The list of shapes ar eupdated correctly, but not the local shape index for some reason. This is a clever fast algorithm to correct it.
-	#NOTE I think i've named the variables good, maybe not the pointers but whatever.
-	# Correct the local index
-	"""
-	if objects_deleted_this_frame != []:
-		var copyof_local_shape_index = local_shape_index # For checking validity of collision later
-		var local_shape_owners = self.get_shape_owners()
-		print(local_shape_owners)
-		print(objects_deleted_this_frame)
-		var p = 0
-		var i = 0
-		while i <= local_shape_index:
-			if objects_deleted_this_frame[p] < local_shape_owners[i]:
-				local_shape_owners.insert(i, objects_deleted_this_frame[p])
-				p += 1
-				local_shape_index -= 1
-			i += 1
-		if local_shape_owners[copyof_local_shape_index] in objects_deleted_this_frame:
-			print('Collision with a deleted cell')
-			return 0
-		print('Suzzessfully corrected index for ', name)
-	# Correct the body's shape index
-	if body.objects_deleted_this_frame != []:
-		var copyof_body_shape_index = body_shape_index # For checking validity of collision later
-		var body_shape_owners = body.get_shape_owners()
-		print(body_shape_owners)
-		print(body.objects_deleted_this_frame)
-		var p = 0
-		var i = 0
-		while i <= body_shape_index:
-			if body.objects_deleted_this_frame[p] < body_shape_owners[i]:
-				body_shape_owners.insert(i, body.objects_deleted_this_frame[p])
-				p += 1
-				body_shape_index -= 1
-			i += 1
-		if body_shape_owners[copyof_body_shape_index] in body.objects_deleted_this_frame:
-			print('Collision with a deleted cell')
-			return 0
-		print('Suzzessfully corrected index for ', body.name)
-	"""
-	if len(self.get_shape_owners())-1 > local_shape_index or len(body.get_shape_owners())-1 > body_shape_index:
+	
+	if len(self.get_shape_owners())-1 > local_shape_index or len(body.get_shape_owners())-1 > body_shape_index: #NOTE faster than Godot's error handling
 		return 0
+	
 	var local_cell = self.shape_owner_get_owner(self.shape_find_owner(local_shape_index))
 	var body_cell = body.shape_owner_get_owner(body.shape_find_owner(body_shape_index))
-	if not(is_instance_valid(local_cell) and is_instance_valid(body_cell)): # I give up, fuck this
+	if not(is_instance_valid(local_cell) and is_instance_valid(body_cell)):
+		print('Something has gone horribly wrong, and this error handling is keeping the simulation from crashing')
 		return 0
 	if not (body_cell.cellID in body.killing_queue or local_cell.cellID in killing_queue): # Checks if the cell has already been eaten 
 		if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
 			#print('-We have been consumed-')
 			kill_cell(local_cell.cellID)
 	#print('---Collision handling end---')
-	
-	
+
 func kill_cell(cellID : String):
-	if cells[cellID] in killing_queue:
-		print('Cell already in killing queue!!')
+	if cells[cellID] in killing_queue: #NOTE Killing queue breaks with multiple of the same entry
 		return 0
 	killing_queue.append(cells[cellID])
-"""
-	var cell = get_node(cellID)
-	var cell_copy = cell.duplicate() 
-	# NOTE I am very mad. This took a while to find
-	# This is an issue with godot, here's the git report I found: https://github.com/godotengine/godot/issues/3393#issuecomment-1218262767
-	# Confirmed bug from 2016
-	# Fuck me I guess
-	cell_copy.cellID = cell.cellID
-	killing_queue.append(cell_copy)
-	cell.queue_free()
-"""
 
 func clear_killing_queue():
-	objects_deleted_this_frame = []
 	if killing_queue != []:
 #INFO First group the cells by if they're touching
 		var alive_cells = {}
@@ -187,8 +134,8 @@ func clear_killing_queue():
 			if cells[cellID] in killing_queue:
 				continue
 			alive_cells[cellID] = cells[cellID]
-		var groups_of_cells = group_cells(alive_cells)
-#INFO Then remove potential cut-off parts
+		var groups_of_cells = group_cells(alive_cells) # Moved to its own function, for potential use in SimulationHandler
+#INFO Then add potential cut-off parts to killing queue
 		if groups_of_cells.size() > 1:
 			groups_of_cells.sort_custom(sort_by_length)
 			if len(groups_of_cells[0]) <= len(DNA) * 0.5:
@@ -215,9 +162,6 @@ func clear_killing_queue():
 			cell_death.emit(cell.cellID)
 			self.remove_child(cell)
 			cell.queue_free()
-		for cell in killing_queue:
-			objects_deleted_this_frame.append(int(str(cell.name)))
-		objects_deleted_this_frame.sort()
 		killing_queue = []
 #INFO Check if the creature died
 	if len(cells) <= len(DNA) * 0.5:
