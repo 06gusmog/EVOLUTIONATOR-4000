@@ -49,7 +49,7 @@ var mutation_chances = {
 	}
 
 # Physics
-var simulation_speed = 2
+var simulation_speed = 5
 var food_cap = 1000
 var ticks_per_second = 30
 

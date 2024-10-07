@@ -1,10 +1,10 @@
 extends RigidBody2D
 var DNA : Array
 var killing_queue : Array
+var killing_queue_ID : Array
 var cells : Dictionary
 var energy : float
 var food_object
-var user_interface
 var bounding_sphere_size : float
 var creatureID : String
 var per_frame_energy_consumption: float
@@ -23,7 +23,6 @@ func _ready():
 	self.add_to_group("Persist")
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
-	user_interface = get_parent().get_node('CanvasLayer').get_node('UserInterface')
 	var i = 0
 	DNA = load_DNA(DNA)
 	for RNA in DNA:
@@ -128,6 +127,7 @@ func kill_cell(cellID : String):
 	killing_queue.append(cells[cellID])
 
 func clear_killing_queue():
+	killing_queue_ID = []
 	if killing_queue != []:
 #INFO First group the cells by if they're touching
 		var alive_cells = {}

@@ -89,7 +89,7 @@ func select_cell_position(established_positions : Array):
 			return cell_position
 
 func _on_mitosis(creature:): 
-	var new_DNA = creature.DNA
+	var new_DNA = str_to_var(var_to_str(creature.DNA))
 	print('MITOSIS')
 	
 	#Chance to remove a cell

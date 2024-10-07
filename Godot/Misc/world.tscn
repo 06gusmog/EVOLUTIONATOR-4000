@@ -2,19 +2,18 @@
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
-[ext_resource type="Script" path="res://Misc/UserInterface.gd" id="3_6vnwv"]
-[ext_resource type="PackedScene" uid="uid://bhsjq7sq2d0bo" path="res://file_logger.tscn" id="4_4un07"]
-[ext_resource type="Script" path="res://Misc/AutoSaveTimer.gd" id="5_f6fae"]
+[ext_resource type="Script" path="res://Misc/User Interface/UserInterface.gd" id="3_6vnwv"]
+[ext_resource type="Script" path="res://Misc/User Interface/Schematic View/Connection Monitor.gd" id="4_8bh71"]
+[ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_06e6h"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_xdqrd"]
-viewport_path = NodePath("CanvasLayer/UserInterface/Creature View")
-
-[sub_resource type="ImageTexture" id="ImageTexture_6sdd6"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jeq8q"]
+viewport_path = NodePath("CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_yl8cj")
@@ -152,10 +151,10 @@ polygon = PackedVector2Array(-39, -79, -79, -89, -99, -64, -118, -38, -94, -24, 
 polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95, 105, 88, 198, 71, 222, -4)
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 208, 123, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
+polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 164, 149, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 208, 123, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
+polygon = PackedVector2Array(273, -139, 264, -20, 276, 31, 333, 58, 372, 151, 299, 217, 206, 183, 164, 149, 93, 154, -40, 164, -161, 113, -257, 25, -269, -95, -183, -173, -16, -219, 134, -209, 273, -139, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
 
 [node name="Polygon2D2" type="Polygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(11, -98, 38, -65, 56, -67, 82, -81, 112, -67, 130, -96, 127, -136, 83, -140, 41, -124)
@@ -170,83 +169,79 @@ polygon = PackedVector2Array(199, -38, 129, -44, 96, -16, 66, 9, 59, 42, 55, 95,
 process_mode = 3
 process_priority = 1
 
-[node name="UserInterface" type="Control" parent="CanvasLayer"]
-process_priority = 1
+[node name="UserInterface2" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 0
-mouse_filter = 1
 script = ExtResource("3_6vnwv")
 
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UserInterface2"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -178.0
-offset_right = 553.0
-grow_vertical = 0
-current_tab = 0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
-metadata/_tab_index = 0
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
 
-[node name="Creature View" type="VBoxContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Energy
-"
-horizontal_alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/Creature View"]
-custom_minimum_size = Vector2(0, 270)
-layout_mode = 2
-size_flags_vertical = 1
-fill_mode = 3
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer"]
-custom_minimum_size = Vector2(300, 300)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer/AspectRatioContainer"]
-layout_mode = 2
-texture = SubResource("ViewportTexture_xdqrd")
-expand_mode = 4
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/UserInterface/TabContainer"]
+[node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 100)
+[node name="Creature Schematic View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
 layout_mode = 2
-stretch_mode = 1
-alignment_horizontal = 0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UserInterface/TabContainer/HBoxContainer2/AspectRatioContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(300, 200)
-layout_mode = 2
-texture = SubResource("ImageTexture_6sdd6")
-expand_mode = 5
+texture = SubResource("ViewportTexture_jeq8q")
+expand_mode = 2
 stretch_mode = 4
 
-[node name="Creature View" type="SubViewport" parent="CanvasLayer/UserInterface"]
+[node name="Connection Monitor" type="SubViewport" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
+canvas_item_default_texture_filter = 3
+script = ExtResource("4_8bh71")
 
-[node name="Creature Sim" type="Node2D" parent="CanvasLayer/UserInterface/Creature View"]
+[node name="Monitor Root" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor"]
 
-[node name="Placeholder" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim"]
+[node name="Camera" type="Camera2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+zoom = Vector2(2, 2)
 
-[node name="Placeholder squared" type="Node2D" parent="CanvasLayer/UserInterface/Creature View/Creature Sim/Placeholder"]
+[node name="Cells" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+
+[node name="Connections" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
+top_level = true
+
+[node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource("5_s53s6")
+expand_mode = 4
+stretch_mode = 4
+script = ExtResource("5_46rmg")
+
+[node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
 
 [node name="FileLogger" parent="." instance=ExtResource("4_4un07")]
 
