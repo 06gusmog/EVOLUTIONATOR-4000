@@ -5,7 +5,7 @@ class_name Cell
 var cellID : String
 var type : String
 var tags : Array # Eats, Uneatable, Output
-var energy_consumption = GlobalSettings.energy_consumption_PC
+var energy_consumption: float
 var connections : Array
 var calculated_input : float
 var output : float
@@ -45,10 +45,12 @@ func unpack(RNA, ID):
 	cellID = ID
 	name = cellID
 	type = RNA['Type']
+	energy_consumption = GlobalSettings.cell_type_energy_consumption[type]
 	connections = RNA['Connections']
 	position = RNA['Position']
 	shape = load("res://Standards/cell_shape.tres")
 	_interpret_special_sauce(RNA['Special Sauce'])
+	get_node("Sprite2D").self_modulate = GlobalSettings.color_sheet[type]
 	
 func remove_connections(cellIDs : Array):
 	var temporary_array = []

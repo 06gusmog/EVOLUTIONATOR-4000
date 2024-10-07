@@ -42,8 +42,8 @@ func _on_body_shape_entered(_body_rid, body, _body_shape_index, local_shape_inde
 		var energy_to_eat = eat_food(local_shape_index)
 		#print(energy_to_eat)
 		body.energy += energy_to_eat
-		if body.energy > len(body.cells) * GlobalSettings.energy_cap_PC:
-			body.energy = len(body.cells) * GlobalSettings.energy_cap_PC
+		if body.energy > body.per_frame_energy_consumption * GlobalSettings.energy_cap:
+			body.energy = body.per_frame_energy_consumption * GlobalSettings.energy_cap
 	else:
 		#print('Food in the wall')
 		eat_food(local_shape_index)

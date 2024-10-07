@@ -7,6 +7,7 @@ var food_object
 var user_interface
 var bounding_sphere_size : float
 var creatureID : String
+var per_frame_energy_consumption: float
 
 
 var cell_weight = GlobalSettings.cell_weight
@@ -60,24 +61,25 @@ func _ready():
 		Vector2(1,-1) * box_side_length + center_of_mass
 		]
 	line_2d.visible = false
-	
-	energy = GlobalSettings.energy_starting_PC * len(cells)
+	for cellID in cells:
+		var cell = cells[cellID]
+		per_frame_energy_consumption += cell.energy_consumption
+	energy = GlobalSettings.starting_energy * per_frame_energy_consumption
 	
 	get_parent().get_node('FoodSpawnPoints').get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	clear_killing_queue()
 	line_2d.global_rotation = 0.0 # boxD
-	
-	var frame_energy_consumption = 0.0
 	for cellID in cells:
 		var cell = cells[cellID]
 		cell.update_output()
+	per_frame_energy_consumption = 0
 	for cellID in cells:
 		var cell = cells[cellID]
 		cell.read_and_act(delta)
-		frame_energy_consumption += cell.energy_consumption
-	energy -= frame_energy_consumption * delta
+		per_frame_energy_consumption += cell.energy_consumption
+	energy -= per_frame_energy_consumption * delta * GlobalSettings.metabolism_modifier
 	if energy <= 0:
 		die()
 #	if energy >= required_energy:
@@ -98,7 +100,7 @@ func save():
 	return save_dict
 
 func reproduce_time():
-	if energy >= GlobalSettings.energy_required_to_reproduce_PC * len(cells):
+	if energy >= GlobalSettings.reproduction_energy_requirement * per_frame_energy_consumption:
 		mitosis.emit(self)
 
 func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index):

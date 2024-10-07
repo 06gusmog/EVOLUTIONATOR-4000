@@ -13,7 +13,6 @@ const CREATURE = preload("res://Misc/creature.tscn")
 @onready var food_spawn_nodes = get_node("FoodSpawnPoints").get_children()
 
 # Math functions
-
 func _ready():
 	food_spawn_nodes.pop_at(-1)
 
@@ -30,7 +29,7 @@ func get_random_position(food_spawn_node):
 	return Vector2(rng.randi() % diameter - diameter/2 + offset[0], rng.randi() % diameter - diameter/2 + offset[1])
 
 func spawn_food(food_spawn_node):
-	var energy = rng.randi() % 50 + 100
+	var energy = rng.randi() % 100 + 150
 	var proposed_position = [0,0]
 	for x in range(15):
 		proposed_position = get_random_position(food_spawn_node)
@@ -139,7 +138,7 @@ func _on_mitosis(creature:):
 		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3), creature.creatureID)
 	else:
 		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3, creature.creatureID)
-	creature.energy -= GlobalSettings.energy_required_to_reproduce_PC * len(creature.cells)
+	creature.energy /= 2
 	
 #This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
 #if any problems occur please consult the source
@@ -181,7 +180,6 @@ func _on_spawn_timer_timeout():
 			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
 		elif len(overlapping_bodies) == 1 and food_object in overlapping_bodies:
 			create_creature(generate_random_DNA(GlobalSettings.creature_spawn_size), spawn.position)
-
 
 func _on_auto_save_timer_timeout():
 	print("Autosave")

@@ -9,4 +9,4 @@ func _update_output(_input):
 	output = 0
 	
 func _act(input, delta):
-	get_parent().apply_torque_impulse(input * weight * delta)
+	get_parent().apply_torque(input * weight * delta)
