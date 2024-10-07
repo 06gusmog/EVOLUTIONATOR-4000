@@ -107,13 +107,10 @@ func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index
 		#print('---Not a creature break---')
 		return
 	
-	if len(self.get_shape_owners())-1 > local_shape_index or len(body.get_shape_owners())-1 > body_shape_index: #NOTE faster than Godot's error handling
-		return 0
-	
 	var local_cell = self.shape_owner_get_owner(self.shape_find_owner(local_shape_index))
 	var body_cell = body.shape_owner_get_owner(body.shape_find_owner(body_shape_index))
 	if not(is_instance_valid(local_cell) and is_instance_valid(body_cell)):
-		print('Something has gone horribly wrong, and this error handling is keeping the simulation from crashing')
+		#print('Something has gone horribly wrong, and this error handling is keeping the simulation from crashing')
 		return 0
 	if not (body_cell.cellID in body.killing_queue or local_cell.cellID in killing_queue): # Checks if the cell has already been eaten 
 		if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
@@ -127,7 +124,6 @@ func kill_cell(cellID : String):
 	killing_queue.append(cells[cellID])
 
 func clear_killing_queue():
-	killing_queue_ID = []
 	if killing_queue != []:
 #INFO First group the cells by if they're touching
 		var alive_cells = {}
@@ -158,7 +154,7 @@ func clear_killing_queue():
 			cell.remove_connections(killing_queue_cellID)
 #INFO Spawn food, remove the cells and send relevant signals
 		for cell in killing_queue:
-			food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
+			food_object.add_food((cell.energy_consumption + energy * (cell.energy_consumption/per_frame_energy_consumption)) * GlobalSettings.energy_drop_modifier, cell.global_position)
 			mass -= cell_weight
 			cell_death.emit(cell.cellID)
 			self.remove_child(cell)
@@ -171,7 +167,7 @@ func clear_killing_queue():
 func die():
 	for cellID in cells:
 		var cell = cells[cellID]
-		food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
+		food_object.add_food((cell.energy_consumption + energy * (cell.energy_consumption/per_frame_energy_consumption)) * GlobalSettings.energy_drop_modifier, cell.global_position)
 	LineageLogger.log_creature_death(creatureID)
 	death.emit()
 	queue_free()

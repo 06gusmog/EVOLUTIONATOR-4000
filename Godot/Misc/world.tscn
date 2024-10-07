@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=11 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Misc/User Interface/Schematic View/Connection Monitor.gd" id="4_8bh71"]
 [ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
 [ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
+[ext_resource type="PackedScene" uid="uid://bhsjq7sq2d0bo" path="res://file_logger.tscn" id="7_654aw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
@@ -25,6 +26,7 @@ creature_amount = 20
 position = Vector2(120, 120)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 1"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -35,6 +37,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(100, -170)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 2"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -45,6 +48,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(-121, -75)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 3"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -55,6 +59,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(0, -67)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 4"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -65,6 +70,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(-120, 0)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 5"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -75,6 +81,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(40, 0)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 6"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -85,6 +92,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(0, 120)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 7"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -95,6 +103,7 @@ shape = SubResource("CircleShape2D_rjn3i")
 position = Vector2(250, 30)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 8"]
+collision_layer = 2
 collision_mask = 2
 monitorable = false
 
@@ -136,7 +145,7 @@ autostart = true
 
 [node name="FoodObject" parent="." instance=ExtResource("2_8ygnx")]
 collision_layer = 4
-collision_mask = 7
+collision_mask = 6
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_06e6h")
@@ -199,7 +208,7 @@ current_tab = 1
 [node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 1
+metadata/_tab_index = 0
 
 [node name="Creature Schematic View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
 layout_mode = 2
@@ -223,6 +232,7 @@ top_level = true
 
 [node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
 layout_mode = 2
@@ -242,13 +252,9 @@ script = ExtResource("5_46rmg")
 [node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
-[node name="FileLogger" parent="." instance=ExtResource("4_4un07")]
-
-[node name="AutoSaveTimer" type="Timer" parent="."]
-wait_time = 300.0
-script = ExtResource("5_f6fae")
+[node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
-[connection signal="timeout" from="AutoSaveTimer" to="." method="_on_auto_save_timer_timeout"]

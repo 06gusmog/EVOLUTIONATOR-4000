@@ -10,6 +10,7 @@ func _interpret_special_sauce(special_sauce):
 	constant = acquired_sauce[3] * const_sign
 	tags.append('Output')
 	tags.append('Input')
+	energy_consumption = GlobalSettings.cell_type_energy_consumption['neuron_cell.tscn']
 
 func _update_output(input):
 	output = input * weight + constant

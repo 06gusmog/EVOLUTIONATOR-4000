@@ -8,6 +8,7 @@ func _interpret_special_sauce(special_sauce):
 	distance = (sauce_values[0] + 1) * distance_factor
 	area_2d.scale = Vector2(0.1 * distance, 0.1 * distance)
 	tags.append('Output')
+	energy_consumption = GlobalSettings.cell_type_energy_consumption['smelling_cell.tscn']
 
 func _update_output(_input):
 	var bodies_in_range = area_2d.get_overlapping_bodies()

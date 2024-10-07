@@ -29,7 +29,7 @@ func get_random_position(food_spawn_node):
 	return Vector2(rng.randi() % diameter - diameter/2 + offset[0], rng.randi() % diameter - diameter/2 + offset[1])
 
 func spawn_food(food_spawn_node):
-	var energy = rng.randi() % 100 + 150
+	var energy = rng.randi() % 75 + 50
 	var proposed_position = [0,0]
 	for x in range(15):
 		proposed_position = get_random_position(food_spawn_node)
@@ -90,11 +90,11 @@ func select_cell_position(established_positions : Array):
 
 func _on_mitosis(creature:): 
 	var new_DNA = str_to_var(var_to_str(creature.DNA))
-	print('MITOSIS')
+	#print('MITOSIS')
 	
 	#Chance to remove a cell
 	if not rng.randi() % (mutation_chances['remove_cell'] * mutation_chance_multiplier):
-		print('Cell Mutation: Removal')
+		#print('Cell Mutation: Removal')
 		var pop_index = rng.randi() % len(new_DNA)
 		new_DNA.pop_at(pop_index)
 		for RNA in new_DNA:
@@ -107,7 +107,7 @@ func _on_mitosis(creature:):
 	
 	#Chance to spawn a new cell
 	if not rng.randi() % (mutation_chances['new_cell'] * mutation_chance_multiplier):
-		print('Cell Mutation: Addition')
+		#print('Cell Mutation: Addition')
 		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
 		for RNA in new_DNA:
 			cell_positions.append(RNA['Position'])
@@ -115,7 +115,7 @@ func _on_mitosis(creature:):
 	
 	#Chance to gain a new connection on a random cell
 	if not rng.randi() % (mutation_chances['new_connection'] * mutation_chance_multiplier):
-		print('Cell Mutation: Connection')
+		#print('Cell Mutation: Connection')
 		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(str(rng.randi() % len(new_DNA)))
 	
 	if not rng.randi() % (mutation_chances['delete_connection'] * mutation_chance_multiplier):
@@ -125,12 +125,12 @@ func _on_mitosis(creature:):
 	
 	#Chance to change one cell type
 	if not rng.randi() % (mutation_chances['type_switch'] * mutation_chance_multiplier):
-		print('Cell Mutation: Type Change')
+		#print('Cell Mutation: Type Change')
 		new_DNA[rng.randi() % len(new_DNA)]['Type'] = cell_types[rng.randi() % len(cell_types)]
 	
 	#Chance to change one digit in the special sauce
 	if not rng.randi() % (mutation_chances['special_sauce_digit_change'] * mutation_chance_multiplier):
-		print('Cell Mutation: Special Sauce')
+		#print('Cell Mutation: Special Sauce')
 		var special_sauce = new_DNA[rng.randi() % len(new_DNA)]['Special Sauce']
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	

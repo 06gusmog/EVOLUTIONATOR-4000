@@ -23,11 +23,13 @@ var cell_type_energy_consumption = {
 	'smelling_cell.tscn':0.2,
 	'armor_cell.tscn':0.1
 }
+var action_consumption_factor = 0.5
 #Factor multiplied by per frame energy consumption
 #Numbers still out of my butt, feel free to change.
 var reproduction_energy_requirement = 150
 var starting_energy = 100
 var energy_cap = 200
+var energy_drop_modifier = 0.5
 #Modifier that changes the speed at which energy is consumed
 var metabolism_modifier = 0.5
 

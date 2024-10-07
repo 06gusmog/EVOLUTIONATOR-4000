@@ -35,12 +35,6 @@ func load_creature(creature: Node):
 	creature.get_child(0).get_child(0).visible = true
 	
 	for cellID in loaded_creature.cells:
-		var do_I_skip_this_cell = false
-		for cell_to_be_killed in loaded_creature.killing_queue:
-			if cell_to_be_killed.cellID == cellID:
-				do_I_skip_this_cell = true
-		if do_I_skip_this_cell:
-			continue
 		
 		var cell = loaded_creature.cells[cellID]
 		# Adding all the cells
@@ -68,12 +62,6 @@ func load_creature(creature: Node):
 			
 	# Adding all the connections
 	for cellID in loaded_creature.cells:
-		var do_I_skip_this_cell = false
-		for cell_to_be_killed in loaded_creature.killing_queue:
-			if cell_to_be_killed.cellID == cellID:
-				do_I_skip_this_cell = true
-		if do_I_skip_this_cell:
-			continue
 		
 		var cell = loaded_creature.cells[cellID]
 		if 'Input' in cell.tags:
@@ -103,17 +91,11 @@ func unload_creature():
 	active = false
 
 func _on_creature_cell_death(cellID:String):
-	print('connected')
-	print(cellID)
 	for output_cell in connections_root.get_children():
 		for connection in output_cell.get_children():
-			print(connection.name)
 			if connection.name == cellID:
-				print('removed')
 				connection.free()
-			print(output_cell.name)
 		if output_cell.name == cellID:
-			print('removed')
 			output_cell.free()
 	for output_cell in cells_root.get_children():
 		if output_cell.name == cellID:
@@ -141,6 +123,3 @@ func _process(delta):
 		value_color.a = abs(value)
 		for connection in output_node.get_children():
 			connection.modulate = value_color
-
-
-

@@ -12,6 +12,7 @@ func _interpret_special_sauce(special_sauce):
 	ray_cast_2d.target_position = Vector2(cos(angle), sin(angle)) * distance
 	line_2d.points = [Vector2(0,0), ray_cast_2d.target_position]
 	tags.append('Output')
+	energy_consumption = GlobalSettings.cell_type_energy_consumption['eye_cell.tscn']
 	
 func _update_output(_input):
 	if ray_cast_2d.is_colliding():
