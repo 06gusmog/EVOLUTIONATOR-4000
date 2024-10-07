@@ -107,71 +107,35 @@ func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index
 	if not body is RigidBody2D:
 		#print('---Not a creature break---')
 		return
-	#print(body)
-	#if body.get_child_count() < body_shape_index+2:
-	#	print('Ahh fuck')
-	#	body.die()
-	var local_cell = get_child(local_shape_index+1)
-	var body_cell = body.get_child(body_shape_index+1)
-	#print(body_cell)
-	#print(local_cell)
-	if is_instance_valid(body_cell) and is_instance_valid(local_cell): # Checks if the cell has already been eaten
+	
+	if len(self.get_shape_owners())-1 > local_shape_index or len(body.get_shape_owners())-1 > body_shape_index: #NOTE faster than Godot's error handling
+		return 0
+	
+	var local_cell = self.shape_owner_get_owner(self.shape_find_owner(local_shape_index))
+	var body_cell = body.shape_owner_get_owner(body.shape_find_owner(body_shape_index))
+	if not(is_instance_valid(local_cell) and is_instance_valid(body_cell)):
+		print('Something has gone horribly wrong, and this error handling is keeping the simulation from crashing')
+		return 0
+	if not (body_cell.cellID in body.killing_queue or local_cell.cellID in killing_queue): # Checks if the cell has already been eaten 
 		if 'Eats' in body_cell.tags and not 'Inedible' in local_cell.tags:
 			#print('-We have been consumed-')
-			kill_cell(get_child(local_shape_index+1).cellID)
+			kill_cell(local_cell.cellID)
 	#print('---Collision handling end---')
-	
-	
+
 func kill_cell(cellID : String):
-	var cell = get_node(cellID)
-	var cell_copy = cell.duplicate() 
-	# NOTE I am very mad. This took a while to find
-	# This is an issue with godot, here's the git report I found: https://github.com/godotengine/godot/issues/3393#issuecomment-1218262767
-	# Confirmed bug from 2016
-	# Fuck me I guess
-	cell_copy.cellID = cell.cellID
-	killing_queue.append(cell_copy)
-	cell.queue_free()
+	if cells[cellID] in killing_queue: #NOTE Killing queue breaks with multiple of the same entry
+		return 0
+	killing_queue.append(cells[cellID])
 
 func clear_killing_queue():
 	if killing_queue != []:
-#INFO First remove the invalid (free'd) cells from cells
-		var placeholder_cells = {} 
+#INFO First group the cells by if they're touching
+		var alive_cells = {}
 		for cellID in cells:
-			var cell = cells[cellID]
-			if is_instance_valid(cell): # Checks if the cell has been removed in kill_cell
-				placeholder_cells[cellID] = cell
-		cells = placeholder_cells
-#INFO Then group the cells by if they're touching
-		var adjacent_offsets = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]
-		var groups_of_cells = []
-		for cellID in cells:
-			var cell = cells[cellID]
-			#print(cell.position)
-			var groups_it_fit = []
-			var i = 0
-			for group in groups_of_cells:
-				var group_positions = []
-				for item in group:
-					group_positions.append(item.position)
-				for offset in adjacent_offsets:
-					if (cell.position + offset) in group_positions:
-						groups_it_fit.append(i)
-						break
-				i += 1
-			if len(groups_it_fit) == 0: # If it didnt match any group
-				#print('First')
-				groups_of_cells.append([cell])
-			elif len(groups_it_fit) == 1: # If it only matched one group
-				#print('Second')
-				groups_of_cells[groups_it_fit[0]].append(cell)
-			else: # If it matched multiple groups
-				#print('Third')
-				var new_group = []
-				groups_it_fit.reverse()
-				for group_index in groups_it_fit:
-					new_group.append_array(groups_of_cells.pop_at(group_index))
-				groups_of_cells.append(new_group)
+			if cells[cellID] in killing_queue:
+				continue
+			alive_cells[cellID] = cells[cellID]
+		var groups_of_cells = group_cells(alive_cells) # Moved to its own function, for potential use in SimulationHandler
 #INFO Then add potential cut-off parts to killing queue
 		if groups_of_cells.size() > 1:
 			groups_of_cells.sort_custom(sort_by_length)
@@ -181,17 +145,10 @@ func clear_killing_queue():
 				groups_of_cells.remove_at(0)
 				for group in groups_of_cells:
 					for cell in group:
-						var cell_copy = cell.duplicate() 
-						cell_copy.cellID = cell.cellID
-						killing_queue.append(cell_copy)
-						cell.free() # Might be risky
-#INFO Remove invalid cells again
-		placeholder_cells = {} 
-		for cellID in cells:
-			var cell = cells[cellID]
-			if is_instance_valid(cell): # Checks if the cell has been removed in kill_cell
-				placeholder_cells[cellID] = cell
-		cells = placeholder_cells
+						killing_queue.append(cell)
+#INFO Remove all cells that are supposed to be removed
+		for cell in killing_queue:
+			cells.erase(cell.cellID)
 #INFO Remove all connections to dead cells
 		var killing_queue_cellID = []
 		for cell in killing_queue:
@@ -199,11 +156,13 @@ func clear_killing_queue():
 		for cellID in cells:
 			var cell = cells[cellID]
 			cell.remove_connections(killing_queue_cellID)
-#INFO Spawn food and send relevant signals
+#INFO Spawn food, remove the cells and send relevant signals
 		for cell in killing_queue:
 			food_object.add_food(GlobalSettings.energy_dropped_min + (GlobalSettings.energy_dropped_max - GlobalSettings.energy_dropped_min) * energy / (GlobalSettings.energy_cap_PC * len(cells)), cell.global_position)
 			mass -= cell_weight
 			cell_death.emit(cell.cellID)
+			self.remove_child(cell)
+			cell.queue_free()
 		killing_queue = []
 #INFO Check if the creature died
 	if len(cells) <= len(DNA) * 0.5:
@@ -217,11 +176,41 @@ func die():
 	death.emit()
 	queue_free()
 
-
 func sort_by_length(a, b):
 	if len(a) > len(b):
 		return 1
 	return 0
+
+func group_cells(cells:Dictionary):
+	var adjacent_offsets = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]
+	var groups_of_cells = []
+	for cellID in cells:
+		var cell = cells[cellID]
+		if cell in killing_queue:
+			continue
+		var groups_it_fit = []
+		var i = 0
+		for group in groups_of_cells:
+			var group_positions = []
+			for item in group:
+				group_positions.append(item.position)
+			for offset in adjacent_offsets:
+				if (cell.position + offset) in group_positions:
+					groups_it_fit.append(i)
+					break
+			i += 1
+		if len(groups_it_fit) == 0: # If it didnt match any group
+			groups_of_cells.append([cell])
+		elif len(groups_it_fit) == 1: # If it only matched one group
+			groups_of_cells[groups_it_fit[0]].append(cell)
+		else: # If it matched multiple groups
+			var new_group = []
+			groups_it_fit.reverse()
+			for group_index in groups_it_fit:
+				new_group.append_array(groups_of_cells.pop_at(group_index))
+			groups_of_cells.append(new_group)
+	return groups_of_cells
+	
 
 func save_DNA(DNA):
 	for RNA in DNA:
