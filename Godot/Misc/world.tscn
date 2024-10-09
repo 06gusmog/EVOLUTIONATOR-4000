@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=12 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://bgpjpvrhc2ioi" path="res://Misc/food_object.tscn" id="2_8ygnx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
 [ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
 [ext_resource type="PackedScene" uid="uid://bhsjq7sq2d0bo" path="res://file_logger.tscn" id="7_654aw"]
+[ext_resource type="Script" path="res://Misc/User Interface/Settings/settings.gd" id="7_tcja2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
 radius = 19.0263
@@ -200,6 +201,11 @@ layout_mode = 2
 size_flags_vertical = 3
 color = Color(1, 1, 1, 0)
 
+[node name="DOWN" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "HIDE UI"
+
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -230,31 +236,62 @@ zoom = Vector2(2, 2)
 [node name="Connections" type="Node2D" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View/Connection Monitor/Monitor Root"]
 top_level = true
 
+[node name="Energy" type="ProgressBar" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+fill_mode = 3
+
+[node name="Energy Consumption" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Consumption: 0"
+
 [node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
-layout_mode = 2
-size_flags_horizontal = 3
-horizontal_scroll_mode = 2
-vertical_scroll_mode = 0
-
-[node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/ScrollContainer"]
+[node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
+layout_direction = 1
 layout_mode = 2
 size_flags_horizontal = 6
-size_flags_vertical = 3
 texture = ExtResource("5_s53s6")
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 4
 script = ExtResource("5_46rmg")
 
 [node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
+script = ExtResource("7_tcja2")
 metadata/_tab_index = 2
+
+[node name="simulation_speed" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
+layout_mode = 2
+text = "Simulation
+Speed"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
+
+[node name="Simulation Speed Slider" type="VSlider" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 3
+min_value = 1.0
+max_value = 10.0
+value = 1.0
 
 [node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/UserInterface2/VBoxContainer/DOWN" to="CanvasLayer/UserInterface2" method="_on_hide_ui_button_pressed"]
+[connection signal="drag_ended" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed/Simulation Speed Slider" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_simulation_speed_slider_drag_ended"]

@@ -1,8 +1,10 @@
 extends Control
 
 @onready var connection_monitor = $"VBoxContainer/TabContainer/Schematic View/Connection Monitor"
+@onready var tab_container: TabContainer = $VBoxContainer/TabContainer
+@onready var down: Button = $VBoxContainer/DOWN
+@onready var creature_lineage_view: TextureRect = $"VBoxContainer/TabContainer/Lineage View/Creature Lineage View"
 
-@onready var creature_lineage_view = $"VBoxContainer/TabContainer/Lineage View/ScrollContainer/Creature Lineage View"
 
 @onready var camera_2d = $"../../Camera2D"
 @export var camera_move_speed = 5.0
@@ -53,6 +55,10 @@ func background_clicked():
 	connection_monitor.unload_creature()
 
 func creature_clicked(creature):
+	# Show the UI
+	tab_container.visible = true
+	down.text = "HIDE UI"
+	
 	# Set lineage view
 	creature_lineage_view.load_lineage(creature)
 	
@@ -63,3 +69,12 @@ func creature_clicked(creature):
 func load_creature(creature):
 	pass
 	#progress_bar.max_value = len(creature.cells) * GlobalSettings.energy_cap_PC
+
+
+func _on_hide_ui_button_pressed() -> void:
+	if tab_container.visible:
+		tab_container.visible = false
+		down.text = "SHOW UI"
+	else:
+		tab_container.visible = true
+		down.text = "HIDE UI"

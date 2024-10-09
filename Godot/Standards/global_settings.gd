@@ -51,9 +51,13 @@ var mutation_chances = {
 	}
 
 # Physics
-var simulation_speed = 5
+var simulation_speed = 1
 var food_cap = 1000
 var ticks_per_second = 30
+
+func set_simulation_speed(speed):
+	Engine.time_scale = simulation_speed
+	Engine.physics_ticks_per_second = ticks_per_second * simulation_speed
 
 # Visual
 var color_sheet = {
@@ -73,11 +77,12 @@ var save_path = "user://Game1/"
 var save_name = "user://Game1/savegame.save"
 var create_new_game = true
 
+
+
 func _ready():
 	if not create_new_game:
 		load_game()
-	Engine.time_scale = simulation_speed
-	Engine.physics_ticks_per_second = ticks_per_second * simulation_speed
+	set_simulation_speed(simulation_speed)
 
 #This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
 #if any problems occur please consult the source

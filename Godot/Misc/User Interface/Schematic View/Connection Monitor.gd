@@ -4,6 +4,9 @@ extends SubViewport
 @onready var cells_root = $"Monitor Root/Cells"
 @onready var connections_root = $"Monitor Root/Connections"
 @onready var camera = $"Monitor Root/Camera"
+@onready var energy: ProgressBar = $"../Energy"
+@onready var energy_consumption: Label = $"../Energy Consumption"
+
 const WHITE_PIXEL = preload("res://Misc/visuals/1_white_pixel.png")
 
 @export var resolution = 500
@@ -28,6 +31,8 @@ func load_creature(creature: Node):
 	
 	active = true
 	loaded_creature = creature
+	
+	energy.max_value = loaded_creature.per_frame_energy_consumption * GlobalSettings.energy_cap
 	
 	creature.cell_death.connect(self._on_creature_cell_death)
 	creature.death.connect(self._on_creature_death)
@@ -84,6 +89,8 @@ func unload_creature():
 		loaded_creature.get_child(0).get_child(0).visible = false
 		loaded_creature.cell_death.disconnect(_on_creature_cell_death)
 		loaded_creature.death.disconnect(_on_creature_death)
+		energy.value = 0
+		energy_consumption.text = "Consumption: 0"
 	for child in cells_root.get_children():
 		child.free()
 	for child in connections_root.get_children():
@@ -108,8 +115,10 @@ func _on_creature_death():
 func _process(delta):
 	if active == false:
 		return 0
-	# Fuck this man wtf
-				
+	
+	energy.value = loaded_creature.energy
+	energy_consumption.text = "Consumption:" + str(round(loaded_creature.per_frame_energy_consumption * 100) / 100)
+	
 	for output_node in connections_root.get_children():
 		var do_I_skip_this_cell = false
 		for cell_to_be_killed in loaded_creature.killing_queue:

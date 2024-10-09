@@ -71,7 +71,8 @@ func _process(delta):
 	line_2d.global_rotation = 0.0 # boxD
 	for cellID in cells:
 		var cell = cells[cellID]
-		cell.update_output()
+		if 'Input' in cell.tags:
+			cell.update_output()
 	per_frame_energy_consumption = 0
 	for cellID in cells:
 		var cell = cells[cellID]
