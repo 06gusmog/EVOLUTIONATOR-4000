@@ -7,6 +7,7 @@ var energy : float
 var food_object
 var bounding_sphere_size : float
 var creatureID : String
+var cellIDs : Array 
 var per_frame_energy_consumption: float
 
 var cell_weight = GlobalSettings.cell_weight
@@ -25,18 +26,32 @@ func _ready():
 	food_object = get_parent().get_node('FoodObject')
 	var i = 0
 	DNA = load_DNA(DNA)
-	for RNA in DNA:
-		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
-		var cell_instance = cell_base.instantiate()
-		add_child(cell_instance)
-		cell_instance.unpack(RNA, str(i))
-		i += 1
-	
-	mass = i * cell_weight
-	for cell in get_children():
-		cells[cell.name] = cell
-	cells.erase('Visual Effects')
-	
+	if GlobalSettings.create_new_game:
+		for RNA in DNA:
+			var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
+			var cell_instance = cell_base.instantiate()
+			add_child(cell_instance)
+			cell_instance.unpack(RNA, str(i))
+			i += 1
+		
+		mass = i * cell_weight
+		for cell in get_children():
+			cells[cell.name] = cell
+		cells.erase('Visual Effects')
+	else:
+		for cell in cellIDs:
+			var cell_base = load("res://Cell Types/Scenes/" + DNA[int(cell)]['Type'])
+			var cell_instance = cell_base.instantiate()
+			add_child(cell_instance)
+			cell_instance.unpack(DNA[int(cell)], str(i))
+			i += 1
+			
+		mass = i * cell_weight
+		for cell in get_children():
+			cells[cell.name] = cell
+		cells.erase('Visual Effects')
+		check_connections()
+		
 	# Box around the creature
 	for cellID in cells:
 		var cell = cells[cellID]
@@ -91,7 +106,7 @@ func save():
 		"pos_x" : position.x, # Vector2 is not supported by JSON
 		"pos_y" : position.y,
 		"DNA": save_DNA(DNA),
-		"cells": cells, 
+		"cellIDs": cells.keys(), 
 		"energy": energy, 
 		"creatureID": creatureID, 
 		"bounding_sphere_size": bounding_sphere_size
@@ -165,6 +180,15 @@ func clear_killing_queue():
 	if len(cells) <= len(DNA) * 0.5:
 		die()
 
+func check_connections():
+	for cellID in cells:
+		var cell = cells[cellID]
+		var corrected_connections = []
+		for connection in cell.connections:
+			if connection in cells.keys():
+				corrected_connections.append(connection)
+		cell.connections = corrected_connections
+		
 func die():
 	for cellID in cells:
 		var cell = cells[cellID]

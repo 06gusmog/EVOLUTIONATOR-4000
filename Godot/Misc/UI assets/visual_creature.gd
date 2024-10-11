@@ -26,4 +26,3 @@ func _ready(): #NOTE Creates every cell as a sprite2D named after the index, and
 			dot_sprite.scale = Vector2(0.01,0.01)
 			dot_sprite.name = 'Dot'
 			cell_instance.add_child(dot_sprite)
-

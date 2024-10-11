@@ -74,8 +74,8 @@ var color_sheet = {
 #To create a new game, create a folder in %appdata%/Godot/app_userdata/[name of the project]/
 #and write the name of the new folder between :// and savegame.save
 var save_path = "user://Game1/"
-var save_name = "user://Game1/savegame.save"
-var create_new_game = true
+var save_name = "user://Game1/savegame14-59.save"
+var create_new_game = false
 
 
 
