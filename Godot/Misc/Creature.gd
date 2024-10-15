@@ -235,11 +235,12 @@ func group_cells(cells:Dictionary):
 
 func save_DNA(DNA):
 	for RNA in DNA:
-		RNA['Position'] = [RNA['Position'][0], RNA['Position'][1]]
+		if not typeof(RNA['Position']) == TYPE_STRING:
+			RNA['Position'] = var_to_str(RNA['Position'])
 	return DNA
 
 func load_DNA(DNA):
-	if typeof(DNA[0]['Position']) == TYPE_ARRAY:
+	if typeof(DNA[0]['Position']) == TYPE_STRING:
 		for RNA in DNA:
-			RNA['Position'] = Vector2(RNA['Position'][0], RNA['Position'][1])
+			RNA['Position'] = str_to_var(RNA['Position'])
 	return DNA
