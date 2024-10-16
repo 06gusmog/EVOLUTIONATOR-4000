@@ -6,7 +6,7 @@ var distance_factor = 10
 func _interpret_special_sauce(special_sauce):
 	var sauce_values = get_from_sauce(special_sauce, ['weight'])
 	distance = (sauce_values[0] + 1) * distance_factor
-	area_2d.scale = Vector2(0.1 * distance, 0.1 * distance)
+	area_2d.get_child(0).shape.radius = distance
 	tags.append('Output')
 	energy_consumption = GlobalSettings.cell_type_energy_consumption['hearing_cell.tscn']
 
