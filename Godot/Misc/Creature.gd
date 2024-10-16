@@ -3,6 +3,7 @@ var DNA : Array
 var killing_queue : Array
 var killing_queue_ID : Array
 var cells : Dictionary
+var output_cells : Dictionary
 var energy : float
 var food_object
 var bounding_sphere_size : float
@@ -51,7 +52,21 @@ func _ready():
 			cells[cell.name] = cell
 		cells.erase('Visual Effects')
 		check_connections()
-		
+	
+	# Optimizing cell list and connections
+	for cellID in cells:
+		var cell = cells[cellID]
+		if 'Output' in cell.tags:
+			output_cells[cell.cellID] = cell
+		if 'Input' in cell.tags:
+			var optimized_connections = []
+			for connection in cell.connections:
+				if 'Output' in cells[connection].tags:
+					optimized_connections.append(connection)
+			cell.connections = optimized_connections
+		else:
+			cell.connections = []
+	
 	# Box around the creature
 	for cellID in cells:
 		var cell = cells[cellID]
@@ -84,10 +99,9 @@ func _ready():
 func _process(delta):
 	clear_killing_queue()
 	line_2d.global_rotation = 0.0 # boxD
-	for cellID in cells:
+	for cellID in output_cells:
 		var cell = cells[cellID]
-		if 'Input' in cell.tags:
-			cell.update_output()
+		cell.update_output()
 	per_frame_energy_consumption = 0
 	for cellID in cells:
 		var cell = cells[cellID]
@@ -161,6 +175,7 @@ func clear_killing_queue():
 #INFO Remove all cells that are supposed to be removed
 		for cell in killing_queue:
 			cells.erase(cell.cellID)
+			output_cells.erase(cell.cellID)
 #INFO Remove all connections to dead cells
 		var killing_queue_cellID = []
 		for cell in killing_queue:

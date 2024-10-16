@@ -209,10 +209,9 @@ text = "HIDE UI"
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 
 [node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -249,6 +248,7 @@ size_flags_vertical = 0
 text = "Consumption: 0"
 
 [node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
