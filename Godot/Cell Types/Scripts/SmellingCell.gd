@@ -16,13 +16,10 @@ func _update_output(_input):
 		output = -1
 	else:
 		var dist2 = []
-		for food in bodies_in_range[0].get_children():
-			dist2.append(to_local(food.position).distance_squared_to(self.position))
-		if len(dist2) == 0:
-			output = -1
-			return
+		for food_bit in bodies_in_range:
+			dist2.append(to_local(food_bit.position).distance_squared_to(self.position))
 		var min_dist2 = dist2.min()
 		var collision_distance = sqrt(min_dist2)
 		if collision_distance > distance:
 			collision_distance = distance
-		output = (distance - collision_distance) /distance #NOTE Can be negative if body center is outside of collision shape.
+		output = (distance - collision_distance) /distance

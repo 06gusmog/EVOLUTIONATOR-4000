@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://doqncbfu3vbkj"]
+
+[ext_resource type="Script" path="res://Food Object/food_bit.gd" id="1_cs5a2"]
+[ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="2_v60eh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1s4nc"]
+size = Vector2(1, 1)
+
+[node name="Food Bit" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_cs5a2")
+
+[node name="shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1s4nc")
+
+[node name="white_square" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 1, 1)
+texture = ExtResource("2_v60eh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

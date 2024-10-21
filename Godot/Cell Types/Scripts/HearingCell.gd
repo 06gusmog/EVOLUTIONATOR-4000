@@ -12,7 +12,7 @@ func _interpret_special_sauce(special_sauce):
 
 func _update_output(_input):
 	var bodies_in_range = area_2d.get_overlapping_bodies()
-	if len(bodies_in_range) == 0:
+	if len(bodies_in_range) == 1:
 		output = -1
 	else:
 		var dist2 = []
@@ -22,7 +22,7 @@ func _update_output(_input):
 			dist2.append(to_local(body.position).distance_squared_to(self.position))
 		if len(dist2) == 0:
 			output = -1
-			return
+			return 0
 		var min_dist2 = dist2.min()
 		var collision_distance = sqrt(min_dist2)
 		if collision_distance > distance:
