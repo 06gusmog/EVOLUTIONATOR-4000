@@ -22,4 +22,6 @@ func add_food(energy, food_position):
 		remove_food(0)
 
 func remove_food(index):
-	get_child(index).queue_free()
+	var food = get_child(index)
+	remove_child(food)
+	food.queue_free()

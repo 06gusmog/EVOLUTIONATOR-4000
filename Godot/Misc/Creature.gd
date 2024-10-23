@@ -96,7 +96,7 @@ func _ready():
 	
 	get_parent().get_node('FoodSpawnPoints').get_node('FoodSpawnTimer').timeout.connect(reproduce_time)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta: float) -> void:
 	clear_killing_queue()
 	line_2d.global_rotation = 0.0 # boxD
 	for cellID in output_cells:

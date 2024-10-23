@@ -45,6 +45,8 @@ func _process(_delta):
 			if not clicked:
 				background_clicked()
 	
+	if Input.is_action_just_pressed('test input'):
+		print($"../../FoodObject".get_child_count())
 	#progress_bar.value = creature_selected.energy
 
 
