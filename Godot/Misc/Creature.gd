@@ -115,17 +115,20 @@ func save():
 
 func save2():
 	var saved_cells = {}
-	print(cells)
 	for cellID in cells:
 		var cell = cells[cellID]
-		print(saved_cells, typeof(cellID))
 		saved_cells[cellID] = {
 			"pos_x": cell.position.x,
 			"pos_y": cell.position.y,
 			"type": cell.type,
 			"connections": cell.connections,
-			"special sauce": DNA[cellID]['Special Sauce']
+			"special sauce": DNA[int(cellID)]['Special Sauce']
 		}
+	var saved_DNA = DNA
+	var i = 0
+	for RNA in DNA:
+		saved_DNA[i]['Position'] = var_to_str(RNA['Position'])
+		i += 1
 	var save_dict = {
 		"pos_x": position.x,
 		"pos_y": position.y,
@@ -134,7 +137,7 @@ func save2():
 		"cells": saved_cells,
 		"mass": mass,
 		"bounding_sphere_size": bounding_sphere_size,
-		"DNA": DNA,
+		"DNA": saved_DNA,
 		"creatureID": creatureID
 		
 	}
@@ -143,6 +146,9 @@ func save2():
 func load2(data):
 	# Remove the shit that ready did
 	for child in self.get_children():
+		if child.name == 'Visual Effects':
+			continue
+		child.name = 'Unoccupied Name'
 		child.queue_free()
 	cells = {}
 	
@@ -150,12 +156,12 @@ func load2(data):
 	rotation = data['rotation']
 	for cellID in data['cells']:
 		var cell_data = data['cells'][cellID]
-		var cell_base = load("res://Cell Types/Scenes/" + cell_data['Type'])
+		var cell_base = load("res://Cell Types/Scenes/" + cell_data['type'])
 		var cell_instance = cell_base.instantiate()
 		add_child(cell_instance)
 		var RNA = {
 			"Position": Vector2(cell_data['pos_x'], cell_data['pos_y']), 
-			"Type": cell_data['Type'], 
+			"Type": cell_data['type'], 
 			"Connections": cell_data['connections'],
 			"Special Sauce": cell_data['special sauce']
 		}

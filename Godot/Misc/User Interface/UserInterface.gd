@@ -47,7 +47,8 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed('test input'):
 		world.save_game_2()
-		print('Saved!!')
+		#world.load_game_2("res://savefiles/savegame21-27.txt")
+		#print('Saved!!')
 	#progress_bar.value = creature_selected.energy
 
 

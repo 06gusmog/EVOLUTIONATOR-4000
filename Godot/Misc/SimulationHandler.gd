@@ -136,37 +136,76 @@ func _on_mitosis(creature:):
 	creature.energy /= 2
 
 func save_game_2():
+	"""
+	Saves creatures according to creature save function
+	Saves creature tree
+	"""
 	var time = Time.get_time_dict_from_system()
-	var save_file = FileAccess.open("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE)
+	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
+	var save_file = FileAccess.open("{0}savegame{1}-{2}.txt".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE) 
+	# .save doesn't show up in the editor
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	var creature_list = []
 	for creature in creatures:
 		creature_list.append(creature.save2())
 	var creature_str = JSON.stringify(creature_list)
 	save_file.store_line(creature_str)
-	save_file.close()
+	
+	var creature_tree_dict = LineageLogger.creature_tree
+	print(creature_tree_dict)
+	for creatureID in creature_tree_dict:
+		var creature = creature_tree_dict[creatureID]
+		var loaded_DNA = creature[4]
+		var i = 0
+		for RNA in loaded_DNA:
+			loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
+			i += 1
+		creature_tree_dict[creatureID] = loaded_DNA
+	var tree_str = JSON.stringify(creature_tree_dict)
+	save_file.store_line(tree_str)
 
 func load_game_2(savefile_location): #WARNING This erases the current simulation. Save first if you want to keep it.
+	"""
+	Loads creatures according to creature save function
+	Loads creature tree
+	"""
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	for creature in creatures:
 		creature.queue_free()
 	var savefile = FileAccess.open(savefile_location, FileAccess.READ)
 	var creature_str = savefile.get_line()
 	var json = JSON.new()
-	json.parse_string(creature_str)
-	var creature_list = json.get_data()
+	var creature_list = json.parse_string(creature_str)
+	#print(test)
+	#var creature_list = json.get_data()
+	if creature_list == null:
+		print('Empty save file. Aborting!')
+		return 0
 	for creature_data in creature_list:
 		var dudebro = CREATURE.instantiate()
-		dudebro.DNA = creature_data['DNA']
+		var loaded_DNA = creature_data['DNA']
+		var i = 0
+		for RNA in creature_data['DNA']:
+			loaded_DNA[i]['Position'] = str_to_var(RNA['Position'])
+			i += 1
+		dudebro.DNA = loaded_DNA
 		dudebro.position = Vector2(creature_data['pos_x'], creature_data['pos_y'])
 		dudebro.mitosis.connect(_on_mitosis) # This connects the signal
-		dudebro.creatureID = creature_data['ceratureID']
+		dudebro.creatureID = creature_data['creatureID']
 		add_child(dudebro)
 		dudebro.load2(creature_data) # Add data
 	
-
-#This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
-#if any problems occur please consult the source
+	var tree_str = savefile.get_line()
+	var tree_dict = json.parse_string(tree_str)
+	for creatureID in tree_dict:
+		var creature = tree_dict[creatureID]
+		var loaded_DNA = creature[4]
+		var i = 0
+		for RNA in loaded_DNA:
+			loaded_DNA[i]['Position'] = str_to_var(RNA['Position'])
+			i += 1
+		tree_dict[creatureID] = loaded_DNA
+	LineageLogger.creature_tree = tree_dict
 
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
