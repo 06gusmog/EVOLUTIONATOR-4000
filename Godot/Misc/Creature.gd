@@ -23,35 +23,21 @@ signal death
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.add_to_group("Persist")
+	self.add_to_group("Creature")
 	#i is because there is no enumerate
 	food_object = get_parent().get_node('FoodObject')
 	var i = 0
-	DNA = load_DNA(DNA)
-	if GlobalSettings.create_new_game:
-		for RNA in DNA:
-			var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
-			var cell_instance = cell_base.instantiate()
-			add_child(cell_instance)
-			cell_instance.unpack(RNA, str(i))
-			i += 1
-		
-		mass = i * cell_weight
-		for cell in get_children():
-			cells[cell.name] = cell
-		cells.erase('Visual Effects')
-	else:
-		for cell in cellIDs:
-			var cell_base = load("res://Cell Types/Scenes/" + DNA[int(cell)]['Type'])
-			var cell_instance = cell_base.instantiate()
-			add_child(cell_instance)
-			cell_instance.unpack(DNA[int(cell)], str(i))
-			i += 1
-			
-		mass = i * cell_weight
-		for cell in get_children():
-			cells[cell.name] = cell
-		cells.erase('Visual Effects')
-		check_connections()
+	for RNA in DNA:
+		var cell_base = load("res://Cell Types/Scenes/" + RNA['Type'])
+		var cell_instance = cell_base.instantiate()
+		add_child(cell_instance)
+		cell_instance.unpack(RNA, str(i))
+		i += 1
+	
+	mass = i * cell_weight
+	for cell in get_children():
+		cells[cell.name] = cell
+	cells.erase('Visual Effects')
 	
 	# Optimizing cell list and connections
 	for cellID in cells:
@@ -126,6 +112,66 @@ func save():
 		"bounding_sphere_size": bounding_sphere_size
 	}
 	return save_dict
+
+func save2():
+	var saved_cells = {}
+	print(cells)
+	for cellID in cells:
+		var cell = cells[cellID]
+		print(saved_cells, typeof(cellID))
+		saved_cells[cellID] = {
+			"pos_x": cell.position.x,
+			"pos_y": cell.position.y,
+			"type": cell.type,
+			"connections": cell.connections,
+			"special sauce": DNA[cellID]['Special Sauce']
+		}
+	var save_dict = {
+		"pos_x": position.x,
+		"pos_y": position.y,
+		"rotation": rotation,
+		"energy": energy,
+		"cells": saved_cells,
+		"mass": mass,
+		"bounding_sphere_size": bounding_sphere_size,
+		"DNA": DNA,
+		"creatureID": creatureID
+		
+	}
+	return save_dict
+
+func load2(data):
+	# Remove the shit that ready did
+	for child in self.get_children():
+		child.queue_free()
+	cells = {}
+	
+	position = Vector2(data['pos_x'], data['pos_y'])
+	rotation = data['rotation']
+	for cellID in data['cells']:
+		var cell_data = data['cells'][cellID]
+		var cell_base = load("res://Cell Types/Scenes/" + cell_data['Type'])
+		var cell_instance = cell_base.instantiate()
+		add_child(cell_instance)
+		var RNA = {
+			"Position": Vector2(cell_data['pos_x'], cell_data['pos_y']), 
+			"Type": cell_data['Type'], 
+			"Connections": cell_data['connections'],
+			"Special Sauce": cell_data['special sauce']
+		}
+		cell_instance.unpack(RNA, cellID)
+		cells[cellID] = cell_instance
+	bounding_sphere_size = data['bounding_sphere_size']
+	var box_side_length = bounding_sphere_size * 2
+	line_2d.points = [
+		Vector2(1,1) * box_side_length + center_of_mass, 
+		Vector2(1,-1) * box_side_length + center_of_mass, 
+		Vector2(-1,-1) * box_side_length + center_of_mass, 
+		Vector2(-1,1) * box_side_length + center_of_mass, 
+		Vector2(1,1) * box_side_length + center_of_mass,
+		Vector2(1,-1) * box_side_length + center_of_mass
+		]
+	energy = data['energy']
 
 func reproduce_time():
 	if energy >= GlobalSettings.reproduction_energy_requirement * per_frame_energy_consumption:

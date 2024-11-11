@@ -16,12 +16,7 @@ const CREATURE = preload("res://Misc/creature.tscn")
 func _ready():
 	food_spawn_nodes.pop_at(-1)
 
-func _process(_delta):
-	#if Input.is_action_just_pressed("click"):
-	#	food_object.add_food(20, get_global_mouse_position())
-	if Input.is_action_just_pressed("test input"):
-		print("Saving Game")
-		save_game()
+# All test inputs in userinterface!!
 
 func get_random_position(food_spawn_node):
 	var diameter = 150
@@ -139,33 +134,39 @@ func _on_mitosis(creature:):
 	else:
 		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3, creature.creatureID)
 	creature.energy /= 2
-	
-#This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
-#if any problems occur please consult the source
-func save_game():
-	#This should name the save "savegame[hour]-[minute].save"
+
+func save_game_2():
 	var time = Time.get_time_dict_from_system()
 	var save_file = FileAccess.open("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE)
-	var save_nodes = get_tree().get_nodes_in_group("Persist")
-	for node in save_nodes:
-		# Check the node is an instanced scene so it can be instanced again during load.
-		if node.scene_file_path.is_empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
-			continue
+	var creatures = get_tree().get_nodes_in_group("Creature")
+	var creature_list = []
+	for creature in creatures:
+		creature_list.append(creature.save2())
+	var creature_str = JSON.stringify(creature_list)
+	save_file.store_line(creature_str)
+	save_file.close()
 
-		# Check the node has a save function.
-		if !node.has_method("save"):
-			print("persistent node '%s' is missing a save() function, skipped" % node.name)
-			continue
+func load_game_2(savefile_location): #WARNING This erases the current simulation. Save first if you want to keep it.
+	var creatures = get_tree().get_nodes_in_group("Creature")
+	for creature in creatures:
+		creature.queue_free()
+	var savefile = FileAccess.open(savefile_location, FileAccess.READ)
+	var creature_str = savefile.get_line()
+	var json = JSON.new()
+	json.parse_string(creature_str)
+	var creature_list = json.get_data()
+	for creature_data in creature_list:
+		var dudebro = CREATURE.instantiate()
+		dudebro.DNA = creature_data['DNA']
+		dudebro.position = Vector2(creature_data['pos_x'], creature_data['pos_y'])
+		dudebro.mitosis.connect(_on_mitosis) # This connects the signal
+		dudebro.creatureID = creature_data['ceratureID']
+		add_child(dudebro)
+		dudebro.load2(creature_data) # Add data
+	
 
-		# Call the node's save function.
-		var node_data = node.call("save")
-
-		# JSON provides a static method to serialized JSON string.
-		var json_string = JSON.stringify(node_data)
-
-		# Store the save dictionary as a new line in the save file.
-		save_file.store_line(json_string)
+#This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
+#if any problems occur please consult the source
 
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
@@ -183,4 +184,4 @@ func _on_spawn_timer_timeout():
 
 func _on_auto_save_timer_timeout():
 	print("Autosave")
-	save_game()
+	save_game_2()

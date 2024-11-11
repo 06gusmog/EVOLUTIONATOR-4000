@@ -46,7 +46,8 @@ func _process(_delta):
 				background_clicked()
 	
 	if Input.is_action_just_pressed('test input'):
-		print($"../../FoodObject".get_child_count())
+		world.save_game_2()
+		print('Saved!!')
 	#progress_bar.value = creature_selected.energy
 
 
