@@ -133,6 +133,9 @@ func save2():
 		"pos_x": position.x,
 		"pos_y": position.y,
 		"rotation": rotation,
+		"vel_x": linear_velocity.x,
+		"vel_y": linear_velocity.y,
+		"vel_rotation": angular_velocity,
 		"energy": energy,
 		"cells": saved_cells,
 		"mass": mass,
@@ -154,6 +157,8 @@ func load2(data):
 	
 	position = Vector2(data['pos_x'], data['pos_y'])
 	rotation = data['rotation']
+	linear_velocity = Vector2(data['vel_x'], data['vel_y'])
+	angular_velocity = data['vel_rotation']
 	for cellID in data['cells']:
 		var cell_data = data['cells'][cellID]
 		var cell_base = load("res://Cell Types/Scenes/" + cell_data['type'])

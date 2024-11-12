@@ -160,7 +160,7 @@ func save_game_2():
 		for RNA in loaded_DNA:
 			loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
 			i += 1
-		creature_tree_dict[creatureID] = loaded_DNA
+		creature_tree_dict[creatureID][4] = loaded_DNA
 	var tree_str = JSON.stringify(creature_tree_dict)
 	save_file.store_line(tree_str)
 
@@ -202,9 +202,10 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 		var loaded_DNA = creature[4]
 		var i = 0
 		for RNA in loaded_DNA:
+			print(str_to_var(RNA['Position']))
 			loaded_DNA[i]['Position'] = str_to_var(RNA['Position'])
 			i += 1
-		tree_dict[creatureID] = loaded_DNA
+		tree_dict[creatureID][4] = loaded_DNA
 	LineageLogger.creature_tree = tree_dict
 
 func _on_food_spawn_timer_timeout():
