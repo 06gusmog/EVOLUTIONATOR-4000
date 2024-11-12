@@ -46,9 +46,13 @@ func _process(_delta):
 				background_clicked()
 	
 	if Input.is_action_just_pressed('test input'):
-		#world.save_game_2()
-		world.load_game_2("res://savefiles/savegame15-52.txt")
-		#print('Saved!!')
+		pass
+	if Input.is_action_just_pressed('Save'):
+		print('Saving!')
+		world.save_game_2()
+	if Input.is_action_just_pressed('Load'):
+		print('Loading save at location "' + GlobalSettings.savefile_selected + '"')
+		world.load_game_2(GlobalSettings.savefile_selected)
 	#progress_bar.value = creature_selected.energy
 
 

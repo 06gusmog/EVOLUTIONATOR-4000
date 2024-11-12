@@ -139,6 +139,7 @@ func save_game_2():
 	"""
 	Saves creatures according to creature save function
 	Saves creature tree
+	Saves food
 	"""
 	var time = Time.get_time_dict_from_system()
 	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
@@ -152,7 +153,6 @@ func save_game_2():
 	save_file.store_line(creature_str)
 	
 	var creature_tree_dict = LineageLogger.creature_tree
-	print(creature_tree_dict)
 	for creatureID in creature_tree_dict:
 		var creature = creature_tree_dict[creatureID]
 		var loaded_DNA = creature[4]
@@ -163,6 +163,17 @@ func save_game_2():
 		creature_tree_dict[creatureID][4] = loaded_DNA
 	var tree_str = JSON.stringify(creature_tree_dict)
 	save_file.store_line(tree_str)
+	
+	var grub_list = []
+	for grub_bit in food_object.get_children():
+		var grub_info = {
+			'pos_x': grub_bit.position.x,
+			'pos_y': grub_bit.position.y,
+			'energy': grub_bit.energy
+		}
+		grub_list.append(grub_info)
+	var grub_str = JSON.stringify(grub_list)
+	save_file.store_line(grub_str)
 
 func load_game_2(savefile_location): #WARNING This erases the current simulation. Save first if you want to keep it.
 	"""
@@ -186,7 +197,9 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 		var loaded_DNA = creature_data['DNA']
 		var i = 0
 		for RNA in creature_data['DNA']:
-			loaded_DNA[i]['Position'] = str_to_var(RNA['Position'])
+			var var_pos = RNA['Position'].replace('Vector2(', '').replace(')', '').split(', ')
+			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			loaded_DNA[i]['Position'] = varified_value
 			i += 1
 		dudebro.DNA = loaded_DNA
 		dudebro.position = Vector2(creature_data['pos_x'], creature_data['pos_y'])
@@ -202,11 +215,23 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 		var loaded_DNA = creature[4]
 		var i = 0
 		for RNA in loaded_DNA:
-			print(str_to_var(RNA['Position']))
-			loaded_DNA[i]['Position'] = str_to_var(RNA['Position'])
+			var str_pos = RNA['Position']
+			var var_pos = str_pos.replace('Vector2(', '').replace(')', '').split(', ')
+			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			loaded_DNA[i]['Position'] = varified_value
 			i += 1
 		tree_dict[creatureID][4] = loaded_DNA
 	LineageLogger.creature_tree = tree_dict
+	
+	var reversed_food_indices = range(food_object.get_child_count())
+	reversed_food_indices.reverse()
+	for food_index in reversed_food_indices:
+		food_object.remove_food(food_index)
+
+	var food_str = savefile.get_line()
+	var food_list = JSON.parse_string(food_str)
+	for grub_bit in food_list:
+		food_object.add_food(grub_bit['energy'], Vector2(grub_bit['pos_x'], grub_bit['pos_y']))
 
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
