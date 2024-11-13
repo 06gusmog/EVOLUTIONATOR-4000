@@ -46,7 +46,16 @@ func _process(_delta):
 				background_clicked()
 	
 	if Input.is_action_just_pressed('test input'):
-		print($"../../FoodObject".get_child_count())
+		pass
+	if Input.is_action_just_pressed('Save'):
+		print('Saving!')
+		world.save_game_2()
+	if Input.is_action_just_pressed('Load'):
+		print('Closing UI...')
+		creature_lineage_view.unload_lineage()
+		connection_monitor.unload_creature()
+		print('Loading save at location "' + GlobalSettings.savefile_selected + '"')
+		world.load_game_2(GlobalSettings.savefile_selected)
 	#progress_bar.value = creature_selected.energy
 
 

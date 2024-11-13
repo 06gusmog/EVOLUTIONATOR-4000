@@ -16,12 +16,7 @@ const CREATURE = preload("res://Misc/creature.tscn")
 func _ready():
 	food_spawn_nodes.pop_at(-1)
 
-func _process(_delta):
-	#if Input.is_action_just_pressed("click"):
-	#	food_object.add_food(20, get_global_mouse_position())
-	if Input.is_action_just_pressed("test input"):
-		print("Saving Game")
-		save_game()
+# All test inputs in userinterface!!
 
 func get_random_position(food_spawn_node):
 	var diameter = 150
@@ -139,33 +134,102 @@ func _on_mitosis(creature:):
 	else:
 		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3, creature.creatureID)
 	creature.energy /= 2
-	
-#This code is stolen from https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html, 
-#if any problems occur please consult the source
-func save_game():
-	#This should name the save "savegame[hour]-[minute].save"
+
+func save_game_2():
+	"""
+	Saves creatures according to creature save function
+	Saves creature tree
+	Saves food
+	"""
 	var time = Time.get_time_dict_from_system()
-	var save_file = FileAccess.open("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE)
-	var save_nodes = get_tree().get_nodes_in_group("Persist")
-	for node in save_nodes:
-		# Check the node is an instanced scene so it can be instanced again during load.
-		if node.scene_file_path.is_empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
-			continue
+	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
+	var save_file = FileAccess.open("{0}savegame{1}-{2}.txt".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE) 
+	# .save doesn't show up in the editor
+	var creatures = get_tree().get_nodes_in_group("Creature")
+	var creature_list = []
+	for creature in creatures:
+		creature_list.append(creature.save2())
+	var creature_str = JSON.stringify(creature_list)
+	save_file.store_line(creature_str)
+	
+	var creature_tree_dict = LineageLogger.creature_tree
+	for creatureID in creature_tree_dict:
+		var creature = creature_tree_dict[creatureID]
+		var loaded_DNA = creature[4]
+		var i = 0
+		for RNA in loaded_DNA:
+			loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
+			i += 1
+		creature_tree_dict[creatureID][4] = loaded_DNA
+	var tree_str = JSON.stringify(creature_tree_dict)
+	save_file.store_line(tree_str)
+	
+	var grub_list = []
+	for grub_bit in food_object.get_children():
+		var grub_info = {
+			'pos_x': grub_bit.position.x,
+			'pos_y': grub_bit.position.y,
+			'energy': grub_bit.energy
+		}
+		grub_list.append(grub_info)
+	var grub_str = JSON.stringify(grub_list)
+	save_file.store_line(grub_str)
 
-		# Check the node has a save function.
-		if !node.has_method("save"):
-			print("persistent node '%s' is missing a save() function, skipped" % node.name)
-			continue
-
-		# Call the node's save function.
-		var node_data = node.call("save")
-
-		# JSON provides a static method to serialized JSON string.
-		var json_string = JSON.stringify(node_data)
-
-		# Store the save dictionary as a new line in the save file.
-		save_file.store_line(json_string)
+func load_game_2(savefile_location): #WARNING This erases the current simulation. Save first if you want to keep it.
+	"""
+	Loads creatures according to creature save function
+	Loads creature tree
+	Loads food
+	"""
+	var creatures = get_tree().get_nodes_in_group("Creature")
+	for creature in creatures:
+		creature.queue_free()
+	var savefile = FileAccess.open(savefile_location, FileAccess.READ)
+	var creature_str = savefile.get_line()
+	var json = JSON.new()
+	var creature_list = json.parse_string(creature_str)
+	if creature_list == null:
+		print('Empty save file. Aborting!')
+		return 0
+	for creature_data in creature_list:
+		var dudebro = CREATURE.instantiate()
+		var loaded_DNA = creature_data['DNA']
+		var i = 0
+		for RNA in creature_data['DNA']:
+			var var_pos = RNA['Position'].replace('Vector2(', '').replace(')', '').split(', ')
+			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			loaded_DNA[i]['Position'] = varified_value
+			i += 1
+		dudebro.DNA = loaded_DNA
+		dudebro.position = Vector2(creature_data['pos_x'], creature_data['pos_y'])
+		dudebro.mitosis.connect(_on_mitosis) # This connects the signal
+		dudebro.creatureID = creature_data['creatureID']
+		add_child(dudebro)
+		dudebro.load2(creature_data) # Add data
+	
+	var tree_str = savefile.get_line()
+	var tree_dict = json.parse_string(tree_str)
+	for creatureID in tree_dict:
+		var creature = tree_dict[creatureID]
+		var loaded_DNA = creature[4]
+		var i = 0
+		for RNA in loaded_DNA:
+			var str_pos = RNA['Position']
+			var var_pos = str_pos.replace('Vector2(', '').replace(')', '').split(', ')
+			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			loaded_DNA[i]['Position'] = varified_value
+			i += 1
+		tree_dict[creatureID][4] = loaded_DNA
+	LineageLogger.creature_tree = tree_dict
+	
+	var reversed_food_indices = range(food_object.get_child_count())
+	reversed_food_indices.reverse()
+	for food_index in reversed_food_indices:
+		food_object.remove_food(food_index)
+	var food_str = savefile.get_line()
+	var food_list = JSON.parse_string(food_str)
+	for grub_bit in food_list:
+		food_object.add_food(grub_bit['energy'], Vector2(grub_bit['pos_x'], grub_bit['pos_y']))
 
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):
@@ -183,4 +247,4 @@ func _on_spawn_timer_timeout():
 
 func _on_auto_save_timer_timeout():
 	print("Autosave")
-	save_game()
+	save_game_2()
