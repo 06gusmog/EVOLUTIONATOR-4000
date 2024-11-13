@@ -71,10 +71,8 @@ var color_sheet = {
 	'armor_cell.tscn':Color.DARK_GRAY
 	}
 
-#To create a new game, create a folder in %appdata%/Godot/app_userdata/[name of the project]/
-#and write the name of the new folder between :// and savegame.save
 
-var savefile_selected = "res://savefiles/savegame21-1.txt"
+var savefile_selected = "res://savefiles/savegame13-8.txt"
 var save_path = "res://savefiles/"
 
 func _ready():

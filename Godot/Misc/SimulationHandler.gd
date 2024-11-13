@@ -179,6 +179,7 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 	"""
 	Loads creatures according to creature save function
 	Loads creature tree
+	Loads food
 	"""
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	for creature in creatures:
@@ -187,8 +188,6 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 	var creature_str = savefile.get_line()
 	var json = JSON.new()
 	var creature_list = json.parse_string(creature_str)
-	#print(test)
-	#var creature_list = json.get_data()
 	if creature_list == null:
 		print('Empty save file. Aborting!')
 		return 0
@@ -227,7 +226,6 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 	reversed_food_indices.reverse()
 	for food_index in reversed_food_indices:
 		food_object.remove_food(food_index)
-
 	var food_str = savefile.get_line()
 	var food_list = JSON.parse_string(food_str)
 	for grub_bit in food_list:
