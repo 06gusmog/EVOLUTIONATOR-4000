@@ -237,9 +237,10 @@ text = "HIDE UI"
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 
 [node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -290,7 +291,6 @@ stretch_mode = 4
 script = ExtResource("5_46rmg")
 
 [node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("7_tcja2")
 metadata/_tab_index = 2
@@ -316,6 +316,13 @@ size_flags_vertical = 3
 min_value = 1.0
 max_value = 10.0
 value = 1.0
+
+[node name="Saving" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Saving Simulation"
 
 [node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
