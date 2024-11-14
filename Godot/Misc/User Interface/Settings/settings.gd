@@ -1,9 +1,18 @@
 extends HBoxContainer
+# Simulation Speed
 @onready var simulation_speed_slider: VSlider = $"simulation_speed/Simulation Speed Slider"
 @onready var simulation_speed_value: Label = $simulation_speed/Value
 
+# Saving
+var root_dir = DirAccess.open("res://savefiles/")
+@onready var reload_button = $"Saving/Reload Button"
+@onready var file_menu = $"Saving/File Menu"
+@onready var load_simulation = $"Saving/Load Simulation"
 
-# Called when the node enters the scene tree for the first time.
+func reload_files():
+	var list_of_folders = root_dir.get_directories()
+	
+
 func _ready() -> void:
 	simulation_speed_slider.value = GlobalSettings.simulation_speed
 

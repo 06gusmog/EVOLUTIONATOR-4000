@@ -317,12 +317,45 @@ min_value = 1.0
 max_value = 10.0
 value = 1.0
 
+[node name="Loading" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "        Loading"
+
+[node name="Reload Button" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "Reload Savefiles
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+
+[node name="Folder Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer"]
+layout_mode = 2
+text = "Folder"
+
+[node name="File Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer"]
+layout_mode = 2
+text = "File
+"
+
+[node name="Load Simulation" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "Load Simulation"
+
 [node name="Saving" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
 layout_mode = 2
-text = "Saving Simulation"
+text = "         Saving"
+
+[node name="Folder Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Folder
+"
 
 [node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
