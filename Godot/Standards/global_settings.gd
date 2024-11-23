@@ -73,7 +73,7 @@ var color_sheet = {
 
 
 var savefile_selected = "res://savefiles/savegame13-8.txt"
-var save_path = "res://savefiles/"
+var save_path = "res://savefiles/Placeholder/"
 
 func _ready():
 	set_simulation_speed(simulation_speed)
