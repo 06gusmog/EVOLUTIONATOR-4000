@@ -1,13 +1,31 @@
 extends Node
 # Lineage tracking
+
+const REGISTRY_FOLDER_PATH = "res://Lineage Tracking/Registry/"
 #[parent, children, time of birth, time of death(-1.0 if alive), DNA]
 var creature_tree = {"-1": ["-1", [], 0, -1, "", {  }]}
+func _ready():
+	var creature_count = len(creature_tree)
+	for x in range(creature_count/50):
+		var file = ConfigFile.new()
+		for y in range((creature_count/50)%50): # NOTE: Condition not functional, revisit. 
+			var current_creature = creature_tree[str(x*50 + y)]
+			file.set_value(str(y), "parent", current_creature[0])
+			file.set_value(str(y), "children", current_creature[1])
+			file.set_value(str(y), "time of birth", current_creature[2])
+			file.set_value(str(y), "time of death", current_creature[3])
+			file.set_value(str(y), "DNA", current_creature[4])
+			file.save(REGISTRY_FOLDER_PATH + str(x*50) + "-" + str(x*50 + 49) + ".cfg")
+	pass
 
 func log_creature_creation(parentID, DNA):
 	creature_tree[str(len(creature_tree))] = [parentID, [], Time.get_ticks_msec(), -1.0, DNA]
 	if parentID != '-1':
 		creature_tree[parentID][1].append(str(len(creature_tree)-1))
 	return str(len(creature_tree)-1)
+
+func log_creature_creation_2(parentID, DNA):
+	pass
 
 func log_creature_death(creatureID):
 	creature_tree[creatureID][3] = Time.get_ticks_msec()
