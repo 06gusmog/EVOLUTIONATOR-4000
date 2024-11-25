@@ -73,7 +73,7 @@ func get_image(creatureID: String):
 	var paddingy = 1
 	var edge_thickness = 1
 	var edge_color = Color.WHITE
-	var childrenIDs = creature_tree[creatureID][1]
+	var childrenIDs = get_creature(creatureID)[1]
 	if len(childrenIDs) > 0:
 		# Get all child icons recursively
 		var images = []
@@ -86,7 +86,7 @@ func get_image(creatureID: String):
 			sizex += images[-1].get_width()
 		
 		# Create image and selfie
-		var selfie = generate_icon(creature_tree[creatureID][4], GlobalSettings.color_sheet)
+		var selfie = generate_icon(get_creature(creatureID)[4], GlobalSettings.color_sheet)
 		var groupie = Image.create(sizex + (len(images) + 1) * paddingx + edge_thickness * 2, sizey + paddingy + selfie.get_height(), false, Image.FORMAT_RGBA8)
 		groupie.fill(Color.BLACK)
 		
@@ -108,7 +108,7 @@ func get_image(creatureID: String):
 			width_sum += image.get_width() + paddingx
 		return groupie
 	
-	return generate_icon(creature_tree[creatureID][4], GlobalSettings.color_sheet)
+	return generate_icon(get_creature(creatureID)[4], GlobalSettings.color_sheet)
 
 func generate_icon(DNA, color_sheet):
 	var lowest_positions = Vector2(0,0)
@@ -133,21 +133,21 @@ func generate_icon(DNA, color_sheet):
 
 func get_relative_lineage(creatureID):
 	# Get first creature in the chain
-	var parentID = creature_tree[creatureID][0]
+	var parentID = get_creature(creatureID)[0]
 	while parentID != '-1':
 		creatureID = parentID
-		parentID = creature_tree[parentID][0]
+		parentID = get_creature(creatureID)[0]
 	
 	# Get all the creatureIDs and put them into a list
 	var i = 0
 	var list_of_creatureIDs = [creatureID]
 	while i < len(list_of_creatureIDs):
-		list_of_creatureIDs.append_array(creature_tree[list_of_creatureIDs[i]][1])
+		list_of_creatureIDs.append_array(get_creature(list_of_creatureIDs[i])[1])
 		i += 1
 	
 	# Convert that list into the dictionary we want
 	var relative_lineage = {'-1':['-1', [], 0.0, -1.0, '', {}]}
 	for ID in list_of_creatureIDs:
-		relative_lineage[ID] = creature_tree[ID]
+		relative_lineage[ID] = get_creature(ID)
 	
 	return relative_lineage
