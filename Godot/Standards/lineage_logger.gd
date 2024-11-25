@@ -25,6 +25,16 @@ func log_creature_creation(parentID, DNA):
 		creature_tree[parentID][1].append(str(len(creature_tree)-1))
 	return str(len(creature_tree)-1)
 
+func get_creature(ID):
+	var file = ConfigFile.new()
+	file.load(REGISTRY_FOLDER_PATH + str(int(ID)/50) + ".cfg")
+	var creature = []
+	creature.append(file.get_value(ID, "parent"))
+	creature.append(file.get_value(ID, "children"))
+	creature.append(file.get_value(ID, "time of birth"))
+	creature.append(file.get_value(ID, "time of death"))
+	creature.append(file.get_value(ID, "DNA"))
+
 func log_creature_creation_2(parentID, DNA):
 	"""I think this works now, still untested though. Not sure if it just keeps going on an 
 	empty file if it failed to load. That part should probably be improved regardless. """
