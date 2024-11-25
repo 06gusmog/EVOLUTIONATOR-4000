@@ -15,7 +15,7 @@ const CREATURE = preload("res://Misc/creature.tscn")
 # Math functions
 func _ready():
 	food_spawn_nodes.pop_at(-1)
-
+	GlobalSettings.autosave_timer = $"Autosave Timer"
 # All test inputs in userinterface!!
 
 func get_random_position(food_spawn_node):

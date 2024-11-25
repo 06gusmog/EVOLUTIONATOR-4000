@@ -34,7 +34,7 @@ func _ready() -> void:
 	simulation_speed_slider.value = GlobalSettings.simulation_speed
 
 func _process(delta: float) -> void:
-	time_until_autosave.text = 'Time Left: ' + str(int(autosave_timer.time_left))
+	time_until_autosave.text = 'Time Left: ' + str(int(autosave_timer.time_left / GlobalSettings.simulation_speed))
 
 func _on_simulation_speed_slider_drag_ended(value_changed: bool) -> void:
 	GlobalSettings.simulation_speed = simulation_speed_slider.value
@@ -95,8 +95,8 @@ func _on_save_button_down() -> void:
 func _on_autosave_time_text_changed(new_text: String) -> void:
 	if new_text.is_valid_int():
 		if int(new_text) > 0:
-			autosave_timer.wait_time = int(new_text) * 60
-			print(autosave_timer.wait_time)
+			GlobalSettings.time_between_saves = int(new_text) * 60
+			autosave_timer.wait_time = GlobalSettings.time_between_saves * GlobalSettings.simulation_speed
 
 func _on_check_button_button_down() -> void:
 	if check_button.button_pressed:
