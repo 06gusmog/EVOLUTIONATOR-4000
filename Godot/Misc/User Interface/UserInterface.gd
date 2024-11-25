@@ -46,7 +46,14 @@ func _process(_delta):
 				background_clicked()
 	
 	if Input.is_action_just_pressed('test input'):
-		pass
+		print(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT), ' ORPHAN')
+		print(Performance.get_monitor(Performance.OBJECT_COUNT), ' OBJECT COUNT')
+		print(Performance.get_monitor(Performance.OBJECT_NODE_COUNT), ' OBJECT NODE COUNT')
+		print(Performance.get_monitor(Performance.MEMORY_STATIC), ' STATIC')
+		print(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED), ' VIDEO MEM')
+		print(Performance.get_monitor(Performance.PHYSICS_2D_ACTIVE_OBJECTS), ' COLLISION OBJECTS')
+		print(Performance.get_monitor(Performance.PHYSICS_2D_COLLISION_PAIRS), ' COLLISION PAIRS')
+		print(Performance.get_monitor(Performance.PHYSICS_2D_ISLAND_COUNT), ' ISLANDS')
 	if Input.is_action_just_pressed('Save'):
 		print('Saving!')
 		world.save_game_2()
@@ -66,6 +73,7 @@ func background_clicked():
 	connection_monitor.unload_creature()
 
 func creature_clicked(creature):
+	print(creature.creatureID)
 	# Show the UI
 	tab_container.visible = true
 	down.text = "HIDE UI"

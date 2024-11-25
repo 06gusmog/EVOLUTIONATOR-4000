@@ -7,10 +7,19 @@ var creature_tree = {"-1": ["-1", [], 0, -1, "", {  }]}
 
 var creature_count = len(creature_tree)
 func _ready():
-	for x in range(creature_count/50):
+	var current_creature = creature_tree['-1']
+	for x in range(creature_count/50 + 1):
 		var file = ConfigFile.new()
-		for y in range(min(50, creature_count - x*50)): # NOTE: Condition not functional, revisit. 
-			var current_creature = creature_tree[str(x*50 + y)]
+		if x == 0:
+			creature_count -= 1
+			current_creature = creature_tree['-1']
+			file.set_value('-1', "parent", current_creature[0])
+			file.set_value('-1', "children", current_creature[1])
+			file.set_value('-1', "time of birth", current_creature[2])
+			file.set_value('-1', "time of death", current_creature[3])
+			file.set_value('-1', "DNA", current_creature[4])
+		for y in range(min(50, creature_count - x*50)):
+			current_creature = creature_tree[str(x*50 + y)]
 			file.set_value(str(y), "parent", current_creature[0])
 			file.set_value(str(y), "children", current_creature[1])
 			file.set_value(str(y), "time of birth", current_creature[2])
@@ -19,11 +28,11 @@ func _ready():
 			file.save(REGISTRY_FOLDER_PATH + str(x) + ".cfg")
 	pass
 
-func log_creature_creation(parentID, DNA):
-	creature_tree[str(len(creature_tree))] = [parentID, [], Time.get_ticks_msec(), -1.0, DNA]
-	if parentID != '-1':
-		creature_tree[parentID][1].append(str(len(creature_tree)-1))
-	return str(len(creature_tree)-1)
+#func log_creature_creation(parentID, DNA):
+#	creature_tree[str(len(creature_tree))] = [parentID, [], Time.get_ticks_msec(), -1.0, DNA]
+#	if parentID != '-1':
+#		creature_tree[parentID][1].append(str(len(creature_tree)-1))
+#	return str(len(creature_tree)-1)
 
 func get_creature(ID):
 	var file = ConfigFile.new()
@@ -36,41 +45,41 @@ func get_creature(ID):
 	creature.append(file.get_value(ID, "DNA"))
 	return creature
 
-func log_creature_creation_2(parentID, DNA):
+func log_creature_creation(parentID, DNA):
 	"""I think this works now, still untested though. Not sure if it just keeps going on an 
 	empty file if it failed to load. That part should probably be improved regardless. """
-	var target_file_index = str(int(creature_count + 1)/50)
+	var target_file_index = str(int(creature_count)/50)
 	var file = ConfigFile.new()
 	var err = file.load(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
 	if err != OK:
-		if err == ERR_UNAVAILABLE:
+		if err == ERR_FILE_NOT_FOUND:
 			pass
 		else:
+			print(err)
 			return
-	file.set_value(str(creature_count + 1), "parent", parentID)
-	file.set_value(str(creature_count + 1), "children", [])
-	file.set_value(str(creature_count + 1), "time of birth", Time.get_ticks_msec())
-	file.set_value(str(creature_count + 1), "time of death", -1)
-	file.set_value(str(creature_count + 1), "DNA", DNA)
+	file.set_value(str(creature_count), "parent", parentID)
+	file.set_value(str(creature_count), "children", [])
+	file.set_value(str(creature_count), "time of birth", Time.get_ticks_msec())
+	file.set_value(str(creature_count), "time of death", -1)
+	file.set_value(str(creature_count), "DNA", DNA)
 	file.save(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
-	file.close
 	if parentID != "-1":
 		var parent = get_creature(parentID)
 		var parent_file = ConfigFile.new()
 		parent_file.load(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
-		parent_file.set_value(parentID, "children", parent[1] + creature_count)
+		parent_file.set_value(parentID, "children", parent[1] + [creature_count])
 		parent_file.save(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
 	creature_count += 1
 	return str(creature_count - 1)
 
-func log_creature_death(creatureID):
-	creature_tree[creatureID][3] = Time.get_ticks_msec()
+#func log_creature_death(creatureID):
+#	creature_tree[creatureID][3] = Time.get_ticks_msec()
 
-func log_creature_death_2(ID):
+func log_creature_death(ID):
 	var creature = get_creature(ID)
 	creature[3] = Time.get_ticks_msec()
 	var file = ConfigFile.new()
-	file.load(REGISTRY_FOLDER_PATH + str(ID/50) + ".cfg")
+	file.load(REGISTRY_FOLDER_PATH + str(int(ID)/50) + ".cfg")
 	file.set_value(ID, "time of death", creature[3])
 
 func get_image(creatureID: String):
@@ -85,7 +94,7 @@ func get_image(creatureID: String):
 		var sizex = 0
 		var sizey = 0
 		for childID in childrenIDs:
-			images.append(get_image(childID))
+			images.append(get_image(str(childID)))
 			if images[-1].get_height() > sizey:
 				sizey = images[-1].get_height()
 			sizex += images[-1].get_width()
@@ -147,12 +156,12 @@ func get_relative_lineage(creatureID):
 	var i = 0
 	var list_of_creatureIDs = [creatureID]
 	while i < len(list_of_creatureIDs):
-		list_of_creatureIDs.append_array(get_creature(list_of_creatureIDs[i])[1])
+		list_of_creatureIDs.append_array(get_creature(str(list_of_creatureIDs[i]))[1])
 		i += 1
 	
 	# Convert that list into the dictionary we want
 	var relative_lineage = {'-1':['-1', [], 0.0, -1.0, '', {}]}
 	for ID in list_of_creatureIDs:
-		relative_lineage[ID] = get_creature(ID)
+		relative_lineage[ID] = get_creature(str(ID))
 	
 	return relative_lineage
