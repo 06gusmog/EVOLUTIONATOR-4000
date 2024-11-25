@@ -34,6 +34,7 @@ func get_creature(ID):
 	creature.append(file.get_value(ID, "time of birth"))
 	creature.append(file.get_value(ID, "time of death"))
 	creature.append(file.get_value(ID, "DNA"))
+	return creature
 
 func log_creature_creation_2(parentID, DNA):
 	"""I think this works now, still untested though. Not sure if it just keeps going on an 
