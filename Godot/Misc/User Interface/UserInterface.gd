@@ -54,6 +54,7 @@ func _process(_delta):
 		print(Performance.get_monitor(Performance.PHYSICS_2D_ACTIVE_OBJECTS), ' COLLISION OBJECTS')
 		print(Performance.get_monitor(Performance.PHYSICS_2D_COLLISION_PAIRS), ' COLLISION PAIRS')
 		print(Performance.get_monitor(Performance.PHYSICS_2D_ISLAND_COUNT), ' ISLANDS')
+
 	if Input.is_action_just_pressed('Save'):
 		print('Saving!')
 		world.save_game_2()
@@ -63,6 +64,7 @@ func _process(_delta):
 		connection_monitor.unload_creature()
 		print('Loading save at location "' + GlobalSettings.savefile_selected + '"')
 		world.load_game_2(GlobalSettings.savefile_selected)
+	"""
 	#progress_bar.value = creature_selected.energy
 
 

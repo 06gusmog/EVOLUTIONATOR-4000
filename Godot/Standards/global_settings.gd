@@ -1,5 +1,5 @@
 extends Node
-
+var autosave_timer
 #Map
 var map_size = Vector2(640, 384)
 
@@ -54,8 +54,12 @@ var mutation_chances = {
 var simulation_speed = 1
 var food_cap = 1000
 var ticks_per_second = 30
+var time_between_saves = 3600
 
 func set_simulation_speed(speed):
+	
+	autosave_timer.start((autosave_timer.time_left / autosave_timer.wait_time) * time_between_saves * speed)
+	autosave_timer.wait_time = time_between_saves * speed
 	Engine.time_scale = simulation_speed
 	Engine.physics_ticks_per_second = ticks_per_second * simulation_speed
 
@@ -71,9 +75,9 @@ var color_sheet = {
 	'armor_cell.tscn':Color.DARK_GRAY
 	}
 
-
 var savefile_selected = "res://savefiles/savegame13-8.txt"
-var save_path = "res://savefiles/"
-
+var save_path = "res://savefiles/Placeholder/"
+"""
 func _ready():
 	set_simulation_speed(simulation_speed)
+"""

@@ -21,6 +21,8 @@ viewport_path = NodePath("CanvasLayer/UserInterface2/VBoxContainer/TabContainer/
 script = ExtResource("1_yl8cj")
 creature_amount = 20
 
+[node name="Autosave Timer" type="Timer" parent="."]
+
 [node name="Spawnpoints" type="Node2D" parent="."]
 
 [node name="Spawn 1" type="Node2D" parent="Spawnpoints"]
@@ -237,9 +239,10 @@ text = "HIDE UI"
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 
 [node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -290,7 +293,6 @@ stretch_mode = 4
 script = ExtResource("5_46rmg")
 
 [node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("7_tcja2")
 metadata/_tab_index = 2
@@ -300,9 +302,12 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
 layout_mode = 2
-text = "Simulation
-Speed"
+text = "Simulation Speed"
 horizontal_alignment = 1
+
+[node name="Title Bar" type="ColorRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
 
 [node name="Value" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed"]
 layout_mode = 2
@@ -317,9 +322,118 @@ min_value = 1.0
 max_value = 10.0
 value = 1.0
 
+[node name="Loading" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "                      Loading                      "
+
+[node name="Title Bar" type="ColorRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Reload Button" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "Reload Savefiles
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+
+[node name="Folder Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Folder"
+
+[node name="File Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "File
+"
+
+[node name="selected File" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+
+[node name="Folder" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/selected File"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="File" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/selected File"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Load Simulation" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading"]
+layout_mode = 2
+text = "Load Simulation"
+
+[node name="Saving" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "                      Saving                      "
+
+[node name="Title Bar" type="ColorRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Folder Menu" type="MenuButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Folder
+"
+
+[node name="Selected Folder" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+
+[node name="New Folder" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Create
+New Folder"
+
+[node name="Folder Name" type="LineEdit" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+placeholder_text = "Name"
+
+[node name="Save" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Save One
+Instance"
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "Start Autosave"
+
+[node name="Autosave Time" type="LineEdit" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving"]
+layout_mode = 2
+text = "60"
+placeholder_text = "Time between saves"
+
+[node name="Time Until Autosave" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/Autosave Time"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Time Left: 3600"
+horizontal_alignment = 2
+
 [node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
+[connection signal="timeout" from="Autosave Timer" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_autosave_timer_timeout"]
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/UserInterface2/VBoxContainer/DOWN" to="CanvasLayer/UserInterface2" method="_on_hide_ui_button_pressed"]
 [connection signal="drag_ended" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed/Simulation Speed Slider" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_simulation_speed_slider_drag_ended"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/Reload Button" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_reload_button_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer/Folder Menu" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_folder_menu_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer/File Menu" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_file_menu_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/Load Simulation" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_load_simulation_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/Folder Menu" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_saving_folder_menu_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/New Folder" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_new_folder_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/Save" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_save_button_down"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/CheckButton" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_check_button_button_down"]
+[connection signal="button_up" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/CheckButton" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_check_button_button_up"]
+[connection signal="text_changed" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Saving/Autosave Time" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_autosave_time_text_changed"]
