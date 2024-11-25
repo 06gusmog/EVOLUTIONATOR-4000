@@ -55,18 +55,23 @@ func log_creature_creation_2(parentID, DNA):
 	file.save(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
 	file.close
 	if parentID != "-1":
+		var parent = get_creature(parentID)
 		var parent_file = ConfigFile.new()
-		var parent_err = file.load(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
-		if parent_err != OK:
-			return
-		var old_value = parent_file.get_value(parentID, "children")
-		parent_file.set_value(parentID, "children", Array(old_value) + creature_count)
+		parent_file.load(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
+		parent_file.set_value(parentID, "children", parent[1] + creature_count)
 		parent_file.save(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
 	creature_count += 1
 	return str(creature_count - 1)
 
 func log_creature_death(creatureID):
 	creature_tree[creatureID][3] = Time.get_ticks_msec()
+
+func log_creature_death_2(ID):
+	var creature = get_creature(ID)
+	creature[3] = Time.get_ticks_msec()
+	var file = ConfigFile.new()
+	file.load(REGISTRY_FOLDER_PATH + str(ID/50) + ".cfg")
+	file.set_value(ID, "time of death", creature[3])
 
 func get_image(creatureID: String):
 	var paddingx = 1
