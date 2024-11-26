@@ -154,19 +154,6 @@ func save_game_2():
 	var creature_str = JSON.stringify(creature_list)
 	save_file.store_line(creature_str)
 	
-	#var creature_tree_dict = LineageLogger.creature_tree
-	#for creatureID in creature_tree_dict:
-		#var creature = creature_tree_dict[creatureID]
-		#var loaded_DNA = creature[4]
-		#var i = 0
-		#for RNA in loaded_DNA:
-			#loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
-			#i += 1
-		#creature_tree_dict[creatureID][4] = loaded_DNA
-	#var tree_str = JSON.stringify(creature_tree_dict)
-	#save_file.store_line(tree_str)
-	
-	
 	var grub_list = []
 	for grub_bit in food_object.get_children():
 		var grub_info = {
@@ -215,21 +202,6 @@ func load_game_2(save_folder_path): #WARNING This erases the current simulation.
 		dudebro.creatureID = creature_data['creatureID']
 		add_child(dudebro)
 		dudebro.load2(creature_data) # Add data
-	
-	#var tree_str = savefile.get_line()
-	#var tree_dict = json.parse_string(tree_str)
-	#for creatureID in tree_dict:
-		#var creature = tree_dict[creatureID]
-		#var loaded_DNA = creature[4]
-		#var i = 0
-		#for RNA in loaded_DNA:
-			#var str_pos = RNA['Position']
-			#var var_pos = str_pos.replace('Vector2(', '').replace(')', '').split(', ')
-			#var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
-			#loaded_DNA[i]['Position'] = varified_value
-			#i += 1
-		#tree_dict[creatureID][4] = loaded_DNA
-	#LineageLogger.creature_tree = tree_dict
 	
 	var reversed_food_indices = range(food_object.get_child_count())
 	reversed_food_indices.reverse()

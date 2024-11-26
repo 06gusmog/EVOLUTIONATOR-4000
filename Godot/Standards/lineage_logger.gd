@@ -3,36 +3,20 @@ extends Node
 
 const REGISTRY_FOLDER_PATH = "res://Lineage Tracking/Registry/"
 #[parent, children, time of birth, time of death(-1.0 if alive), DNA]
-#var creature_tree = {"-1": ["-1", [], 0, -1, "", {  }]}
 
-var creature_count
+var creature_count = 0
 func _ready():
-	"""This might be completely unnecessary if we just keep the files, instead of creating new ones."""
-	#var current_creature = creature_tree['-1']
-	#for x in range(creature_count/50 + 1):
-		#var file = ConfigFile.new()
-		#if x == 0:
-			#creature_count -= 1
-			#current_creature = creature_tree['-1']
-			#file.set_value('-1', "parent", current_creature[0])
-			#file.set_value('-1', "children", current_creature[1])
-			#file.set_value('-1', "time of birth", current_creature[2])
-			#file.set_value('-1', "time of death", current_creature[3])
-			#file.set_value('-1', "DNA", current_creature[4])
-		#for y in range(min(50, creature_count - x*50)):
-			#current_creature = creature_tree[str(x*50 + y)]
-			#file.set_value(str(y), "parent", current_creature[0])
-			#file.set_value(str(y), "children", current_creature[1])
-			#file.set_value(str(y), "time of birth", current_creature[2])
-			#file.set_value(str(y), "time of death", current_creature[3])
-			#file.set_value(str(y), "DNA", current_creature[4])
-			#file.save(REGISTRY_FOLDER_PATH + str(x) + ".cfg")
-
-#func log_creature_creation(parentID, DNA):
-#	creature_tree[str(len(creature_tree))] = [parentID, [], Time.get_ticks_msec(), -1.0, DNA]
-#	if parentID != '-1':
-#		creature_tree[parentID][1].append(str(len(creature_tree)-1))
-#	return str(len(creature_tree)-1)
+	var file = ConfigFile.new()
+	var err = file.load(REGISTRY_FOLDER_PATH + "0.cfg")
+	if err != OK:
+		if err == ERR_FILE_NOT_FOUND:
+			pass
+	file.set_value("-1", "parent", "-1")
+	file.set_value("-1", "children", [])
+	file.set_value("-1", "time of birth", 0)
+	file.set_value("-1", "time of death", -1)
+	file.set_value("-1", "DNA", {})
+	file.save(REGISTRY_FOLDER_PATH + "0.cfg")
 
 func get_creature(ID):
 	var file = ConfigFile.new()
@@ -46,8 +30,6 @@ func get_creature(ID):
 	return creature
 
 func log_creature_creation(parentID, DNA):
-	"""I think this works now, still untested though. Not sure if it just keeps going on an 
-	empty file if it failed to load. That part should probably be improved regardless. """
 	var target_file_index = str(int(creature_count)/50)
 	var file = ConfigFile.new()
 	var err = file.load(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
@@ -71,9 +53,6 @@ func log_creature_creation(parentID, DNA):
 		parent_file.save(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
 	creature_count += 1
 	return str(creature_count - 1)
-
-#func log_creature_death(creatureID):
-#	creature_tree[creatureID][3] = Time.get_ticks_msec()
 
 func log_creature_death(ID):
 	var creature = get_creature(ID)
