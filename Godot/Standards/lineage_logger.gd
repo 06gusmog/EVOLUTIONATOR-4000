@@ -6,6 +6,9 @@ const REGISTRY_FOLDER_PATH = "res://Lineage Tracking/Registry/"
 
 var creature_count = 0
 func _ready():
+	for file in DirAccess.get_files_at(REGISTRY_FOLDER_PATH):
+		DirAccess.remove_absolute(REGISTRY_FOLDER_PATH + file)
+	
 	var file = ConfigFile.new()
 	var err = file.load(REGISTRY_FOLDER_PATH + "0.cfg")
 	if err != OK:

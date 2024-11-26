@@ -180,7 +180,9 @@ func load_game_2(save_folder_path): #WARNING This erases the current simulation.
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	for creature in creatures:
 		creature.queue_free()
-	var savefile = FileAccess.open(save_folder_path + "Header.txt", FileAccess.READ)
+	var savefile = FileAccess.open(save_folder_path + "/Header.txt", FileAccess.READ)
+	print(save_folder_path + "/Header.txt")
+	print(FileAccess.get_open_error())
 	var creature_str = savefile.get_line()
 	var json = JSON.new()
 	var creature_list = json.parse_string(creature_str)
