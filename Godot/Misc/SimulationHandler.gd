@@ -169,7 +169,7 @@ func save_game_2():
 	for file_name in DirAccess.get_files_at("res://Lineage Tracking/Registry/"):
 		var file = ConfigFile.new()
 		file.load("res://Lineage Tracking/Registry/" + file_name)
-		file.save(save_folder_path + file_name)
+		file.save(save_folder_path + "/" + file_name)
 
 func load_game_2(save_folder_path): #WARNING This erases the current simulation. Save first if you want to keep it.
 	"""
@@ -217,7 +217,7 @@ func load_game_2(save_folder_path): #WARNING This erases the current simulation.
 	registry_files.remove_at(registry_files.find("Header.txt"))
 	for file_name in registry_files:
 		var file = ConfigFile.new()
-		file.load(save_folder_path + file_name)
+		file.load(save_folder_path + "/" + file_name)
 		creature_count += len(file.get_sections())
 		file.save("res://Lineage Tracking/Registry/" + file_name) 
 	LineageLogger.creature_count = creature_count

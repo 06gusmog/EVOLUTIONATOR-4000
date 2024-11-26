@@ -64,10 +64,8 @@ func _process(_delta):
 		connection_monitor.unload_creature()
 		print('Loading save at location "' + GlobalSettings.savefile_selected + '"')
 		world.load_game_2(GlobalSettings.savefile_selected)
-	"""
+	
 	#progress_bar.value = creature_selected.energy
-
-
 
 func background_clicked():
 	creature_lineage_view.unload_lineage()
