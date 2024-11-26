@@ -183,6 +183,15 @@ func load2(data):
 		Vector2(1,-1) * box_side_length + center_of_mass
 		]
 	energy = data['energy']
+	
+	var to_remove = []
+	for cellID in output_cells:
+		print(cellID)
+		if not cellID in cells.keys():
+			print(cellID, ' Removed')
+			to_remove.append(cellID)
+	for item in to_remove:
+		output_cells.erase(item)
 
 func reproduce_time():
 	if energy >= GlobalSettings.reproduction_energy_requirement * per_frame_energy_consumption:
