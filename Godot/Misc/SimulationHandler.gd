@@ -63,7 +63,7 @@ func generate_random_RNA(cell_positions: Array, creature_size):
 	var RNA = {}
 	RNA['Type'] = cell_types[rng.randi() % len(cell_types)]
 	cell_positions.append(select_cell_position(cell_positions))
-	RNA['Position'] = cell_positions[-1] #Uhhhhh, I don't know how to mutate this?????
+	RNA['Position'] = cell_positions[-1] 
 	RNA['Connections'] = []
 	for x in range(int(ceil(7.5/(0.4 * (rng.randi() % 10) + 1.25) - 2))): # Selects a weighted number between 0 and 4  
 		var connection = rng.randi() % (creature_size)
@@ -142,8 +142,10 @@ func save_game_2():
 	Saves food
 	"""
 	var time = Time.get_time_dict_from_system()
-	print("{0}savegame{1}-{2}.save".format([GlobalSettings.save_path, time.hour, time.minute]))
-	var save_file = FileAccess.open("{0}savegame{1}-{2}.txt".format([GlobalSettings.save_path, time.hour, time.minute]), FileAccess.WRITE) 
+	var save_folder_path = "{0}{1}-{2}".format([GlobalSettings.save_path, time.hour, time.minute])
+	DirAccess.make_dir_absolute(save_folder_path) # Creates a folder for every save 
+	print("{0}savegame{1}-{2}.save".format([save_folder_path, time.hour, time.minute]))
+	var save_file = FileAccess.open("{0}/Header.txt".format([save_folder_path, time.hour, time.minute]), FileAccess.WRITE) 
 	# .save doesn't show up in the editor
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	var creature_list = []
@@ -152,17 +154,18 @@ func save_game_2():
 	var creature_str = JSON.stringify(creature_list)
 	save_file.store_line(creature_str)
 	
-	var creature_tree_dict = LineageLogger.creature_tree
-	for creatureID in creature_tree_dict:
-		var creature = creature_tree_dict[creatureID]
-		var loaded_DNA = creature[4]
-		var i = 0
-		for RNA in loaded_DNA:
-			loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
-			i += 1
-		creature_tree_dict[creatureID][4] = loaded_DNA
-	var tree_str = JSON.stringify(creature_tree_dict)
-	save_file.store_line(tree_str)
+	#var creature_tree_dict = LineageLogger.creature_tree
+	#for creatureID in creature_tree_dict:
+		#var creature = creature_tree_dict[creatureID]
+		#var loaded_DNA = creature[4]
+		#var i = 0
+		#for RNA in loaded_DNA:
+			#loaded_DNA[i]['Position'] = var_to_str(RNA['Position'])
+			#i += 1
+		#creature_tree_dict[creatureID][4] = loaded_DNA
+	#var tree_str = JSON.stringify(creature_tree_dict)
+	#save_file.store_line(tree_str)
+	
 	
 	var grub_list = []
 	for grub_bit in food_object.get_children():
@@ -174,8 +177,14 @@ func save_game_2():
 		grub_list.append(grub_info)
 	var grub_str = JSON.stringify(grub_list)
 	save_file.store_line(grub_str)
+	
+	# Relocates registry to save folder
+	for file_name in DirAccess.get_files_at("res://Lineage Tracking/Registry/"):
+		var file = ConfigFile.new()
+		file.load("res://Lineage Tracking/Registry/" + file_name)
+		file.save(save_folder_path + file_name)
 
-func load_game_2(savefile_location): #WARNING This erases the current simulation. Save first if you want to keep it.
+func load_game_2(save_folder_path): #WARNING This erases the current simulation. Save first if you want to keep it.
 	"""
 	Loads creatures according to creature save function
 	Loads creature tree
@@ -184,7 +193,7 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 	var creatures = get_tree().get_nodes_in_group("Creature")
 	for creature in creatures:
 		creature.queue_free()
-	var savefile = FileAccess.open(savefile_location, FileAccess.READ)
+	var savefile = FileAccess.open(save_folder_path + "Header.txt", FileAccess.READ)
 	var creature_str = savefile.get_line()
 	var json = JSON.new()
 	var creature_list = json.parse_string(creature_str)
@@ -207,20 +216,20 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 		add_child(dudebro)
 		dudebro.load2(creature_data) # Add data
 	
-	var tree_str = savefile.get_line()
-	var tree_dict = json.parse_string(tree_str)
-	for creatureID in tree_dict:
-		var creature = tree_dict[creatureID]
-		var loaded_DNA = creature[4]
-		var i = 0
-		for RNA in loaded_DNA:
-			var str_pos = RNA['Position']
-			var var_pos = str_pos.replace('Vector2(', '').replace(')', '').split(', ')
-			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
-			loaded_DNA[i]['Position'] = varified_value
-			i += 1
-		tree_dict[creatureID][4] = loaded_DNA
-	LineageLogger.creature_tree = tree_dict
+	#var tree_str = savefile.get_line()
+	#var tree_dict = json.parse_string(tree_str)
+	#for creatureID in tree_dict:
+		#var creature = tree_dict[creatureID]
+		#var loaded_DNA = creature[4]
+		#var i = 0
+		#for RNA in loaded_DNA:
+			#var str_pos = RNA['Position']
+			#var var_pos = str_pos.replace('Vector2(', '').replace(')', '').split(', ')
+			#var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			#loaded_DNA[i]['Position'] = varified_value
+			#i += 1
+		#tree_dict[creatureID][4] = loaded_DNA
+	#LineageLogger.creature_tree = tree_dict
 	
 	var reversed_food_indices = range(food_object.get_child_count())
 	reversed_food_indices.reverse()
@@ -230,6 +239,17 @@ func load_game_2(savefile_location): #WARNING This erases the current simulation
 	var food_list = JSON.parse_string(food_str)
 	for grub_bit in food_list:
 		food_object.add_food(grub_bit['energy'], Vector2(grub_bit['pos_x'], grub_bit['pos_y']))
+	
+	var creature_count = 0
+	var registry_files = DirAccess.get_files_at(save_folder_path)
+	registry_files.remove_at(registry_files.find("Header.txt"))
+	for file_name in registry_files:
+		var file = ConfigFile.new()
+		file.load(save_folder_path + file_name)
+		creature_count += len(file.get_sections())
+		file.save("res://Lineage Tracking/Registry/" + file_name) 
+	LineageLogger.creature_count = creature_count
+		# I think this is all we need to do, since the creature tree is redundant now
 
 func _on_food_spawn_timer_timeout():
 	for x in range(GlobalSettings.food_spawn_burst_size):

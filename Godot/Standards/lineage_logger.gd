@@ -3,30 +3,30 @@ extends Node
 
 const REGISTRY_FOLDER_PATH = "res://Lineage Tracking/Registry/"
 #[parent, children, time of birth, time of death(-1.0 if alive), DNA]
-var creature_tree = {"-1": ["-1", [], 0, -1, "", {  }]}
+#var creature_tree = {"-1": ["-1", [], 0, -1, "", {  }]}
 
-var creature_count = len(creature_tree)
+var creature_count
 func _ready():
-	var current_creature = creature_tree['-1']
-	for x in range(creature_count/50 + 1):
-		var file = ConfigFile.new()
-		if x == 0:
-			creature_count -= 1
-			current_creature = creature_tree['-1']
-			file.set_value('-1', "parent", current_creature[0])
-			file.set_value('-1', "children", current_creature[1])
-			file.set_value('-1', "time of birth", current_creature[2])
-			file.set_value('-1', "time of death", current_creature[3])
-			file.set_value('-1', "DNA", current_creature[4])
-		for y in range(min(50, creature_count - x*50)):
-			current_creature = creature_tree[str(x*50 + y)]
-			file.set_value(str(y), "parent", current_creature[0])
-			file.set_value(str(y), "children", current_creature[1])
-			file.set_value(str(y), "time of birth", current_creature[2])
-			file.set_value(str(y), "time of death", current_creature[3])
-			file.set_value(str(y), "DNA", current_creature[4])
-			file.save(REGISTRY_FOLDER_PATH + str(x) + ".cfg")
-	pass
+	"""This might be completely unnecessary if we just keep the files, instead of creating new ones."""
+	#var current_creature = creature_tree['-1']
+	#for x in range(creature_count/50 + 1):
+		#var file = ConfigFile.new()
+		#if x == 0:
+			#creature_count -= 1
+			#current_creature = creature_tree['-1']
+			#file.set_value('-1', "parent", current_creature[0])
+			#file.set_value('-1', "children", current_creature[1])
+			#file.set_value('-1', "time of birth", current_creature[2])
+			#file.set_value('-1', "time of death", current_creature[3])
+			#file.set_value('-1', "DNA", current_creature[4])
+		#for y in range(min(50, creature_count - x*50)):
+			#current_creature = creature_tree[str(x*50 + y)]
+			#file.set_value(str(y), "parent", current_creature[0])
+			#file.set_value(str(y), "children", current_creature[1])
+			#file.set_value(str(y), "time of birth", current_creature[2])
+			#file.set_value(str(y), "time of death", current_creature[3])
+			#file.set_value(str(y), "DNA", current_creature[4])
+			#file.save(REGISTRY_FOLDER_PATH + str(x) + ".cfg")
 
 #func log_creature_creation(parentID, DNA):
 #	creature_tree[str(len(creature_tree))] = [parentID, [], Time.get_ticks_msec(), -1.0, DNA]

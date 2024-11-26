@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=11 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://dbbnsnkyrxsa8" path="res://Food Object/food_object.tscn" id="2_uhlcr"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Misc/User Interface/Schematic View/Connection Monitor.gd" id="4_8bh71"]
 [ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
 [ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
-[ext_resource type="PackedScene" uid="uid://bhsjq7sq2d0bo" path="res://file_logger.tscn" id="7_654aw"]
 [ext_resource type="Script" path="res://Misc/User Interface/Settings/settings.gd" id="7_tcja2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjn3i"]
@@ -419,8 +418,6 @@ offset_bottom = 23.0
 grow_horizontal = 0
 text = "Time Left: 3600"
 horizontal_alignment = 2
-
-[node name="FileLogger" parent="." instance=ExtResource("7_654aw")]
 
 [connection signal="timeout" from="Autosave Timer" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_autosave_timer_timeout"]
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
