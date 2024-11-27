@@ -124,11 +124,9 @@ func save2():
 			"connections": cell.connections,
 			"special sauce": DNA[int(cellID)]['Special Sauce']
 		}
-	var saved_DNA = DNA
-	var i = 0
-	for RNA in DNA:
-		saved_DNA[i]['Position'] = var_to_str(RNA['Position'])
-		i += 1
+	var saved_DNA = DNA.duplicate(true)
+	for RNA in saved_DNA:
+		RNA['Position'] = var_to_str(RNA['Position'])
 	var save_dict = {
 		"pos_x": position.x,
 		"pos_y": position.y,
