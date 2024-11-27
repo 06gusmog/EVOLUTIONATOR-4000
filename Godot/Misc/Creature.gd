@@ -124,11 +124,9 @@ func save2():
 			"connections": cell.connections,
 			"special sauce": DNA[int(cellID)]['Special Sauce']
 		}
-	var saved_DNA = DNA
-	var i = 0
-	for RNA in DNA:
-		saved_DNA[i]['Position'] = var_to_str(RNA['Position'])
-		i += 1
+	var saved_DNA = DNA.duplicate(true)
+	for RNA in saved_DNA:
+		RNA['Position'] = var_to_str(RNA['Position'])
 	var save_dict = {
 		"pos_x": position.x,
 		"pos_y": position.y,
@@ -194,8 +192,27 @@ func load2(data):
 		output_cells.erase(item)
 
 func reproduce_time():
-	if energy >= GlobalSettings.reproduction_energy_requirement * per_frame_energy_consumption:
-		mitosis.emit(self)
+	if not energy >= GlobalSettings.reproduction_energy_requirement * per_frame_energy_consumption:
+		return
+	var child_position
+	if linear_velocity == Vector2(0,0):
+		child_position = position + Vector2(0, bounding_sphere_size * 3)
+	else:
+		child_position = position + -linear_velocity.normalized() * bounding_sphere_size * 3
+	var shape_rid = PhysicsServer2D.circle_shape_create()
+	var radius = bounding_sphere_size
+	PhysicsServer2D.shape_set_data(shape_rid, radius)
+
+	var params = PhysicsShapeQueryParameters2D.new()
+	params.shape_rid = shape_rid
+	params.transform = Transform2D(0, child_position)
+
+	var space_state = get_world_2d().direct_space_state
+	if space_state.collide_shape(params, 1) == []:
+		mitosis.emit(self, child_position)
+
+	PhysicsServer2D.free_rid(shape_rid)
+
 
 func _on_body_shape_entered(_body_rid, body, body_shape_index, local_shape_index):
 	#print('---Collision handling start---')

@@ -83,7 +83,7 @@ func select_cell_position(established_positions : Array):
 		else:
 			return cell_position
 
-func _on_mitosis(creature:): 
+func _on_mitosis(creature, pos): 
 	var new_DNA = str_to_var(var_to_str(creature.DNA))
 	#print('MITOSIS')
 	
@@ -129,10 +129,8 @@ func _on_mitosis(creature:):
 		var special_sauce = new_DNA[rng.randi() % len(new_DNA)]['Special Sauce']
 		special_sauce[rng.randi() % len(special_sauce)] = str(rng.randi() % 10)
 	
-	if creature.linear_velocity == Vector2(0,0):
-		create_creature(new_DNA, creature.position + Vector2(0, creature.bounding_sphere_size * 3), creature.creatureID)
-	else:
-		create_creature(new_DNA, creature.position + -creature.linear_velocity.normalized() * creature.bounding_sphere_size * 3, creature.creatureID)
+	create_creature(new_DNA, pos, creature.creatureID)
+	
 	creature.energy /= 2
 
 func save_game_2():
