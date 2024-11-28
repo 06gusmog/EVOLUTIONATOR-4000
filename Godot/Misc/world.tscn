@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqhflav3j0b86"]
+[gd_scene load_steps=12 format=3 uid="uid://dqhflav3j0b86"]
 
 [ext_resource type="Script" path="res://Misc/SimulationHandler.gd" id="1_yl8cj"]
 [ext_resource type="PackedScene" uid="uid://dbbnsnkyrxsa8" path="res://Food Object/food_object.tscn" id="2_uhlcr"]
 [ext_resource type="Script" path="res://Misc/User Interface/UserInterface.gd" id="3_6vnwv"]
 [ext_resource type="Script" path="res://Misc/User Interface/Schematic View/Connection Monitor.gd" id="4_8bh71"]
 [ext_resource type="Script" path="res://Misc/User Interface/Lineage View/Creature Lineage View.gd" id="5_46rmg"]
+[ext_resource type="Script" path="res://Lineage Tracking/lineage_view.gd" id="5_iilek"]
 [ext_resource type="Texture2D" uid="uid://be6tg6lcyhdvt" path="res://Misc/visuals/1_white_pixel.png" id="5_s53s6"]
 [ext_resource type="Script" path="res://Misc/User Interface/Settings/settings.gd" id="7_tcja2"]
 
@@ -238,7 +239,7 @@ text = "HIDE UI"
 [node name="TabContainer" type="TabContainer" parent="CanvasLayer/UserInterface2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 1
 
 [node name="Schematic View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
@@ -278,9 +279,28 @@ size_flags_vertical = 0
 text = "Consumption: 0"
 
 [node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
+script = ExtResource("5_iilek")
 metadata/_tab_index = 1
+
+[node name="Button Panel" type="VBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
+layout_mode = 2
+
+[node name="Generate Lineage" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel"]
+layout_mode = 2
+text = "Generate Lineage"
+
+[node name="Name" type="LineEdit" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel"]
+layout_mode = 2
+placeholder_text = "Filename"
+
+[node name="Save Lineage To Computer" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel"]
+layout_mode = 2
+text = "Save Lineage To Computer"
+
+[node name="Load And Save All Lineages" type="Button" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel"]
+layout_mode = 2
+text = "Load and save all lineages"
 
 [node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
 layout_direction = 1
@@ -292,6 +312,7 @@ stretch_mode = 4
 script = ExtResource("5_46rmg")
 
 [node name="Settings" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("7_tcja2")
 metadata/_tab_index = 2
@@ -423,6 +444,7 @@ horizontal_alignment = 2
 [connection signal="timeout" from="Spawnpoints/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="FoodSpawnPoints/FoodSpawnTimer" to="." method="_on_food_spawn_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/UserInterface2/VBoxContainer/DOWN" to="CanvasLayer/UserInterface2" method="_on_hide_ui_button_pressed"]
+[connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel/Load And Save All Lineages" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View" method="_on_load_and_save_all_lineages_button_down"]
 [connection signal="drag_ended" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/simulation_speed/Simulation Speed Slider" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_simulation_speed_slider_drag_ended"]
 [connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/Reload Button" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_reload_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings/Loading/HBoxContainer/Folder Menu" to="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Settings" method="_on_folder_menu_button_down"]

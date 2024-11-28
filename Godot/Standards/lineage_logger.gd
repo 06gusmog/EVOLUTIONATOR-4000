@@ -23,7 +23,10 @@ func _ready():
 
 func get_creature(ID):
 	var file = ConfigFile.new()
-	file.load(REGISTRY_FOLDER_PATH + str(int(ID)/50) + ".cfg")
+	if ID == '-1':
+		file.load(REGISTRY_FOLDER_PATH + "0.cfg")
+	else:
+		file.load(REGISTRY_FOLDER_PATH + str(int(ID)/50) + ".cfg")
 	var creature = []
 	creature.append(file.get_value(ID, "parent"))
 	creature.append(file.get_value(ID, "children"))
