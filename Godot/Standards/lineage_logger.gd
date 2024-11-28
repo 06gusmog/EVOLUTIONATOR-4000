@@ -51,12 +51,12 @@ func log_creature_creation(parentID, DNA):
 	file.set_value(str(creature_count), "time of death", -1)
 	file.set_value(str(creature_count), "DNA", DNA)
 	file.save(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
-	if parentID != "-1":
-		var parent = get_creature(parentID)
-		var parent_file = ConfigFile.new()
-		parent_file.load(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
-		parent_file.set_value(parentID, "children", parent[1] + [creature_count])
-		parent_file.save(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
+	#if parentID != "-1":
+	var parent = get_creature(parentID)
+	var parent_file = ConfigFile.new()
+	parent_file.load(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
+	parent_file.set_value(parentID, "children", parent[1] + [creature_count])
+	parent_file.save(REGISTRY_FOLDER_PATH + str(int(parentID)/50) + ".cfg")
 	creature_count += 1
 	return str(creature_count - 1)
 

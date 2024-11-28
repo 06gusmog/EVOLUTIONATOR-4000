@@ -302,6 +302,10 @@ text = "Save Lineage To Computer"
 layout_mode = 2
 text = "Load and save all lineages"
 
+[node name="Image Size Minimum" type="LineEdit" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View/Button Panel"]
+layout_mode = 2
+text = "100"
+
 [node name="Creature Lineage View" type="TextureRect" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Lineage View"]
 layout_direction = 1
 layout_mode = 2
