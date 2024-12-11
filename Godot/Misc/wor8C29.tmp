@@ -277,12 +277,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Consumption: 0"
 
-[node name="Birth Time" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
-layout_mode = 2
-
-[node name="Current Time" type="Label" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer/Schematic View"]
-layout_mode = 2
-
 [node name="Lineage View" type="HBoxContainer" parent="CanvasLayer/UserInterface2/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2

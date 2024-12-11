@@ -55,6 +55,7 @@ var simulation_speed = 1
 var food_cap = 1000
 var ticks_per_second = 30
 var time_between_saves = 3600
+var global_time = 0.0
 
 func set_simulation_speed(speed):
 	if not autosave_timer.is_stopped():

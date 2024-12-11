@@ -44,7 +44,7 @@ func log_creature_creation(parentID, DNA):
 			return
 	file.set_value(str(creature_count), "parent", parentID)
 	file.set_value(str(creature_count), "children", [])
-	file.set_value(str(creature_count), "time of birth", Time.get_ticks_msec())
+	file.set_value(str(creature_count), "time of birth", GlobalSettings.global_time)
 	file.set_value(str(creature_count), "time of death", -1)
 	file.set_value(str(creature_count), "DNA", DNA)
 	file.save(REGISTRY_FOLDER_PATH + target_file_index + ".cfg")
@@ -59,7 +59,7 @@ func log_creature_creation(parentID, DNA):
 
 func log_creature_death(ID):
 	var creature = get_creature(ID)
-	creature[3] = Time.get_ticks_msec()
+	creature[3] = GlobalSettings.global_time
 	var file = ConfigFile.new()
 	file.load(REGISTRY_FOLDER_PATH + str(int(ID)/50) + ".cfg")
 	file.set_value(ID, "time of death", creature[3])
