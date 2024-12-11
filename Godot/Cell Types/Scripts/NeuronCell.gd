@@ -13,4 +13,4 @@ func _interpret_special_sauce(special_sauce):
 	energy_consumption = GlobalSettings.cell_type_energy_consumption['neuron_cell.tscn']
 
 func _update_output(input):
-	output = input * weight + constant
+	output = weighted_clamp(input * weight + constant)
