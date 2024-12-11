@@ -18,6 +18,9 @@ func _ready():
 	GlobalSettings.autosave_timer = $"Autosave Timer"
 # All test inputs in userinterface!!
 
+func _process(delta: float) -> void:
+	GlobalSettings.global_time += delta
+
 func get_random_position(food_spawn_node):
 	var diameter = 150
 	var offset = food_spawn_node.position 
@@ -163,6 +166,9 @@ func save_game_2():
 	var grub_str = JSON.stringify(grub_list)
 	save_file.store_line(grub_str)
 	
+	var time_str = JSON.stringify(GlobalSettings.global_time)
+	save_file.store_line(time_str)
+	
 	# Relocates registry to save folder
 	for file_name in DirAccess.get_files_at("res://Lineage Tracking/Registry/"):
 		var file = ConfigFile.new()
@@ -211,6 +217,9 @@ func load_game_2(save_folder_path): #WARNING This erases the current simulation.
 	var food_list = JSON.parse_string(food_str)
 	for grub_bit in food_list:
 		food_object.add_food(grub_bit['energy'], Vector2(grub_bit['pos_x'], grub_bit['pos_y']))
+	
+	var time_str = savefile.get_line()
+	GlobalSettings.global_time = float(time_str)
 	
 	var creature_count = 0
 	var registry_files = DirAccess.get_files_at(save_folder_path)

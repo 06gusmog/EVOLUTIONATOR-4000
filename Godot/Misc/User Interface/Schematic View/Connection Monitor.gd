@@ -6,6 +6,8 @@ extends SubViewport
 @onready var camera = $"Monitor Root/Camera"
 @onready var energy: ProgressBar = $"../Energy"
 @onready var energy_consumption: Label = $"../Energy Consumption"
+@onready var birth_time: Label = $"../Birth Time"
+@onready var current_time: Label = $"../Current Time"
 
 const WHITE_PIXEL = preload("res://Misc/visuals/1_white_pixel.png")
 
@@ -33,6 +35,7 @@ func load_creature(creature: Node):
 	loaded_creature = creature
 	
 	energy.max_value = loaded_creature.per_frame_energy_consumption * GlobalSettings.energy_cap
+	birth_time.text = 'Creation Time: ' + str(LineageLogger.get_creature(creature.creatureID)[2])
 	
 	creature.cell_death.connect(self._on_creature_cell_death)
 	creature.death.connect(self._on_creature_death)
@@ -118,6 +121,7 @@ func _process(delta):
 	
 	energy.value = loaded_creature.energy
 	energy_consumption.text = "Consumption:" + str(round(loaded_creature.per_frame_energy_consumption * 100) / 100)
+	current_time.text = 'Current Time: ' + str(GlobalSettings.global_time)
 	
 	for output_node in connections_root.get_children():
 		var do_I_skip_this_cell = false
