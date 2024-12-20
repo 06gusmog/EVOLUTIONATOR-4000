@@ -20,4 +20,4 @@ func _update_output(_input):
 		var collision_distance = to_local(collision_point).distance_to(Vector2(0,0))
 		output = (distance - collision_distance) / distance
 	else:
-		output = -1
+		output = 0

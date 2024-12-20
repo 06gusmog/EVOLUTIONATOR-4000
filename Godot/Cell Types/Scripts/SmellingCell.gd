@@ -13,7 +13,7 @@ func _interpret_special_sauce(special_sauce):
 func _update_output(_input):
 	var bodies_in_range = area_2d.get_overlapping_areas()
 	if len(bodies_in_range) == 0:
-		output = -1
+		output = 0
 	else:
 		var dist2 = []
 		for food_bit in bodies_in_range:

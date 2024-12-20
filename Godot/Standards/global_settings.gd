@@ -47,7 +47,7 @@ var mutation_chances = {
 	'new_connection': 5,
 	'delete_connection': 5,
 	'type_switch': 5,
-	'special_sauce_digit_change': 1
+	'special_sauce_digit_change': 2
 	}
 
 # Physics

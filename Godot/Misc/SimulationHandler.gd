@@ -109,7 +109,7 @@ func _on_mitosis(creature, pos):
 	#Chance to spawn a new cell
 	if not rng.randi() % (mutation_chances['new_cell'] * mutation_chance_multiplier):
 		#print('Cell Mutation: Addition')
-		var cell_positions = [] #NOTE: I think it would be better to store cell_positions for every creature, instead of calculating it every time
+		var cell_positions = [] 
 		for RNA in new_DNA:
 			cell_positions.append(RNA['Position'])
 		new_DNA.append(generate_random_RNA(cell_positions, len(new_DNA) + 1)[0])
@@ -119,6 +119,7 @@ func _on_mitosis(creature, pos):
 		#print('Cell Mutation: Connection')
 		new_DNA[rng.randi() % len(new_DNA)]['Connections'].append(str(rng.randi() % len(new_DNA)))
 	
+	#Chance to remove a connection
 	if not rng.randi() % (mutation_chances['delete_connection'] * mutation_chance_multiplier):
 		var connections = new_DNA[rng.randi() % len(new_DNA)]['Connections']
 		if not len(connections) == 0:
