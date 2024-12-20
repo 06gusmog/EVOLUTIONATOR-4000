@@ -44,6 +44,9 @@ func create_creature(DNA, creature_position, parentID = '-1'):
 	dudebro.mitosis.connect(_on_mitosis) # This connects the signal
 	dudebro.creatureID = creatureID
 	add_child(dudebro)
+	if len(dudebro.group_cells(dudebro.cells)) > 1:
+		#print('Oops! Miscarriage!')
+		dudebro.die()
 
 func generate_special_sauce(length : int):
 	var special_sauce = ""
