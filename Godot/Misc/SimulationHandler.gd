@@ -146,10 +146,10 @@ func save_game_2():
 	Saves creature tree
 	Saves food
 	"""
-	var time = Time.get_time_dict_from_system()
-	var save_folder_path = "{0}{1}-{2}".format([GlobalSettings.save_path, time.hour, time.minute])
+	var time = Time.get_datetime_dict_from_system()
+	var save_folder_path = "{0}{1}-{2}-{3}".format([GlobalSettings.save_path, time.day, time.hour, time.minute])
 	DirAccess.make_dir_absolute(save_folder_path) # Creates a folder for every save 
-	print("{0}savegame{1}-{2}.save".format([save_folder_path, time.hour, time.minute]))
+	print("{0}savegame{1}-{2}-{3}.save".format([save_folder_path, time.day, time.hour, time.minute]))
 	var save_file = FileAccess.open("{0}/Header.txt".format([save_folder_path, time.hour, time.minute]), FileAccess.WRITE) 
 	# .save doesn't show up in the editor
 	var creatures = get_tree().get_nodes_in_group("Creature")

@@ -24,8 +24,8 @@ var cell_type_energy_consumption = {
 	'armor_cell.tscn':0.1
 }
 var action_consumption_factor = 0.5
-#Factor multiplied by per frame energy consumption
 #Numbers still out of my butt, feel free to change.
+#Factor multiplied by per second energy consumption
 var reproduction_energy_requirement = 150
 var starting_energy = 100
 var energy_cap = 200
@@ -41,9 +41,10 @@ var creature_spawn_size = 10
 
 # Mutation
 var mutation_chance_multiplier = 1
-var mutation_chances = {
+var mutation_chances = { 
+	#Likelihood is 1/x
 	'remove_cell': 15,
-	'new_cell': 10, #Likelihood is 1/x
+	'new_cell': 10, 
 	'new_connection': 5,
 	'delete_connection': 5,
 	'type_switch': 5,
