@@ -25,7 +25,7 @@ creature_amount = 20
 [node name="Spawnpoints" type="Node2D" parent="."]
 
 [node name="Spawn 1" type="Node2D" parent="Spawnpoints"]
-position = Vector2(120, 120)
+position = Vector2(141.02, 102.89)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 1"]
 collision_layer = 2
@@ -36,7 +36,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 2" type="Node2D" parent="Spawnpoints"]
-position = Vector2(100, -170)
+position = Vector2(184, -157)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 2"]
 collision_layer = 2
@@ -47,7 +47,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 3" type="Node2D" parent="Spawnpoints"]
-position = Vector2(-121, -75)
+position = Vector2(-291, -40)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 3"]
 collision_layer = 2
@@ -58,7 +58,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 4" type="Node2D" parent="Spawnpoints"]
-position = Vector2(0, -67)
+position = Vector2(38, -132)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 4"]
 collision_layer = 2
@@ -69,7 +69,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 5" type="Node2D" parent="Spawnpoints"]
-position = Vector2(-120, 0)
+position = Vector2(-152.395, -147.395)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 5"]
 collision_layer = 2
@@ -80,7 +80,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 6" type="Node2D" parent="Spawnpoints"]
-position = Vector2(40, 0)
+position = Vector2(13.195, 169.885)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 6"]
 collision_layer = 2
@@ -91,7 +91,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 7" type="Node2D" parent="Spawnpoints"]
-position = Vector2(0, 120)
+position = Vector2(-175, 105)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 7"]
 collision_layer = 2
@@ -102,7 +102,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_rjn3i")
 
 [node name="Spawn 8" type="Node2D" parent="Spawnpoints"]
-position = Vector2(250, 30)
+position = Vector2(294.625, 66.405)
 
 [node name="Area2D" type="Area2D" parent="Spawnpoints/Spawn 8"]
 collision_layer = 2
@@ -119,25 +119,25 @@ autostart = true
 [node name="FoodSpawnPoints" type="Node2D" parent="."]
 
 [node name="FoodSpawn1" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-215, -100)
+position = Vector2(-187, -71)
 
 [node name="FoodSpawn2" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-79, 112)
+position = Vector2(-76, 113)
 
 [node name="FoodSpawn3" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(214, 116)
+position = Vector2(236.5, 158.505)
 
 [node name="FoodSpawn4" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-65, -143)
+position = Vector2(-41, -185)
 
 [node name="FoodSpawn5" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(210, -108)
+position = Vector2(192, -73)
 
 [node name="FoodSpawn6" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(151, 1)
+position = Vector2(290, -18)
 
 [node name="FoodSpawn7" type="Node2D" parent="FoodSpawnPoints"]
-position = Vector2(-210, 51)
+position = Vector2(-277, 45)
 
 [node name="FoodSpawnTimer" type="Timer" parent="FoodSpawnPoints"]
 wait_time = 10.0
@@ -151,58 +151,20 @@ autostart = true
 physics_material_override = SubResource("PhysicsMaterial_06e6h")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(-3, 6)
-polygon = PackedVector2Array(213, -134, 200, -132, 191, -125, 188, -110, 196, -97, 212, -93, 229, -97, 239, -110, 236, -124, 225, -132)
+position = Vector2(-1257.98, 464.749)
+scale = Vector2(5.93505, 4.13567)
+polygon = PackedVector2Array(213.643, -136.072, 205.724, -135.588, 196.963, -134.138, 189.549, -128.576, 185.337, -121.564, 183.315, -114.068, 185.842, -103.671, 193.256, -97.8677, 198.648, -94.7243, 211.958, -93.2735, 225.606, -94.7243, 233.02, -98.3513, 238.074, -102.22, 241.276, -108.023, 242.287, -115.519, 239.759, -122.289, 236.726, -127.851, 232.683, -131.478, 227.459, -134.138, 221.225, -135.347)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
-position = Vector2(0, 7)
+position = Vector2(-0.00287948, 6.83114)
 scale = Vector2(1, 1.07165)
-polygon = PackedVector2Array(213, -131.573, 200, -129.707, 191, -123.175, 188, -109.178, 196, -97.0469, 212, -93.3144, 229, -97.0469, 239, -109.178, 236, -122.242, 225, -129.707)
+polygon = PackedVector2Array(213.646, -133.349, 205.727, -132.897, 196.966, -131.544, 189.552, -126.354, 185.34, -119.811, 183.318, -112.816, 185.845, -103.114, 193.259, -97.6988, 198.65, -94.7655, 211.961, -93.4117, 225.609, -94.7655, 233.023, -98.15, 238.077, -101.76, 241.279, -107.175, 242.29, -114.17, 239.762, -120.488, 236.729, -125.677, 232.686, -129.062, 227.462, -131.544, 221.228, -132.672)
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(166, -219, 287, -187, 337, -101, 358, -34, 360, 28, 349, 128, 285, 194, 179, 209, 56, 208, -93, 213, -220, 190, -291, 124, -336, 23, -334, -112, -270, -174, -151, -215, 165, -219, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D4"]
 polygon = PackedVector2Array(287, -187, 337, -101, 358, -34, 360, 28, 349, 128, 285, 194, 179, 209, 56, 208, -93, 213, -220, 190, -291, 124, -336, 23, -334, -112, -270, -174, -151, -215, 166, -219, 287, -187, 367, -248, -450, -265, -402, 256, 472, 263, 367, -248)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-66, -167, -79, -164, -91, -152, -91, -129, -74, -114, -44, -120, -32, -138, -34, -158, -46, -167)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D2"]
-polygon = PackedVector2Array(-46, -167, -66, -167, -79, -164, -91, -152, -91, -129, -74, -114, -44, -120, -32, -138, -34, -158)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-216, -123, -230, -118, -236, -108, -235, -97, -229, -86, -212, -82, -199, -91, -194, -100, -198, -112)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D3"]
-polygon = PackedVector2Array(-216, -123, -230, -118, -236, -108, -235, -97, -229, -86, -212, -82, -199, -91, -194, -100, -198, -112)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D5"]
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(131, 62)
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D6"]
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(361, -48)
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D7"]
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(425, 70)
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D8"]
-polygon = PackedVector2Array(-209, 28, -222, 30, -230, 38, -232, 49, -230, 60, -219, 69, -203, 70, -194, 64, -191, 52, -193, 40, -200, 32)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
