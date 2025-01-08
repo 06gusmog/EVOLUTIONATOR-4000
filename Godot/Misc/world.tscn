@@ -93,6 +93,12 @@ polygon = PackedVector2Array(-1, -176, 129, -124, 195, -1, 133, 119, 1, 162, -12
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
 polygon = PackedVector2Array(-1, -176, 129, -124, 195, -1, 133, 119, 1, 162, -126, 115, -169, 0, -128, -122, -1, -176, -236, -205, -239, 197, 262, 201, 253, -206, -236, -205)
 
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, -31, -24, -22, -32, -1, -25, 22, 0, 32, 26, 24, 35, -1, 24, -24)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D2"]
+polygon = PackedVector2Array(0, -31, -24, -22, -32, -1, -25, 22, 0, 32, 26, 24, 35, -1, 24, -24)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
 process_priority = 1
