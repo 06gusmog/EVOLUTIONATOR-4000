@@ -56,13 +56,7 @@ func _ready():
 	# Box around the creature
 	for cellID in cells:
 		var cell = cells[cellID]
-		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size: #CRITICAL: It crashes on startup here sometimes, error message: Invalid get index 'position' (on base: 'String'). No idea why
-			# When saving the cells, references to cell objects are saved as strings instead 
-			# of the cells themselves being saved. The cells are saved as children, but the 
-			# dictionary is just strings. This works when the creatures are whole because
-			# the strings are overwritten with actual references. (lines 35-38). I don't know why 
-			# the cells are just completely replaced (lines 28-33) but this solution is fundementally
-			# flawed and needs replacing.
+		if cell.position.distance_squared_to(center_of_mass) > bounding_sphere_size: 
 			bounding_sphere_size = cell.position.distance_squared_to(center_of_mass)
 	bounding_sphere_size = sqrt(bounding_sphere_size)
 	var box_side_length = bounding_sphere_size * 2
@@ -99,19 +93,6 @@ func _physics_process(delta: float) -> void:
 #	if energy >= required_energy:
 #		mitosis.emit(self)
 
-func save():
-	var save_dict = {
-		"filename" : get_scene_file_path(),
-		"parent" : get_parent().get_path(),
-		"pos_x" : position.x, # Vector2 is not supported by JSON
-		"pos_y" : position.y,
-		"DNA": save_DNA(DNA),
-		"cellIDs": cells.keys(), 
-		"energy": energy, 
-		"creatureID": creatureID, 
-		"bounding_sphere_size": bounding_sphere_size
-	}
-	return save_dict
 
 func save2():
 	var saved_cells = {}

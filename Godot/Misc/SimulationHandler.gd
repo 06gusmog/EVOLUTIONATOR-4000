@@ -203,8 +203,8 @@ func load_game_2(save_folder_path): #WARNING This erases the current simulation.
 		var i = 0
 		for RNA in creature_data['DNA']:
 			var var_pos = RNA['Position'].replace('Vector2(', '').replace(')', '').split(', ')
-			var varified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
-			loaded_DNA[i]['Position'] = varified_value
+			var verified_value = Vector2(int(var_pos[0]), int(var_pos[1]))
+			loaded_DNA[i]['Position'] = verified_value
 			i += 1
 		dudebro.DNA = loaded_DNA
 		dudebro.position = Vector2(creature_data['pos_x'], creature_data['pos_y'])
