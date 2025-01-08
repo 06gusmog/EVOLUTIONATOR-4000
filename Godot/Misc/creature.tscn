@@ -13,7 +13,7 @@ input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_cf5g3")
 contact_monitor = true
 max_contacts_reported = 5
-linear_damp = 3.621
+linear_damp = 1.0
 angular_damp = 49.347
 script = ExtResource("1_2isnp")
 
